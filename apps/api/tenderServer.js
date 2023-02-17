@@ -12,14 +12,13 @@ import getTenders from "./services/getTenders.js";
 
 const runJobs = async () => {
   console.log(`${getDateTimeString()} - Running jobs...`);
-  console.log(await getTenders());
+  console.log('current education tenders are', await getTenders());
 }
 
 const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
+rule.minute = 11;
 
-// const jobsSchedule = scheduleJob(rule, runJobs);
-
-runJobs();
+const jobsSchedule = scheduleJob(rule, runJobs);
