@@ -17,10 +17,12 @@
     "node-schedule": "^2.1.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
     "eslint": "^8.34.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.27.5",
+    "hex-generator": "^1.0.1",
     "jest": "^29.4.3"
   }
 }
