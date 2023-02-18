@@ -9,16 +9,44 @@ import mongoose from "mongoose";
 import pkgSchedule from "node-schedule";
 import getDateTimeString from "./helpers/getDateTimeString.js";
 import getTenders from "./services/getTenders.js";
+import storeTenders from "./services/storeTenders.js";
+
+dotenv.config();
 
 const runJobs = async () => {
   console.log(`${getDateTimeString()} - Running jobs...`);
-  console.log('current education tenders are', await getTenders());
+  const retrievedTenders = await getTenders();
+  console.log('retrievedTenders', retrievedTenders);
+  storeTenders(retrievedTenders);
+
 }
 
 const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
-rule.minute = 11;
+rule.minute = 41;
 
-const jobsSchedule = scheduleJob(rule, runJobs);
+// const jobsSchedule = scheduleJob(rule, runJobs);
+
+runJobs();
+
+
+/* **MONGOOSE** */
+
+// Mongoose //
+
+const { MONGO_URL } = process.env;
+console.log('MONGO_URL', MONGO_URL);
+
+async function connect() {
+  try {
+    await mongoose.connect(MONGO_URL);
+  } catch (error) {
+    console.log('Error connecting to MongoDB: ', error.message);
+  } finally {
+    console.log('Connected to MongoDB');
+  }
+}
+
+connect();

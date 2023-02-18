@@ -1,7 +1,4 @@
-import getDateTimeString from "../helpers/getDateTimeString.js";
-import sortEducationTenders from "./sortEducationTenders.js";
-
-const tenders = [
+[
   {
     ocid: "ocds-h6vhtk-03a68d",
     id: "004918-2023",
@@ -1441,25 +1438,3 @@ const tenders = [
     language: "en",
   },
 ]
-
-// eslint-disable-next-line arrow-body-style
-const getTenders = async () => {
-  return tenders;
-  
-
-  // This all works but, for now, we're skipping the API calls for development purposes. 
-
-  /* let response;
-   try {
-    response = await fetch(
-      `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(-12)}&updatedTo=${getDateTimeString()}`,
-    );
-    const data = await response.json();
-    const educationTenders = sortEducationTenders(data);
-    return educationTenders;
-  } catch (error) {
-    console.error("Error getting tenders: ", error.message);
-  } */
-};
-
-export default getTenders;
