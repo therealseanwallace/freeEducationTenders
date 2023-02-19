@@ -8,29 +8,16 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import pkgSchedule from "node-schedule";
 import getDateTimeString from "./helpers/getDateTimeString.js";
-import getTenders from "./services/getTenders.js";
-import storeTenders from "./services/storeTenders.js";
+import getTenders from "./helpers/getTenders.js";
+import storeTenders from "./helpers/storeTenders.js";
+import APICrawlerService from "./services/APICrawlerService.js";
+
 
 dotenv.config();
 
-const runJobs = async () => {
-  console.log(`${getDateTimeString()} - Running jobs...`);
-  const retrievedTenders = await getTenders();
-  console.log('retrievedTenders', retrievedTenders);
-  storeTenders(retrievedTenders);
+console.log('API Crawler Service:', APICrawlerService);
 
-}
-
-const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
-
-const rule = new RecurrenceRule();
-rule.hour = new Range(0, 23, 1);
-rule.minute = 41;
-
-// const jobsSchedule = scheduleJob(rule, runJobs);
-
-runJobs();
-
+const APICrawler = new APICrawlerService();
 
 /* **MONGOOSE** */
 
