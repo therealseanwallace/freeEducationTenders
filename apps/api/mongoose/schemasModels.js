@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const tenderSchema = new Schema({
+const TenderSchema = new Schema({
   ocid: String,
   id: String,
   date: String,
@@ -24,6 +24,12 @@ const tenderSchema = new Schema({
   }
 });
 
-const WeatherModel = mongoose.model("Tenders", tenderSchema);
+const TenderModel = mongoose.model("Tenders", TenderSchema);
 
-export default WeatherModel;
+const AppStatus = new Schema({
+  firstRun: Boolean,
+});
+
+const AppStatusModel = mongoose.model("AppStatus", AppStatus);
+
+export { TenderModel, AppStatusModel };

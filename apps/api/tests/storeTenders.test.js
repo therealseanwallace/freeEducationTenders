@@ -1,11 +1,11 @@
-import storeTenders from "../services/storeTenders";
 import hexGen from "hex-generator";
+import storeTenders from "../services/storeTenders";
 
-const hex = hexGen(256);
+const genHex = () => hexGen(256);
 
 const mockTender = [
   {
-    ocid: `test-ocid-${hex}`,
+    ocid: `test-ocid-${genHex()}`,
     id: "004918-2023",
     date: "2023-02-17T15:16:09Z",
     tag: ["planning"],
