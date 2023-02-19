@@ -19,6 +19,7 @@ console.log('API Crawler Service:', APICrawlerService);
 
 const APICrawler = new APICrawlerService();
 
+
 /* **MONGOOSE** */
 
 // Mongoose //
@@ -37,3 +38,6 @@ async function connect() {
 }
 
 connect();
+
+
+APICrawler.runJobs();
