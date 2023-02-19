@@ -1,4 +1,4 @@
-import getTenders from "../services/getTenders";
+import getTenders from "../helpers/getTenders";
 
 describe("getTenders", () => {
   let tenders;

@@ -1,4 +1,4 @@
-import getDateTimeString from "../helpers/getDateTimeString.js";
+import getDateTimeString from "./getDateTimeString.js";
 import sortEducationTenders from "./sortEducationTenders.js";
 
 const tenders = [
@@ -6,9 +6,7 @@ const tenders = [
     ocid: "ocds-h6vhtk-03a68d",
     id: "004918-2023",
     date: "2023-02-17T15:16:09Z",
-    tag: [
-      "planning",
-    ],
+    tag: ["planning"],
     initiationType: "tender",
     tender: {
       id: "DN656986",
@@ -24,12 +22,14 @@ const tenders = [
         description: "Primary education services",
       },
       mainProcurementCategory: "services",
-      description: "Northumberland County Council seek to establish a Flexible Purchasing System (FPS) to support the provision of Alternative Education for children of statutory school age.  Alternative Education refers to the operation of programmes of learning and skills development in non-school settings with the aim of supporting the progression of students who have become disengaged or are at risk of being disengaged from school-based education. There will be an emphasis on students being provided with the opportunity to achieve academic accreditation, particularly in English and maths.\nAll lots relate to pre 16 statutory education unless otherwise stated.\nDuring summer 2022 the DfE launched a call for evidence into understanding the use of unregistered alternative provision across England. This was announced as one of the commitments published in the SEND and Alternative Provision green paper which committed to strengthening protections for children in unregistered alternative provision. At the same time the impact of COVID is now starting to show within Northumberland resulting in a rise in both permanent exclusions and fixed term exclusions/suspensions. A FPS will create a more flexible solution providing the Council with improved access to suppliers in order to meet need.\nA provider information and engagement event is scheduled to be held as follows:\nThursday 9th March 2.30 - 4.00 pm\nRoom CR1, Northumberland County Council, Morpeth, Northumberland, NE61 2EF\nPlease register your place at this event by contacting Karen Davison on telephone number 01670 623960 or email: Karen.Davison01@northumberland.gov.uk",
+      description:
+        "Northumberland County Council seek to establish a Flexible Purchasing System (FPS) to support the provision of Alternative Education for children of statutory school age.  Alternative Education refers to the operation of programmes of learning and skills development in non-school settings with the aim of supporting the progression of students who have become disengaged or are at risk of being disengaged from school-based education. There will be an emphasis on students being provided with the opportunity to achieve academic accreditation, particularly in English and maths.\nAll lots relate to pre 16 statutory education unless otherwise stated.\nDuring summer 2022 the DfE launched a call for evidence into understanding the use of unregistered alternative provision across England. This was announced as one of the commitments published in the SEND and Alternative Provision green paper which committed to strengthening protections for children in unregistered alternative provision. At the same time the impact of COVID is now starting to show within Northumberland resulting in a rise in both permanent exclusions and fixed term exclusions/suspensions. A FPS will create a more flexible solution providing the Council with improved access to suppliers in order to meet need.\nA provider information and engagement event is scheduled to be held as follows:\nThursday 9th March 2.30 - 4.00 pm\nRoom CR1, Northumberland County Council, Morpeth, Northumberland, NE61 2EF\nPlease register your place at this event by contacting Karen Davison on telephone number 01670 623960 or email: Karen.Davison01@northumberland.gov.uk",
       lots: [
         {
           id: "1",
           title: "Ofsted Registered Provision - Full Time or Part Time Places",
-          description: "Tier 1 – Leading to Accredited Qualifications\nLot 1: Ofsted Registered Provision - Full Time or Part Time Places",
+          description:
+            "Tier 1 – Leading to Accredited Qualifications\nLot 1: Ofsted Registered Provision - Full Time or Part Time Places",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -39,7 +39,8 @@ const tenders = [
         {
           id: "2",
           title: "Unregistered Providers – Part Time Placements",
-          description: "Tier 1 – Leading to Accredited Qualifications\nLot 2: Unregistered Providers – Part Time Placements",
+          description:
+            "Tier 1 – Leading to Accredited Qualifications\nLot 2: Unregistered Providers – Part Time Placements",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -48,8 +49,10 @@ const tenders = [
         },
         {
           id: "3",
-          title: "Unregistered Providers – Part Time Placements for Post 16 Students",
-          description: "Tier 1 – Leading to Accredited Qualifications\nLot 3: Unregistered Providers – Part Time Placements for Post 16 Students",
+          title:
+            "Unregistered Providers – Part Time Placements for Post 16 Students",
+          description:
+            "Tier 1 – Leading to Accredited Qualifications\nLot 3: Unregistered Providers – Part Time Placements for Post 16 Students",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -59,7 +62,8 @@ const tenders = [
         {
           id: "4",
           title: "Unregistered Providers – Part Time Enrichment",
-          description: "Tier 2 – Supplementary Support: To be used by exception\nLot 4: Unregistered Providers – Part Time Enrichment",
+          description:
+            "Tier 2 – Supplementary Support: To be used by exception\nLot 4: Unregistered Providers – Part Time Enrichment",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -69,7 +73,8 @@ const tenders = [
         {
           id: "5",
           title: "Unregistered Providers – Tuition",
-          description: "Tier 2 – Supplementary Support: To be used by exception\nLot 5: Unregistered Providers – Tuition",
+          description:
+            "Tier 2 – Supplementary Support: To be used by exception\nLot 5: Unregistered Providers – Tuition",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -79,7 +84,8 @@ const tenders = [
         {
           id: "6",
           title: "Unregistered Providers – Virtual Learning",
-          description: "Tier 2 – Supplementary Support: To be used by exception\nLot 6: Unregistered Providers – Virtual Learning",
+          description:
+            "Tier 2 – Supplementary Support: To be used by exception\nLot 6: Unregistered Providers – Virtual Learning",
           hasRenewal: true,
           renewal: {
             description: "On expiry",
@@ -188,9 +194,7 @@ const tenders = [
       communication: {
         futureNoticeDate: "2023-04-17T00:00:00+01:00",
       },
-      coveredBy: [
-        "GPA",
-      ],
+      coveredBy: ["GPA"],
     },
     parties: [
       {
@@ -210,9 +214,7 @@ const tenders = [
           name: "Mrs Leanne Stewart",
           email: "leanne.stewart@northumberland.gov.uk",
         },
-        roles: [
-          "buyer",
-        ],
+        roles: ["buyer"],
         details: {
           url: "https://procontract.due-north.com/",
           buyerProfile: "https://procontract.due-north.com/",
@@ -241,10 +243,7 @@ const tenders = [
     ocid: "ocds-h6vhtk-03a688",
     id: "004913-2023",
     date: "2023-02-17T14:46:34Z",
-    tag: [
-      "award",
-      "contract",
-    ],
+    tag: ["award", "contract"],
     initiationType: "tender",
     tender: {
       id: "ocds-h6vhtk-03a688",
@@ -252,7 +251,8 @@ const tenders = [
         id: "32014L0024",
         scheme: "CELEX",
       },
-      title: "Project - 7780 - DfE - HGV Bootcamp System Group Remediation (Multiple Contracts)",
+      title:
+        "Project - 7780 - DfE - HGV Bootcamp System Group Remediation (Multiple Contracts)",
       status: "complete",
       classification: {
         scheme: "CPV",
@@ -260,11 +260,13 @@ const tenders = [
         description: "Education and training services",
       },
       mainProcurementCategory: "services",
-      description: "The delivery of HGV Skills Bootcamps to allow continuation in training for learners who were previously under System Group.",
+      description:
+        "The delivery of HGV Skills Bootcamps to allow continuation in training for learners who were previously under System Group.",
       lots: [
         {
           id: "1",
-          description: "The delivery of HGV Skills Bootcamps to allow continuation in training for learners who were previously under System Group.",
+          description:
+            "The delivery of HGV Skills Bootcamps to allow continuation in training for learners who were previously under System Group.",
           awardCriteria: {
             criteria: [
               {
@@ -288,22 +290,23 @@ const tenders = [
         },
       ],
       procurementMethod: "limited",
-      procurementMethodDetails: "Award procedure without prior publication of a call for competition",
+      procurementMethodDetails:
+        "Award procedure without prior publication of a call for competition",
       procurementMethodRationaleClassifications: [
         {
           scheme: "TED_PT_AWARD_CONTRACT_WITHOUT_CALL",
           id: "D_TECHNICAL",
-          description: "The works, supplies or services can be provided only by a particular economic operator due to absence of competition for technical reasons",
+          description:
+            "The works, supplies or services can be provided only by a particular economic operator due to absence of competition for technical reasons",
         },
       ],
-      procurementMethodRationale: "Reg 32 (2) (a) (ii) This was to ensure continuity of training for distressed learners with contractors and sub-contractors with prior experience of the service requirement.",
+      procurementMethodRationale:
+        "Reg 32 (2) (a) (ii) This was to ensure continuity of training for distressed learners with contractors and sub-contractors with prior experience of the service requirement.",
     },
     awards: [
       {
         id: "004913-2023-1",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -314,9 +317,7 @@ const tenders = [
       },
       {
         id: "004913-2023-2",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -327,9 +328,7 @@ const tenders = [
       },
       {
         id: "004913-2023-3",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -340,9 +339,7 @@ const tenders = [
       },
       {
         id: "004913-2023-4",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -353,9 +350,7 @@ const tenders = [
       },
       {
         id: "004913-2023-5",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -366,9 +361,7 @@ const tenders = [
       },
       {
         id: "004913-2023-6",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -379,9 +372,7 @@ const tenders = [
       },
       {
         id: "004913-2023-7",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -392,9 +383,7 @@ const tenders = [
       },
       {
         id: "004913-2023-8",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -405,9 +394,7 @@ const tenders = [
       },
       {
         id: "004913-2023-9",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -418,9 +405,7 @@ const tenders = [
       },
       {
         id: "004913-2023-10",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -431,9 +416,7 @@ const tenders = [
       },
       {
         id: "004913-2023-11",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -444,9 +427,7 @@ const tenders = [
       },
       {
         id: "004913-2023-12",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -457,9 +438,7 @@ const tenders = [
       },
       {
         id: "004913-2023-13",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -470,9 +449,7 @@ const tenders = [
       },
       {
         id: "004913-2023-14",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -483,9 +460,7 @@ const tenders = [
       },
       {
         id: "004913-2023-15",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -512,16 +487,15 @@ const tenders = [
         contactPoint: {
           email: "wave2.skillsbootcamps@education.gov.uk",
         },
-        roles: [
-          "buyer",
-        ],
+        roles: ["buyer"],
         details: {
           url: "https://www.gov.uk/government/organisations/department-for-education",
           classifications: [
             {
               scheme: "TED_CA_TYPE",
               id: "MINISTRY",
-              description: "Ministry or any other national or federal authority, including their regional or local subdivisions",
+              description:
+                "Ministry or any other national or federal authority, including their regional or local subdivisions",
             },
             {
               scheme: "COFOG",
@@ -542,9 +516,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -560,9 +532,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -578,9 +548,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "large",
         },
@@ -596,9 +564,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -614,9 +580,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -632,9 +596,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -650,9 +612,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -668,9 +628,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -679,16 +637,15 @@ const tenders = [
         name: "Commercial Driver Training Ltd T/A National Driving Centre",
         id: "GB-FTS-75603",
         identifier: {
-          legalName: "Commercial Driver Training Ltd T/A National Driving Centre",
+          legalName:
+            "Commercial Driver Training Ltd T/A National Driving Centre",
         },
         address: {
           locality: "Surrey",
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -697,16 +654,15 @@ const tenders = [
         name: "Pertemps Recruitment Partnership t/a PDT Fleet Training Solutions",
         id: "GB-FTS-75604",
         identifier: {
-          legalName: "Pertemps Recruitment Partnership t/a PDT Fleet Training Solutions",
+          legalName:
+            "Pertemps Recruitment Partnership t/a PDT Fleet Training Solutions",
         },
         address: {
           locality: "Meriden",
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "large",
         },
@@ -722,9 +678,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -740,9 +694,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -758,9 +710,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -776,9 +726,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -794,9 +742,7 @@ const tenders = [
           region: "UK",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -812,9 +758,7 @@ const tenders = [
           locality: "London",
           countryName: "United Kingdom",
         },
-        roles: [
-          "reviewBody",
-        ],
+        roles: ["reviewBody"],
       },
     ],
     buyer: {
@@ -1073,10 +1017,7 @@ const tenders = [
     ocid: "ocds-h6vhtk-038a40",
     id: "004877-2023",
     date: "2023-02-17T12:12:27Z",
-    tag: [
-      "award",
-      "contract",
-    ],
+    tag: ["award", "contract"],
     initiationType: "tender",
     tender: {
       id: "ocds-h6vhtk-038a40",
@@ -1092,11 +1033,13 @@ const tenders = [
         description: "Training services",
       },
       mainProcurementCategory: "services",
-      description: "BFPO Provision of Aviation (Cargo) Security Training for Regulated Agents 2023-2027",
+      description:
+        "BFPO Provision of Aviation (Cargo) Security Training for Regulated Agents 2023-2027",
       lots: [
         {
           id: "1",
-          description: "BFPO Provision of Aviation (Cargo) Security Training for Regulated Agents 2023-2027",
+          description:
+            "BFPO Provision of Aviation (Cargo) Security Training for Regulated Agents 2023-2027",
           awardCriteria: {
             criteria: [
               {
@@ -1128,10 +1071,9 @@ const tenders = [
     awards: [
       {
         id: "004877-2023-704734451-1",
-        relatedLots: [
-          "1",
-        ],
-        title: "BFPO - Provision of Training Aviation (Cargo) Security for Regulated Agents 2023 - 2027",
+        relatedLots: ["1"],
+        title:
+          "BFPO - Provision of Training Aviation (Cargo) Security for Regulated Agents 2023 - 2027",
         status: "active",
         suppliers: [
           {
@@ -1157,16 +1099,15 @@ const tenders = [
         contactPoint: {
           email: "mike.mcgovern521@mod.gov.uk",
         },
-        roles: [
-          "buyer",
-        ],
+        roles: ["buyer"],
         details: {
           url: "https://www.gov.uk/bfpo",
           classifications: [
             {
               scheme: "TED_CA_TYPE",
               id: "MINISTRY",
-              description: "Ministry or any other national or federal authority, including their regional or local subdivisions",
+              description:
+                "Ministry or any other national or federal authority, including their regional or local subdivisions",
             },
             {
               scheme: "COFOG",
@@ -1189,9 +1130,7 @@ const tenders = [
           postalCode: "KT13 8NA",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           scale: "sme",
         },
@@ -1206,9 +1145,7 @@ const tenders = [
           locality: "London",
           countryName: "United Kingdom",
         },
-        roles: [
-          "reviewBody",
-        ],
+        roles: ["reviewBody"],
       },
     ],
     buyer: {
@@ -1219,7 +1156,8 @@ const tenders = [
       {
         id: "004877-2023-704734451-1",
         awardID: "004877-2023-704734451-1",
-        title: "BFPO - Provision of Training Aviation (Cargo) Security for Regulated Agents 2023 - 2027",
+        title:
+          "BFPO - Provision of Training Aviation (Cargo) Security for Regulated Agents 2023 - 2027",
         status: "active",
         value: {
           amount: 77730,
@@ -1244,10 +1182,7 @@ const tenders = [
     ocid: "ocds-h6vhtk-03a66f",
     id: "004865-2023",
     date: "2023-02-17T11:24:43Z",
-    tag: [
-      "award",
-      "contract",
-    ],
+    tag: ["award", "contract"],
     initiationType: "tender",
     tender: {
       id: "ocds-h6vhtk-03a66f",
@@ -1263,11 +1198,13 @@ const tenders = [
         description: "Staff training services",
       },
       mainProcurementCategory: "services",
-      description: "For the delivery of the Elizabeth Garrett Anderson Programme - L7 Senior Leader Apprenticeship Pilot",
+      description:
+        "For the delivery of the Elizabeth Garrett Anderson Programme - L7 Senior Leader Apprenticeship Pilot",
       lots: [
         {
           id: "1",
-          description: "To support the delivery of a pilot of the Anderson Programme as a L7 Senior Leader Apprenticeship (‘Programme’) leading to the award of a Postgraduate Diploma.",
+          description:
+            "To support the delivery of a pilot of the Anderson Programme as a L7 Senior Leader Apprenticeship (‘Programme’) leading to the award of a Postgraduate Diploma.",
           awardCriteria: {
             criteria: [
               {
@@ -1291,25 +1228,24 @@ const tenders = [
         },
       ],
       procurementMethod: "limited",
-      procurementMethodDetails: "Award procedure without prior publication of a call for competition",
-      coveredBy: [
-        "GPA",
-      ],
+      procurementMethodDetails:
+        "Award procedure without prior publication of a call for competition",
+      coveredBy: ["GPA"],
       procurementMethodRationaleClassifications: [
         {
           scheme: "TED_PT_AWARD_CONTRACT_WITHOUT_CALL",
           id: "D_OUTSIDE_SCOPE",
-          description: "The procurement falls outside the scope of application of the directive",
+          description:
+            "The procurement falls outside the scope of application of the directive",
         },
       ],
-      procurementMethodRationale: "One economic operator as competition is absent for technical reasons",
+      procurementMethodRationale:
+        "One economic operator as competition is absent for technical reasons",
     },
     awards: [
       {
         id: "004865-2023-1",
-        relatedLots: [
-          "1",
-        ],
+        relatedLots: ["1"],
         status: "active",
         suppliers: [
           {
@@ -1337,9 +1273,7 @@ const tenders = [
           name: "Jonathan Richards",
           email: "jonathan.powell-richards@nhs.net",
         },
-        roles: [
-          "buyer",
-        ],
+        roles: ["buyer"],
         details: {
           url: "https://www.england.nhs.uk/",
           buyerProfile: "https://www.england.nhs.uk/",
@@ -1347,7 +1281,8 @@ const tenders = [
             {
               scheme: "TED_CA_TYPE",
               id: "MINISTRY",
-              description: "Ministry or any other national or federal authority, including their regional or local subdivisions",
+              description:
+                "Ministry or any other national or federal authority, including their regional or local subdivisions",
             },
             {
               scheme: "COFOG",
@@ -1371,9 +1306,7 @@ const tenders = [
           postalCode: "B15 2TT",
           countryName: "United Kingdom",
         },
-        roles: [
-          "supplier",
-        ],
+        roles: ["supplier"],
         details: {
           url: "https://www.birmingham.ac.uk/index.aspx",
           scale: "large",
@@ -1394,9 +1327,7 @@ const tenders = [
         contactPoint: {
           email: "generaloffice@administrativecourtoffice.justice.gov.uk",
         },
-        roles: [
-          "reviewBody",
-        ],
+        roles: ["reviewBody"],
         details: {
           url: "https://www.gov.uk/courts-tribunals",
         },
@@ -1440,26 +1371,29 @@ const tenders = [
     },
     language: "en",
   },
-]
+];
 
 // eslint-disable-next-line arrow-body-style
-const getTenders = async () => {
-  return tenders;
-  
+async function getTenders(url) {
+  // return tenders;
 
-  // This all works but, for now, we're skipping the API calls for development purposes. 
-
-  /* let response;
-   try {
-    response = await fetch(
-      `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(-12)}&updatedTo=${getDateTimeString()}`,
-    );
+  let urlToUse = url;
+  if (!urlToUse) {
+    urlToUse = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(-0.22)}&updatedTo=${getDateTimeString()}`
+  }
+  let response;
+  try {
+    response = await fetch(urlToUse);
     const data = await response.json();
-    const educationTenders = sortEducationTenders(data);
+    if (data.links) {
+      this.crawlerQueue.push(data.links.next);
+    }
+    const educationTenders = this.sortEducationTenders(data);
+    console.log(`${getDateTimeString()} - got ${educationTenders.length} tenders.`);
     return educationTenders;
   } catch (error) {
-    console.error("Error getting tenders: ", error.message);
-  } */
+    console.error(`${getDateTimeString()} - Error getting tenders: `, error.message);
+  }
 };
 
 export default getTenders;

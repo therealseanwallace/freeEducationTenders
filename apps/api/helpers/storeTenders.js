@@ -1,4 +1,4 @@
-import TenderModel from '../mongoose/schemasModels.js';
+import { TenderModel } from '../mongoose/schemasModels.js';
 
 const tenderFactory = (tender) => {
   console.log('tenderFactory! - tender', tender);
@@ -35,8 +35,22 @@ const tenderFactory = (tender) => {
   }
 }
 
+const checkIfTenderExists = async (tender) => {
+  const tenderExists = await TenderModel.find({ id: tender.id }).lean();
+  console.log('checkIfTenderExists! - tenderExists', tenderExists);
+  if (tenderExists.length > 0) {
+    return true;
+  }
+  return false;
+}
+
 const storeTender = async (tender) => {
   console.log('storeTender! - tender', tender);
+  const tenderExists = await checkIfTenderExists(tender);
+  if (tenderExists) {
+    console.log('storeTender! - tender already exists, not storing');
+    return false;
+  }
   const newTender = new TenderModel(tender);
   const savedTender = await newTender.save();
   console.log('storeTender! - savedTender', savedTender);

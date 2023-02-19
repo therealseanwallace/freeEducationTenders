@@ -1,0 +1,91 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-unused-vars */
+import pkgSchedule from "node-schedule";
+
+import getTenders from "../helpers/getTenders.js";
+import storeTenders from "../helpers/storeTenders.js";
+import sortEducationTenders from "../helpers/sortEducationTenders.js";
+import getDateTimeString from "../helpers/getDateTimeString.js";
+import markRun from "../helpers/markRun.js";
+
+import { AppStatusModel } from "../mongoose/schemasModels.js";
+
+const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
+
+const rule = new RecurrenceRule();
+rule.hour = new Range(0, 23, 1);
+rule.minute = new Range(0, 59, 5);
+
+class APICrawlerService {
+  constructor() {
+    console.log(`${getDateTimeString()} - Instantiating APICrawlerService...`);
+    this.getTenders = getTenders.bind(this);
+    this.storeTenders = storeTenders.bind(this);
+    this.sortEducationTenders = sortEducationTenders.bind(this);
+    this.crawlerQueue = [];
+    this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
+    this.appStatus = [];
+    this.markRun = markRun.bind(this);
+  }
+
+  async runJobs() {
+    console.log(`${getDateTimeString()} - Running jobs...`);
+
+    // Check to see if this is the first run
+    this.appStatus = await AppStatusModel.find({ name: "apiCrawler" }).lean();
+    console.log("this.appStatus", this.appStatus);
+    if (this.appStatus.length === 0) {
+      this.appStatus = [{ firstRun: true }];
+    }
+    console.log("this.appStatus[0].firstRun", this.appStatus[0].firstRun);
+
+    // If this isn't the first run...
+    if (this.appStatus[0].firstRun !== true) {
+      let tenders;
+      // If there are pages in the queue, get the tenders from the first page
+      if (this.crawlerQueue.length > 0) {
+        tenders = await this.getTenders(this.crawlerQueue.shift());
+      } else {
+        // Else, get the tenders from the last x hours
+        tenders = await this.getTenders();
+      }
+      // Store the retrieved tenders
+      const storedTenders = await this.storeTenders(tenders);
+      console.log(
+        `${getDateTimeString()} - ${
+          tenders.length
+        } tenders stored! Tenders are:`,
+        storedTenders
+      );
+      // Mark the app as having run
+      if (this.appStatus[0].firstRun === true) {
+        this.appStatus[0].firstRun = false;
+        this.markRun();
+      }
+    } else {
+      let tenders;
+      // If this is the first run, get the tenders from the last 30 days
+      // This will populate the queue with pages to crawl
+      tenders = await this.getTenders(
+        `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(
+          -720
+        )}&updatedTo=${getDateTimeString()}`
+      );
+      // Store the retrieved tenders
+      const storedTenders = await this.storeTenders(tenders);
+      console.log(
+        `${getDateTimeString()} - ${
+          tenders.length
+        } tenders stored! Tenders are:`,
+        storedTenders
+      );
+      // Mark the app as having run
+      if (this.appStatus[0].firstRun === true) {
+        this.appStatus[0].firstRun = false;
+        this.markRun();
+      }
+    }
+  }
+}
+
+export default APICrawlerService;
