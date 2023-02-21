@@ -43,6 +43,13 @@ const AppStatus = new Schema({
 
 const AppStatusModel = mongoose.model("AppStatus", AppStatus);
 
+const CrawlerQueue = new Schema({
+  URL: String,
+  ID: String,
+});
+
+const CrawlerQueueModel = mongoose.model("CrawlerQueue", CrawlerQueue);
+
 export {
   AppStatusModel,
   AdultModel,
@@ -56,4 +63,5 @@ export {
   DefenseModel,
   HealthModel,
   OtherModel,
+  CrawlerQueueModel,
 };

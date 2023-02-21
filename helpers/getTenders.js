@@ -1,5 +1,6 @@
 import getDateTimeString from "./getDateTimeString.js";
 import sortEducationTenders from "./sortEducationTenders.js";
+import { CrawlerQueueModel } from "../mongoose/schemasModels.js";
 
 const tenders = [
   {
@@ -1373,7 +1374,6 @@ const tenders = [
   },
 ];
 
-// eslint-disable-next-line arrow-body-style
 async function getTenders(url) {
   // return tenders;
 
@@ -1386,7 +1386,12 @@ async function getTenders(url) {
     response = await fetch(urlToUse);
     const data = await response.json();
     if (data.links) {
-      this.crawlerQueue.push(data.links.next);
+      const queue = await CrawlerQueueModel.findOneAndUpdate({ ID: "CrawlerQueue" }, { $set: { URL: data.links.next } }).setOptions({ returnDocument: 'after' });
+      console.log('Updated crawler queue. queue = ', queue);
+      console.log('Updated crawler queue. Next URL: ', queue.URL);
+    } else {
+      console.log('No links in response. Clearing crawler queue.');
+      await CrawlerQueueModel.findOneAndUpdate({ ID: "CrawlerQueue" }, { $set: { URL: null } }).setOptions({ returnDocument: 'after' });
     }
     const educationTenders = this.sortEducationTenders(data);
     console.log(`${getDateTimeString()} - got ${educationTenders.length} tenders.`);

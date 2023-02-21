@@ -11,11 +11,19 @@ import getDateTimeString from "./helpers/getDateTimeString.js";
 import getTenders from "./helpers/getTenders.js";
 import storeTenders from "./helpers/storeTenders.js";
 import APICrawlerService from "./services/APICrawlerService.js";
+import tenderRouter from "./routes/tenderRouter.js";
 
 
 dotenv.config();
 
-console.log('API Crawler Service:', APICrawlerService);
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+const PORT = process.env.PORT || 3001;
+
+app.use("/api/tenders", tenderRouter);
 
 const APICrawler = new APICrawlerService();
 
@@ -29,15 +37,17 @@ console.log('MONGO_URL', MONGO_URL);
 
 async function connect() {
   try {
-    await mongoose.connect(MONGO_URL);
+    const connection = await mongoose.connect(MONGO_URL);
   } catch (error) {
     console.log('Error connecting to MongoDB: ', error.message);
   } finally {
-    console.log('Connected to MongoDB');
+    if (mongoose.connection.readyState === 1) {
+      console.log('Connected to MongoDB');
+    }
   }
 }
 
 connect();
 
 
-APICrawler.runJobs();
+// APICrawler.runJobs();
