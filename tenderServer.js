@@ -50,4 +50,4 @@ async function connect() {
 connect();
 
 
-// APICrawler.runJobs();
+APICrawler.runJobs();
