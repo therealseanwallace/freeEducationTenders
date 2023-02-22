@@ -12,7 +12,23 @@ import {
   OtherModel,
 } from "../mongoose/schemasModels.js";
 
-import getModel from "./getModel.js";
+import getModels from "./getModels.js";
+
+const extractAdditionalIDs = (tender) => {
+  const { items } = tender.tender;
+  const additionalIDs = [];
+  if (items) {
+    for (let i = 0; i < items.length; i += 1) {
+      if (items[i].additionalClassifications) {
+        const { additionalClassifications } = items[i];
+        for (let j = 0; j < additionalClassifications.length; j += 1) {
+          additionalIDs.push(additionalClassifications[j].id);
+        }
+      }
+    }
+  }
+  return additionalIDs;
+}
 
 const tenderFactory = (tender) => {
   console.log("tenderFactory! - tender", tender);
@@ -20,7 +36,7 @@ const tenderFactory = (tender) => {
   const tenderId = tender.tender.id;
   const tenderStatus = tender.tender.status;
   const { title, description, lots, items } = tender.tender;
-  const classificationID = tender.tender.classification.id;
+  const classificationIDs = [ tender.tender.classification.id, ...extractAdditionalIDs(tender) ];
   const classificationDescription = tender.tender.classification.description;
   let communication = false;
   const timestamp = Date.now();
@@ -37,7 +53,7 @@ const tenderFactory = (tender) => {
       tenderId,
       title,
       tenderStatus,
-      classificationID,
+      classificationIDs,
       classificationDescription,
       description,
       lots,
@@ -51,8 +67,8 @@ const tenderFactory = (tender) => {
 
 
 
-const checkIfTenderExists = async (tender, model) => {
-  const tenderExists = await model.find({ id: tender.id }).lean();
+const checkIfTenderExists = async (tenderID, model) => {
+  const tenderExists = await model.find({ id: tenderID }).lean();
   // const tenderExists = await TenderModel.find({ id: tender.id }).lean();
   console.log("checkIfTenderExists! - tenderExists: ", tenderExists);
   if (tenderExists.length > 0) {
@@ -61,14 +77,7 @@ const checkIfTenderExists = async (tender, model) => {
   return false;
 };
 
-const storeTender = async (tender) => {
-  console.log("storeTender! - tender", tender);
-  const model = getModel(tender);
-  const tenderExists = await checkIfTenderExists(tender, model);
-  if (tenderExists) {
-    console.log("storeTender! - tender already exists, not storing");
-    return false;
-  }
+const returnNewTenderModel = (model, tender) => {
   let newTender;
   switch (model) {
     case AdultModel:
@@ -108,9 +117,23 @@ const storeTender = async (tender) => {
       newTender = new OtherModel(tender);
       break;
   }
-  const savedTender = await newTender.save();
-  console.log("storeTender! - savedTender", savedTender);
-  return savedTender;
+  return newTender;
+}
+
+const storeTender = async (tender) => {
+  console.log("storeTender! - tender", tender);
+  const models = getModels(tender.tenderDetails.classificationIDs);
+  const tenderExists = await checkIfTenderExists(tender.id, models[0]);
+  if (tenderExists) {
+    console.log("storeTender! - tender already exists, not storing");
+    return false;
+  }
+  const results = [];
+  for (let i = 0; i < models.length; i += 1) {
+    const newTender = returnNewTenderModel(models[i], tender);
+    results.push(newTender.save());
+  }
+  return Promise.all(results);
 };
 
 const storeTenders = async (tenders) => {

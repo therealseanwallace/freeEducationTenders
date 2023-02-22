@@ -13,7 +13,7 @@ const TenderSchema = new Schema({
     title: String,
     tenderId: String,
     tenderStatus: String,
-    classificationID: String,
+    classificationIDs: Array,
     classificationDescription: String,
     description: String,
     lots: Array,

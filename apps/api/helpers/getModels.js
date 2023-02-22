@@ -40,13 +40,17 @@ const IDsAndModels = {
   80562000: HealthModel,
 };
 
-const getModel = (tender) => {
-  const { classificationID } = tender.tenderDetails;
-  const model = IDsAndModels[classificationID];
-  if (!model) {
-    return OtherModel;
+const getModels = (IDs) => {
+  const result = [];
+  for (let i = 0; i < IDs.length; i += 1) {
+    const model = IDsAndModels[IDs[i]];
+    if (model) {
+      result.push(model);
+    } else {
+      result.push(OtherModel);
+    }
   }
-  return model;
+  return result;
 };
 
-export default getModel;
+export default getModels;
