@@ -1,18 +1,6 @@
 import {
-  AdultModel,
-  TrainingModel,
-  PrimaryPreModel,
-  SecondaryModel,
-  HigherModel,
-  YouthModel,
-  SpecialModel,
-  ELearningModel,
-  DefenseModel,
-  HealthModel,
-  OtherModel,
+  TenderModel
 } from "../mongoose/schemasModels.js";
-
-import getModels from "./getModels.js";
 
 const extractAdditionalIDs = (tender) => {
   const { items } = tender.tender;
@@ -65,8 +53,6 @@ const tenderFactory = (tender) => {
   };
 };
 
-
-
 const checkIfTenderExists = async (tenderID, model) => {
   const tenderExists = await model.find({ id: tenderID }).lean();
   // const tenderExists = await TenderModel.find({ id: tender.id }).lean();
@@ -77,63 +63,16 @@ const checkIfTenderExists = async (tenderID, model) => {
   return false;
 };
 
-const returnNewTenderModel = (model, tender) => {
-  let newTender;
-  switch (model) {
-    case AdultModel:
-      newTender = new AdultModel(tender);
-      break;
-    case TrainingModel:
-      newTender = new TrainingModel(tender);
-      break;
-    case PrimaryPreModel:
-      newTender = new PrimaryPreModel(tender);
-      break;
-    case SecondaryModel:
-      newTender = new SecondaryModel(tender);
-      break;
-    case HigherModel:
-      newTender = new HigherModel(tender);
-      break;
-    case YouthModel:
-      newTender = new YouthModel(tender);
-      break;
-    case SpecialModel:
-      newTender = new SpecialModel(tender);
-      break;
-    case ELearningModel:
-      newTender = new ELearningModel(tender);
-      break;
-    case DefenseModel:
-      newTender = new DefenseModel(tender);
-      break;
-    case HealthModel:
-      newTender = new HealthModel(tender);
-      break;
-    case OtherModel:
-      newTender = new OtherModel(tender);
-      break;
-    default:
-      newTender = new OtherModel(tender);
-      break;
-  }
-  return newTender;
-}
-
 const storeTender = async (tender) => {
   console.log("storeTender! - tender", tender);
-  const models = getModels(tender.tenderDetails.classificationIDs);
-  const tenderExists = await checkIfTenderExists(tender.id, models[0]);
+  const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists) {
     console.log("storeTender! - tender already exists, not storing");
     return false;
   }
-  const results = [];
-  for (let i = 0; i < models.length; i += 1) {
-    const newTender = returnNewTenderModel(models[i], tender);
-    results.push(newTender.save());
-  }
-  return Promise.all(results);
+  let model =  new TenderModel(tender);
+  model = await model.save();
+  return model
 };
 
 const storeTenders = async (tenders) => {
