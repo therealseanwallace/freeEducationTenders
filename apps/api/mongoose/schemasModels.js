@@ -24,18 +24,7 @@ const TenderSchema = new Schema({
   },
 });
 
-// const TenderModel = mongoose.model("Tenders", TenderSchema);
-const AdultModel = mongoose.model("Adult", TenderSchema);
-const TrainingModel = mongoose.model("Training", TenderSchema);
-const PrimaryPreModel = mongoose.model("PrimaryPre", TenderSchema);
-const SecondaryModel = mongoose.model("Secondary", TenderSchema);
-const HigherModel = mongoose.model("Higher", TenderSchema);
-const YouthModel = mongoose.model("Youth", TenderSchema);
-const SpecialModel = mongoose.model("Special", TenderSchema);
-const ELearningModel = mongoose.model("ELearning", TenderSchema);
-const DefenseModel = mongoose.model("Defense", TenderSchema);
-const HealthModel = mongoose.model("Health", TenderSchema);
-const OtherModel = mongoose.model("Other", TenderSchema);
+const TenderModel = mongoose.model("Tenders", TenderSchema);
 
 const AppStatus = new Schema({
   firstRun: Boolean,
@@ -52,16 +41,6 @@ const CrawlerQueueModel = mongoose.model("CrawlerQueue", CrawlerQueue);
 
 export {
   AppStatusModel,
-  AdultModel,
-  TrainingModel,
-  PrimaryPreModel,
-  SecondaryModel,
-  HigherModel,
-  YouthModel,
-  SpecialModel,
-  ELearningModel,
-  DefenseModel,
-  HealthModel,
-  OtherModel,
   CrawlerQueueModel,
+  TenderModel,
 };
