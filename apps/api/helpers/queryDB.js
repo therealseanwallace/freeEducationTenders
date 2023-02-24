@@ -1,34 +1,28 @@
-import {
-  AdultModel,
-  TrainingModel,
-  PrimaryPreModel,
-  SecondaryModel,
-  HigherModel,
-  YouthModel,
-  SpecialModel,
-  ELearningModel,
-  DefenseModel,
-  HealthModel,
-  OtherModel,
-} from "../mongoose/schemasModels.js";
+import { TenderModel } from "../mongoose/schemasModels.js";
 
-import getModel from "./getModel.js";
-
-const queryDB = async (category, page) => {
+const queryDB = async (categories, page) => {
   let pageToUse = page;
   if (!pageToUse) {
     pageToUse = 0;
   }
-  const model = getModel(category);
+  const model = TenderModel;
   try {
-    const query = model.find({}).skip(page).limit(10);
-    const tenders = await query.exec();
-    return tenders;
+    const promises = [];
+    for (let i = 0; i < categories.length; i += 1) {
+      const cat = categories[i].toString();
+      const query = model.find({
+         "tenderDetails.classificationIDs": cat
+      }
+      );
+      promises.push(query.exec());
+    }
+    return Promise.all(promises);
   } catch (error) {
     console.log("queryDB! - error: ", error);
     return [];
   }
-  
-}
+};
 
 export default queryDB;
+
+// { "tenderDetails.classificationIDs": { $exists: true } })

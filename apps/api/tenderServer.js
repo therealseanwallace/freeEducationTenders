@@ -23,12 +23,17 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3001;
 
-app.use("/api/tenders", tenderRouter);
+app.use('/api/tenders/', tenderRouter);
+
+app.use("/ping", (req, res) => {
+  res.send("pong");
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 const APICrawler = new APICrawlerService();
-
-
-/* **MONGOOSE** */
 
 // Mongoose //
 
@@ -48,6 +53,3 @@ async function connect() {
 }
 
 connect();
-
-
-APICrawler.runJobs();
