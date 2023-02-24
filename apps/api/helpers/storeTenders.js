@@ -1,6 +1,4 @@
-import {
-  TenderModel
-} from "../mongoose/schemasModels.js";
+import { TenderModel } from "../mongoose/schemasModels.js";
 
 const extractAdditionalIDs = (tender) => {
   const { items } = tender.tender;
@@ -16,63 +14,77 @@ const extractAdditionalIDs = (tender) => {
     }
   }
   return additionalIDs;
-}
+};
 
 const tenderFactory = (tender) => {
   console.log("tenderFactory! - tender", tender);
-  const { ocid, id, date, tag, parties, buyer } = tender;
-  const tenderId = tender.tender.id;
-  const tenderStatus = tender.tender.status;
-  const { title, description, lots, items } = tender.tender;
-  const classificationIDs = [ tender.tender.classification.id, ...extractAdditionalIDs(tender) ];
-  const classificationDescription = tender.tender.classification.description;
-  let communication = false;
+  const { ocid, id, date, tag } = tender;
   const timestamp = Date.now();
-  if (tender.tender.communication) {
-    communication = tender.tender.communication;
-  }
-  return {
+  const classificationIDs = [
+    tender.tender.classification.id,
+    ...extractAdditionalIDs(tender),
+  ];
+  const tenderToReturn = {
     ocid,
     id,
     date,
     tag,
     timestamp,
+    classificationIDs,
     tenderDetails: {
-      tenderId,
-      title,
-      tenderStatus,
-      classificationIDs,
-      classificationDescription,
-      description,
-      lots,
-      items,
-      communication,
-      parties,
-      buyer,
+      title: tender.tender.title,
+      classificationDescription: tender.tender.classification.description,
+      tenderId: tender.tender.id,
+      tenderStatus: tender.tender.status,
+      description: tender.tender.description,
+      lots: tender.tender.lots,
+      items: tender.tender.items,
+      communication: {},
+      startDate: tender.tender.awardPeriod.startDate,
+      endDate: tender.tender.tenderPeriod.endDate,
+      submissionMethod: tender.tender.submissionMethod,
+      submissionMethodDetails: tender.tender.submissionMethodDetails,
+      buyer: {
+        name: tender.buyer.name,
+        contactPoint: tender.parties[0].contactPoint,
+        details: tender.parties[0].details,
+      },
     },
   };
+
+  if (tender.tender.communication) {
+    tenderToReturn.tenderDetails.communication = tender.tender.communication;
+  }
+  return tenderToReturn;
 };
 
 const checkIfTenderExists = async (tenderID, model) => {
   const tenderExists = await model.find({ id: tenderID }).lean();
-  // const tenderExists = await TenderModel.find({ id: tender.id }).lean();
   console.log("checkIfTenderExists! - tenderExists: ", tenderExists);
-  if (tenderExists.length > 0) {
-    return true;
+  if (tenderExists.length === 0) {
+    return false;
   }
-  return false;
+  return tenderExists;
 };
 
 const storeTender = async (tender) => {
   console.log("storeTender! - tender", tender);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
-  if (tenderExists) {
+  if (tenderExists.length !== 0) {
+    if (tenderExists[0].tenderDetails.tenderStatus !== tender.tenderDetails.tenderStatus) {
+      const updatedTender = tenderExists[0];
+      updatedTender.tenderDetails.updates.push(tender.tenderDetails);
+      await TenderModel.deleteOne({ id: tender.id });
+      let updatedTenderModel = new TenderModel(updatedTender);
+      updatedTenderModel = await updatedTenderModel.save();
+      return updatedTenderModel;
+  }
     console.log("storeTender! - tender already exists, not storing");
     return false;
   }
-  let model =  new TenderModel(tender);
+  let model = new TenderModel(tender);
   model = await model.save();
-  return model
+  return model;
 };
 
 const storeTenders = async (tenders) => {
