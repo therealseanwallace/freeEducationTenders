@@ -53,3 +53,5 @@ async function connect() {
 }
 
 connect();
+
+APICrawler.runJobs();
