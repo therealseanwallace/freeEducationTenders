@@ -24,6 +24,15 @@ const tenderFactory = (tender) => {
     tender.tender.classification.id,
     ...extractAdditionalIDs(tender),
   ];
+  let startDate = "";
+  let endDate = "";
+  if (tender.tender.awardPeriod) {
+    startDate = tender.tender.awardPeriod.startDate;
+  }
+  if (tender.tender.tenderPeriod) {
+    endDate = tender.tender.tenderPeriod.endDate;
+  }
+
   const tenderToReturn = {
     ocid,
     id,
@@ -40,10 +49,11 @@ const tenderFactory = (tender) => {
       lots: tender.tender.lots,
       items: tender.tender.items,
       communication: {},
-      startDate: tender.tender.awardPeriod.startDate,
-      endDate: tender.tender.tenderPeriod.endDate,
+      startDate,
+      endDate,
       submissionMethod: tender.tender.submissionMethod,
       submissionMethodDetails: tender.tender.submissionMethodDetails,
+      links: tender.tender.links,
       buyer: {
         name: tender.buyer.name,
         contactPoint: tender.parties[0].contactPoint,
@@ -61,9 +71,6 @@ const tenderFactory = (tender) => {
 const checkIfTenderExists = async (tenderID, model) => {
   const tenderExists = await model.find({ id: tenderID }).lean();
   console.log("checkIfTenderExists! - tenderExists: ", tenderExists);
-  if (tenderExists.length === 0) {
-    return false;
-  }
   return tenderExists;
 };
 
@@ -71,7 +78,7 @@ const storeTender = async (tender) => {
   console.log("storeTender! - tender", tender);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
-    if (tenderExists[0].tenderDetails.tenderStatus !== tender.tenderDetails.tenderStatus) {
+    if (tenderExists && tenderExists[0].tenderDetails.tenderStatus !== tender.tenderDetails.tenderStatus) {
       const updatedTender = tenderExists[0];
       updatedTender.tenderDetails.updates.push(tender.tenderDetails);
       await TenderModel.deleteOne({ id: tender.id });
