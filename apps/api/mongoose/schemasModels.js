@@ -22,6 +22,7 @@ const TenderSchema = new Schema({
     endDate: String,
     SubmissionMethod: Array,
     SubmissionMethodDetails: String,
+    links: Array,
     buyer: {
       name: String,
       contactPoint: Object,

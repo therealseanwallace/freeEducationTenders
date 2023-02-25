@@ -11,7 +11,7 @@ const queryDB = async (categories, page) => {
     for (let i = 0; i < categories.length; i += 1) {
       const cat = categories[i].toString();
       const query = model.find({
-         "tenderDetails.classificationIDs": cat
+         "classificationIDs": cat
       }
       );
       promises.push(query.exec());
