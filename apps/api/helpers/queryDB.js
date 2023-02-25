@@ -5,18 +5,26 @@ const queryDB = async (categories, page) => {
   if (!pageToUse) {
     pageToUse = 0;
   }
-  const model = TenderModel;
+
   try {
-    const promises = [];
-    for (let i = 0; i < categories.length; i += 1) {
-      const cat = categories[i].toString();
-      const query = model.find({
-         "classificationIDs": cat
+    const options = {
+      page: pageToUse,
+      limit: 10,
+      sort: { date: -1 },
+    };
+
+    const query = TenderModel.find({
+      $or: [{ category: { $in: categories } }],
+    });
+
+    const response = TenderModel.paginate(query, options, (err, result) => {
+      if (err) {
+        console.log("queryDB! - error: ", err);
+        return [];
       }
-      );
-      promises.push(query.exec());
-    }
-    return Promise.all(promises);
+      return result;
+    });
+    return response;
   } catch (error) {
     console.log("queryDB! - error: ", error);
     return [];
@@ -24,5 +32,3 @@ const queryDB = async (categories, page) => {
 };
 
 export default queryDB;
-
-// { "tenderDetails.classificationIDs": { $exists: true } })
