@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const { Schema } = mongoose;
 
@@ -31,6 +32,8 @@ const TenderSchema = new Schema({
     updates: Array,
   },
 });
+
+TenderSchema.plugin(mongoosePaginate);
 
 const TenderModel = mongoose.model("Tenders", TenderSchema);
 
