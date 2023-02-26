@@ -20,10 +20,16 @@ const tenderFactory = (tender) => {
   console.log("tenderFactory! - tender", tender);
   const { ocid, id, date, tag } = tender;
   const timestamp = Date.now();
+  const additionalIDs = extractAdditionalIDs(tender);
   const classificationIDs = [
-    tender.tender.classification.id,
-    ...extractAdditionalIDs(tender),
+    tender.tender.classification.id
   ];
+  for (let i = 0; i < additionalIDs.length; i += 1) {
+    if (!classificationIDs.includes(additionalIDs[i])) {
+      classificationIDs.push(additionalIDs[i]);
+    }
+  }
+
   let startDate = "";
   let endDate = "";
   if (tender.tender.awardPeriod) {
