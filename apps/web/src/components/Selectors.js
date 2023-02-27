@@ -1,8 +1,8 @@
 import categories from "../constants/categories.js";
 
-const Selectors = () => {
+const Selectors = (props) => {
   const categoryButtons = categories.map((category) => (
-    <button className={`cat-button-${category}`}>{category}</button>
+    <button className={`cat-button`} data-id={category.id} key={category.id} onClick={props.selectCategories} >{category.name}</button>
   ));
 
   return (
