@@ -13,23 +13,22 @@ const queryDB = async (categories, page) => {
       sort: { date: -1 },
     };
 
-    console.log('queryDB! - categories = ', categories);
+    console.log("queryDB! - categories = ", categories);
 
-    const query = TenderModel.find({
-      $or: [{ category: { $in: categories } }],
-    });
-
-    console.log('query is', query);
-
-    const response = TenderModel.paginate(query, options, (err, result) => {
+    const response = TenderModel.paginate({
+      "classificationIDs": {
+        "$in": categories
+      }
+    }, options, (err, result) => {
       if (err) {
         console.log("queryDB! - error: ", err);
         return [];
       }
-      console.log('queried DB. result = ', result);
+      console.log("queried DB. result = ", result);
       return result;
     });
     return response;
+    
   } catch (error) {
     console.log("queryDB! - error: ", error);
     return [];

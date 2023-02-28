@@ -13,32 +13,57 @@ const App = () => {
     const newCategory = {
       category: getCategory(e.target.dataset.id),
       id: Number(e.target.dataset.id),
-      pageRetrieved: -1,
+      pageRetrieved: 0,
+      totalPages: 0,
     };
     setSelectedCategories([...selectedCategories, newCategory]);
   };
 
   const fetchCategory = async (category) => {
-    console.log('fetchCategory', category);
-    const categoryTenders = await fetch(
-      `http://localhost:3001/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,
-      {
-        method: 'GET',
-        mode: 'cors',
+    console.log("fetchCategory", category);
+    try {
+      const categoryTenders = await fetch(
+        `http://localhost:3001/api/tenders/category/${category.category}/page/${
+          category.pageRetrieved + 1
+        }`,
+        {
+          method: "GET",
+          mode: "cors",
+        }
+      );
+      console.log("categoryTenders", categoryTenders);
+      if (categoryTenders.status === 200) {
+        return [await categoryTenders.json(), categoryTenders.status];
       }
-    );
-    console.log('categoryTenders', categoryTenders);
-    console.log('categoryTenders.json()', await categoryTenders.json());
-  }
+      throw new Error(
+        "Error fetching tenders",
+        categoryTenders.status,
+        categoryTenders.statusText
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const getTenders = () => {
+  const getTenders = async () => {
     let foundUnretrievedCategory = false;
-    const tendersArrayUpdated = tenders.map((tender) => tender);
-    const categoriesUpdated = selectedCategories.map((category) => {
-      if (foundUnretrievedCategory === false && category.pageRetrieved === -1) {
-        fetchCategory(category);
+    const categoriesUpdated = selectedCategories.map((category) => category);
+    for (let i = 0; i < categoriesUpdated.length; i++) {
+      if (
+        foundUnretrievedCategory === false &&
+        categoriesUpdated[i].pageRetrieved === 0
+      ) {
+        const response = await fetchCategory(categoriesUpdated[i]);
+        console.log("response", response);
+        if (response[1] === 200) {
+          foundUnretrievedCategory = true;
+          setTenders([...tenders, ...response[0].docs]);
+          categoriesUpdated[i].pageRetrieved += 1;
+          setSelectedCategories(categoriesUpdated);
+          
+        }
       }
-    });
+    }
   };
 
   useEffect(() => {
@@ -48,6 +73,10 @@ const App = () => {
     }, 2000);
     return () => clearInterval(interval);
   });
+
+  useEffect(() => {
+    console.log('tenders', tenders);
+  }, [tenders]);
 
   return (
     <div className="App">
