@@ -28,7 +28,7 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// const APICrawler = new APICrawlerService();
+const APICrawler = new APICrawlerService();
 
 // Mongoose //
 
@@ -49,4 +49,4 @@ async function connect() {
 
 connect();
 
-// APICrawler.runJobs();
+APICrawler.runJobs();
