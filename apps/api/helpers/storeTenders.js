@@ -16,6 +16,51 @@ const extractAdditionalIDs = (tender) => {
   return additionalIDs;
 };
 
+const constructLot = (lot, item) => {
+  let title = "Unavailable";
+  let description = "Unavailable";
+  let ID = "Unavailable";
+  let duration = "Unavailable";
+  let value = "Unavailable";
+  let deliveryLocations = "Unavailable";
+  if (lot.title) {
+    title = lot.title;
+  }
+  if (lot.description) {
+    description = lot.description;
+  }
+  if (lot.id) {
+    ID = lot.id;
+  }
+  if (lot.contractPeriod) {
+    duration = lot.contractPeriod.durationInDays;
+  }
+  if (lot.value) {
+    value = lot.value.currency + " " + lot.value.amount;
+  }
+  if (item.deliveryAddresses) {
+    deliveryLocations = item.deliveryAddresses.map((address) => address.region);
+  }
+  return {
+    title,
+    description,
+    ID,
+    duration,
+    value,
+    deliveryLocations,
+  }
+
+}
+
+const constructLots = (lots, items) => {
+  const lotsToReturn = [];
+  for (let i = 0; i < lots.length; i += 1) {
+    const lotToReturn = constructLot(lots[i], items[i]);
+    lotsToReturn.push(lotToReturn);
+  }
+  return lotsToReturn;
+}
+
 const tenderFactory = (tender) => {
   console.log("tenderFactory! - tender", tender);
   const { ocid, id, date, tag } = tender;
@@ -52,9 +97,7 @@ const tenderFactory = (tender) => {
       tenderId: tender.tender.id,
       tenderStatus: tender.tender.status,
       description: tender.tender.description,
-      lots: tender.tender.lots,
-      items: tender.tender.items,
-      communication: {},
+      lots: constructLots(tender.tender.lots, tender.tender.items),
       startDate,
       endDate,
       submissionMethod: tender.tender.submissionMethod,

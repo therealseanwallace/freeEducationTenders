@@ -17,8 +17,6 @@ const TenderSchema = new Schema({
     tenderStatus: String,
     description: String,
     lots: Array,
-    items: Array,
-    communication: Object,
     startDate: String,
     endDate: String,
     SubmissionMethod: Array,
@@ -29,7 +27,6 @@ const TenderSchema = new Schema({
       contactPoint: Object,
       details: Object,
     },
-    updates: Array,
   },
 });
 
