@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Selectors from "./components/Selectors";
 import getCategory from "./helpers/getCategory";
+import ResultsDisplay from "./components/ResultsDisplay";
 
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -89,6 +90,7 @@ const App = () => {
       </header>
       <main>
         <Selectors selectCategories={selectCategories} />
+        <ResultsDisplay tenders={tenders} />
       </main>
     </div>
   );
