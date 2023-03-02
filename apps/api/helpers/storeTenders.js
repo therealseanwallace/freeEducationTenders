@@ -1,4 +1,5 @@
 import { TenderModel } from "../mongoose/schemasModels.js";
+import nutsLookup from "./nutsLookup.js";
 
 const extractAdditionalIDs = (tender) => {
   const { items } = tender.tender;
@@ -16,7 +17,7 @@ const extractAdditionalIDs = (tender) => {
   return additionalIDs;
 };
 
-const constructLot = (lot, item) => {
+const constructLot = async (lot, item) => {
   let title = "Unavailable";
   let description = "Unavailable";
   let ID = "Unavailable";
@@ -36,10 +37,16 @@ const constructLot = (lot, item) => {
     duration = lot.contractPeriod.durationInDays;
   }
   if (lot.value) {
-    value = lot.value.currency + " " + lot.value.amount;
+    value = `${lot.value.currency} ${lot.value.amount}`;
   }
   if (item.deliveryAddresses) {
-    deliveryLocations = item.deliveryAddresses.map((address) => address.region);
+    deliveryLocations = await Promise.all(
+      item.deliveryAddresses.map(async (address) => {
+        const lookup = await nutsLookup(address.region);
+        console.log("lookup", lookup);
+        return lookup;
+      })
+    );
   }
   return {
     title,
@@ -48,27 +55,26 @@ const constructLot = (lot, item) => {
     duration,
     value,
     deliveryLocations,
-  }
+  };
+};
 
-}
+const constructLots = async (lots, items) => {
+  const lotsToReturn = await Promise.all(
+    lots.map(async (lot, index) => {
+      const lotToReturn = await constructLot(lot, items[index]);
+      return lotToReturn;
+    })
+  );
 
-const constructLots = (lots, items) => {
-  const lotsToReturn = [];
-  for (let i = 0; i < lots.length; i += 1) {
-    const lotToReturn = constructLot(lots[i], items[i]);
-    lotsToReturn.push(lotToReturn);
-  }
   return lotsToReturn;
-}
+};
 
-const tenderFactory = (tender) => {
+const tenderFactory = async (tender) => {
   console.log("tenderFactory! - tender", tender);
   const { ocid, id, date, tag } = tender;
-  const timestamp = Date.now();
+  const timestamp = new Date().toLocaleDateString("en-GB");
   const additionalIDs = extractAdditionalIDs(tender);
-  const classificationIDs = [
-    tender.tender.classification.id
-  ];
+  const classificationIDs = [tender.tender.classification.id];
   for (let i = 0; i < additionalIDs.length; i += 1) {
     if (!classificationIDs.includes(additionalIDs[i])) {
       classificationIDs.push(additionalIDs[i]);
@@ -97,7 +103,7 @@ const tenderFactory = (tender) => {
       tenderId: tender.tender.id,
       tenderStatus: tender.tender.status,
       description: tender.tender.description,
-      lots: constructLots(tender.tender.lots, tender.tender.items),
+      lots: await constructLots(tender.tender.lots, tender.tender.items),
       startDate,
       endDate,
       submissionMethod: tender.tender.submissionMethod,
@@ -127,14 +133,18 @@ const storeTender = async (tender) => {
   console.log("storeTender! - tender", tender);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
-    if (tenderExists && tenderExists[0].tenderDetails.tenderStatus !== tender.tenderDetails.tenderStatus) {
+    if (
+      tenderExists &&
+      tenderExists[0].tenderDetails.tenderStatus !==
+        tender.tenderDetails.tenderStatus
+    ) {
       const updatedTender = tenderExists[0];
       updatedTender.tenderDetails.updates.push(tender.tenderDetails);
       await TenderModel.deleteOne({ id: tender.id });
       let updatedTenderModel = new TenderModel(updatedTender);
       updatedTenderModel = await updatedTenderModel.save();
       return updatedTenderModel;
-  }
+    }
     console.log("storeTender! - tender already exists, not storing");
     return false;
   }
@@ -145,13 +155,13 @@ const storeTender = async (tender) => {
 
 const storeTenders = async (tenders) => {
   console.log("storeTenders! - tenders", tenders);
-  const storedTenders = [];
-  for (let i = 0; i < tenders.length; i += 1) {
-    const tender = tenderFactory(tenders[i]);
-    // eslint-disable-next-line no-await-in-loop
-    const storedTender = await storeTender(tender);
-    storedTenders.push(storedTender);
-  }
+  const storedTenders = Promise.all(
+    tenders.map(async (tender) => {
+      const tenderToStore = await tenderFactory(tender);
+      const storedTender = await storeTender(tenderToStore);
+      return storedTender;
+    })
+  );
   return storedTenders;
 };
 
