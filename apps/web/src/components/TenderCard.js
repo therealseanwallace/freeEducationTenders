@@ -11,8 +11,8 @@ const TenderCard = ({ tender }) => {
         {tender.tenderDetails.description}
       </p>
       <div className="tender-card-lots-display">
-        {tender.tenderDetails.lots.map((lot) => (
-          <TenderCardLots key={lot.id + tender.date} lot={lot} />
+        {tender.tenderDetails.lots.map((lot, index) => (
+          <TenderCardLots key={index} lot={lot} />
         ))}
       </div>
       <a
