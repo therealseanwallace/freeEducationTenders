@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import logo from "./logo.svg";
-import "./App.css";
 import Selectors from "./components/Selectors";
 import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
@@ -10,12 +9,15 @@ const App = () => {
   const [tenders, setTenders] = useState([]);
 
   const selectCategories = (e) => {
+    console.log("selectCategories! e is", e);
     console.log("e.target.dataset", e.target.dataset);
+    console.log("e.target.classlist", e.target.classList);
     const newCategory = {
       category: getCategory(e.target.dataset.id),
       id: Number(e.target.dataset.id),
       pageRetrieved: 0,
       totalPages: 0,
+      selected: true,
     };
     setSelectedCategories([...selectedCategories, newCategory]);
   };
@@ -46,6 +48,11 @@ const App = () => {
     }
   };
 
+  const clearCategories = () => {
+    setSelectedCategories([]);
+    setTenders([]);
+  };
+
   const getTenders = async () => {
     let foundUnretrievedCategory = false;
     const categoriesUpdated = selectedCategories.map((category) => category);
@@ -61,7 +68,6 @@ const App = () => {
           setTenders([...tenders, ...response[0].docs]);
           categoriesUpdated[i].pageRetrieved += 1;
           setSelectedCategories(categoriesUpdated);
-          
         }
       }
     }
@@ -76,7 +82,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log('tenders', tenders);
+    console.log("tenders", tenders);
   }, [tenders]);
 
   return (
@@ -89,7 +95,11 @@ const App = () => {
         </h2>
       </header>
       <main>
-        <Selectors selectCategories={selectCategories} />
+        <Selectors
+          selectCategories={selectCategories}
+          selectedCategories={selectedCategories.map((category) => category.id)}
+          clearCategories={clearCategories}
+        />
         <ResultsDisplay tenders={tenders} />
       </main>
     </div>
