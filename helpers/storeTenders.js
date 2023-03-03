@@ -34,7 +34,7 @@ const constructLot = async (lot, item) => {
     ID = lot.id;
   }
   if (lot.contractPeriod) {
-    duration = lot.contractPeriod.durationInDays;
+    duration = `${lot.contractPeriod.durationInDays} days`;
   }
   if (lot.value) {
     value = `${lot.value.currency} ${lot.value.amount}`;
@@ -71,7 +71,8 @@ const constructLots = async (lots, items) => {
 
 const tenderFactory = async (tender) => {
   console.log("tenderFactory! - tender", tender);
-  const { ocid, id, date, tag } = tender;
+  const { ocid, id, tag } = tender;
+  const date = new Date(tender.date).toLocaleDateString("en-GB");
   const timestamp = new Date().toLocaleDateString("en-GB");
   const additionalIDs = extractAdditionalIDs(tender);
   const classificationIDs = [tender.tender.classification.id];
@@ -84,10 +85,10 @@ const tenderFactory = async (tender) => {
   let startDate = "";
   let endDate = "";
   if (tender.tender.awardPeriod) {
-    startDate = tender.tender.awardPeriod.startDate;
+    startDate = new Date(tender.tender.awardPeriod.startDate).toLocaleString("en-GB");
   }
   if (tender.tender.tenderPeriod) {
-    endDate = tender.tender.tenderPeriod.endDate;
+    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString("en-GB");
   }
 
   const tenderToReturn = {
