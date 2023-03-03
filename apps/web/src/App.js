@@ -88,8 +88,8 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        <h1>Free Education Tenders</h1>
-        <h2>
+        <h1 className="header-title">Free Education Tenders</h1>
+        <h2 className="header-text">
           Doggo ipsum mlem floofs borking doggo pats dat tungg tho heckin good
           boys shoober shibe
         </h2>

@@ -1,4 +1,5 @@
 import TenderCardLots from "./TenderCardLots";
+import Collapsible from "react-collapsible";
 
 const TenderCard = ({ tender }) => {
   console.log("tender card! tender = ", tender);
@@ -6,10 +7,14 @@ const TenderCard = ({ tender }) => {
     <div className="tender-card">
       <h2 className="tender-card-title">{tender.tenderDetails.title}</h2>
       <h2 className="tender-card-buyer">{tender.tenderDetails.buyer.name}</h2>
-      <h2 className="tender-card-date">{tender.date}</h2>
-      <p className="tender-card-description">
+      <h2 className="tender-card-date">Released: {tender.date}</h2>
+      <p className="card-instructions">Click description/lots to expand</p>
+      <Collapsible
+        trigger={"Description"}
+        className="description-collapsible"
+      >
         {tender.tenderDetails.description}
-      </p>
+      </Collapsible>
       <div className="tender-card-lots-display">
         {tender.tenderDetails.lots.map((lot, index) => (
           <TenderCardLots key={index} lot={lot} />
