@@ -44,7 +44,7 @@ h6 {
 
 /* IMPORT FONTS */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
 /* STYLES */
 
@@ -82,6 +82,7 @@ header {
 .selectors h3 {
   font-size: 1.4rem;
   width: 100%;
+  font-weight: 600;
 }
 
 button {
@@ -107,6 +108,7 @@ button:hover, .cat-button-selected {
 
 .clear-cats {
   width: 100%;
+  height: 50px;
   background-color: #ffdf81;
   color: black;
   margin-top: 12px;
@@ -118,13 +120,14 @@ button:hover, .cat-button-selected {
 
 .tender-card {
   background-color: #869B7B5C;
-  padding: 4px;
+  padding: 14px;
   margin-bottom: 24px;
 }
 
 .tender-card-title {
   font-size: 1.5rem;
   margin: 4px 0 0 4px;
+  font-weight: 600;
 }
 
 .tender-card-buyer {
@@ -143,6 +146,7 @@ button:hover, .cat-button-selected {
 
 .tender-card-button {
   width: 50%;
+  min-height: 50px;
 }
 
 hr {
@@ -151,6 +155,7 @@ hr {
 
 .tender-card-button > button {
   width: 100%;
+  height: 100%;
   padding: 3px 12px;
   border-radius: 4px;
   border: 0;
@@ -178,14 +183,18 @@ hr {
   overflow: scroll;
 }
 
+.Collapsible {
+  width: 90%;
+}
+
 .Collapsible__trigger {
   cursor: pointer;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 4px;
   background: #73a8a444;
   display: block;
-  width: 90%;
+  width: 100%;
   border-radius: 4px 4px 0 0;
   padding: 4px 12px;
 }
@@ -193,6 +202,7 @@ hr {
 .tags {
   display: flex;
   gap: 2px;
+  flex-wrap: wrap;
 }
 
 .tag {
@@ -204,6 +214,7 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 28px;
 }
 
 .tags-title {
@@ -270,3 +281,18 @@ hr {
   font-weight: normal;
 }
 
+/* MEDIA QUERIES */
+
+@media (min-width: 960px) {
+  .tender-card {
+    max-width: 450px;
+    min-height: 500px;
+  }
+
+  .results-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
