@@ -8,8 +8,9 @@ const TenderCardLots = ({ lot }) => {
     return (
       <div key={index} className="lot-locations">
         <h3 className="lot-location">Locations</h3>
-        <p>Code: {location.Code}</p>
-        <p>Name: {location.Region}</p>
+        <p className="location-index">Location {index + 1}</p>
+        <p className="location-code">Code: {location.Code}</p>
+        <p className="location-region">Region: {location.Region}</p>
         
       </div>
     );
