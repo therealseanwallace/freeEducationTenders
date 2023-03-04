@@ -64,6 +64,23 @@ const App = () => {
 
   let updatesRequested = 0;
 
+  const checkTendersToAdd = (docs) => {
+    const tendersToReturn = [];
+    for (let i = 0; i < docs.length; i++) {
+      let foundTender = false;
+      for (let j = 0; j < tenders.length; j++) {
+        if (docs[i]._id === tenders[j]._id) {
+          foundTender = true;
+        }
+      }
+      if (foundTender === false) {
+        tendersToReturn.push(docs[i]);
+      }
+      
+    }
+    return tendersToReturn;
+  }
+
   const getTenders = async () => {
     let foundUnretrievedCategory = false;
     const categoriesUpdated = selectedCategories.map((category) => category);
@@ -76,9 +93,12 @@ const App = () => {
         const response = await fetchCategory(categoriesUpdated[i]);
         console.log("response", response);
         if (response[1] === 200) {
+          console.log('response is valid');
           foundUnretrievedCategory = true;
           categoriesUpdated[i].totalPages = response[0].totalPages;
-          setTenders([...tenders, ...response[0].docs]);
+          const tendersToAdd = checkTendersToAdd(response[0].docs);
+          console.log('tendersToAdd', tendersToAdd);
+          setTenders([...tenders, ...tendersToAdd]);
           categoriesUpdated[i].pageRetrieved += 1;
           setSelectedCategories(categoriesUpdated);
         }
