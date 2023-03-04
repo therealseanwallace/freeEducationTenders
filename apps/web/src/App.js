@@ -9,14 +9,23 @@ const App = () => {
   const [tenders, setTenders] = useState([]);
 
   const selectCategories = (e) => {
+    for (let i = 0; i < selectedCategories.length; i++) {
+      if (selectedCategories[i].id === Number(e.target.dataset.id)) {
+        return;
+      }
+      if (selectedCategories[i].id === 0) {
+        return;
+      }
+    }
     console.log("selectCategories! e is", e);
     console.log("e.target.dataset", e.target.dataset);
     console.log("e.target.classlist", e.target.classList);
+    console.log('selectedCategories', selectedCategories);
     const newCategory = {
       category: getCategory(e.target.dataset.id),
       id: Number(e.target.dataset.id),
       pageRetrieved: 0,
-      totalPages: 999999,
+      totalPages: 999999999,
       selected: true,
     };
     setSelectedCategories([...selectedCategories, newCategory]);
@@ -59,7 +68,6 @@ const App = () => {
     let foundUnretrievedCategory = false;
     const categoriesUpdated = selectedCategories.map((category) => category);
     for (let i = 0; i < categoriesUpdated.length; i++) {
-      console.log("pageRetrieved", categoriesUpdated[i].pageRetrieved, "totalPages", categoriesUpdated[i].totalPages)
       if (
         foundUnretrievedCategory === false &&
         categoriesUpdated[i].pageRetrieved < updatesRequested + 1 &&
