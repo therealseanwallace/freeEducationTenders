@@ -1,11 +1,12 @@
 import TenderCard from "./TenderCard";
 
-const ResultsDisplay = ({ tenders }) => {
+const ResultsDisplay = (props) => {
   return (
     <div className="results-display">
-      {tenders.map((tender) => (
+      {props.tenders.map((tender) => (
         <TenderCard key={tender._id} tender={tender} />
       ))}
+      <button className="getMore" onClick={props.getMore}>Load more</button>
     </div>
   );
 }

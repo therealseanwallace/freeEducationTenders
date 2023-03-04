@@ -53,18 +53,22 @@ const App = () => {
     setTenders([]);
   };
 
+  let updatesRequested = 0;
+
   const getTenders = async () => {
     let foundUnretrievedCategory = false;
     const categoriesUpdated = selectedCategories.map((category) => category);
     for (let i = 0; i < categoriesUpdated.length; i++) {
       if (
         foundUnretrievedCategory === false &&
-        categoriesUpdated[i].pageRetrieved === 0
+        categoriesUpdated[i].pageRetrieved < updatesRequested + 1 &&
+        categoriesUpdated[i].pageRetrieved < categoriesUpdated[i].totalPages
       ) {
         const response = await fetchCategory(categoriesUpdated[i]);
         console.log("response", response);
         if (response[1] === 200) {
           foundUnretrievedCategory = true;
+          categoriesUpdated[i].totalPages = response[0].totalPages;
           setTenders([...tenders, ...response[0].docs]);
           categoriesUpdated[i].pageRetrieved += 1;
           setSelectedCategories(categoriesUpdated);
@@ -73,11 +77,16 @@ const App = () => {
     }
   };
 
+  const getMore = () => {
+    console.log("getMore");
+    updatesRequested += 1;
+  };
+
   useEffect(() => {
     console.log("selectedCategories", selectedCategories);
     const interval = setInterval(() => {
       getTenders();
-    }, 2000);
+    }, 1000);
     return () => clearInterval(interval);
   });
 
@@ -100,7 +109,7 @@ const App = () => {
           selectedCategories={selectedCategories.map((category) => category.id)}
           clearCategories={clearCategories}
         />
-        <ResultsDisplay tenders={tenders} />
+        <ResultsDisplay tenders={tenders} getMore={getMore}/>
       </main>
     </div>
   );
