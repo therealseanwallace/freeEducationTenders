@@ -6,13 +6,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import pkgSchedule from "node-schedule";
-import getDateTimeString from "./helpers/getDateTimeString.js";
-import getTenders from "./helpers/getTenders.js";
-import storeTenders from "./helpers/storeTenders.js";
 import APICrawlerService from "./services/APICrawlerService.js";
 import tenderRouter from "./routes/tenderRouter.js";
-
 
 dotenv.config();
 
@@ -47,11 +42,11 @@ async function connect() {
     console.log('Error connecting to MongoDB: ', error.message);
   } finally {
     if (mongoose.connection.readyState === 1) {
-      console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB');
     }
   }
 }
 
 connect();
 
-// APICrawler.runJobs();
+APICrawler.runJobs();

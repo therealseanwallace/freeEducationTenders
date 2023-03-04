@@ -17,7 +17,7 @@ const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
-rule.minute = new Range(0, 59, 30);
+rule.minute = new Range(0, 59, 2);
 
 class APICrawlerService {
   constructor() {
@@ -25,7 +25,7 @@ class APICrawlerService {
     this.getTenders = getTenders.bind(this);
     this.storeTenders = storeTenders.bind(this);
     this.sortEducationTenders = sortEducationTenders.bind(this);
-    this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
+    // this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
     this.appStatus = [];
     this.markRun = markRun.bind(this);
   }
