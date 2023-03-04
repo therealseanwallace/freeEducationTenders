@@ -16,7 +16,7 @@ const App = () => {
       category: getCategory(e.target.dataset.id),
       id: Number(e.target.dataset.id),
       pageRetrieved: 0,
-      totalPages: 0,
+      totalPages: 999999,
       selected: true,
     };
     setSelectedCategories([...selectedCategories, newCategory]);
@@ -59,6 +59,7 @@ const App = () => {
     let foundUnretrievedCategory = false;
     const categoriesUpdated = selectedCategories.map((category) => category);
     for (let i = 0; i < categoriesUpdated.length; i++) {
+      console.log("pageRetrieved", categoriesUpdated[i].pageRetrieved, "totalPages", categoriesUpdated[i].totalPages)
       if (
         foundUnretrievedCategory === false &&
         categoriesUpdated[i].pageRetrieved < updatesRequested + 1 &&
