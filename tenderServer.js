@@ -6,7 +6,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import APICrawlerService from "./services/APICrawlerService.js";
 import tenderRouter from "./routes/tenderRouter.js";
 
 dotenv.config();
@@ -28,8 +27,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-const APICrawler = new APICrawlerService();
-
 // Mongoose //
 
 const { MONGO_URL } = process.env;
@@ -48,5 +45,3 @@ async function connect() {
 }
 
 connect();
-
-APICrawler.runJobs();

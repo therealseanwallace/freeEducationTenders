@@ -34,21 +34,4 @@ TenderSchema.plugin(mongoosePaginate);
 
 const TenderModel = mongoose.model("Tenders", TenderSchema);
 
-const AppStatus = new Schema({
-  firstRun: Boolean,
-});
-
-const AppStatusModel = mongoose.model("AppStatus", AppStatus);
-
-const CrawlerQueue = new Schema({
-  URL: String,
-  ID: String,
-});
-
-const CrawlerQueueModel = mongoose.model("CrawlerQueue", CrawlerQueue);
-
-export {
-  AppStatusModel,
-  CrawlerQueueModel,
-  TenderModel,
-};
+export default TenderModel;
