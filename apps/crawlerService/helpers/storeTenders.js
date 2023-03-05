@@ -73,6 +73,7 @@ const tenderFactory = async (tender) => {
   console.log("tenderFactory! - tender", tender);
   const { ocid, id, tag } = tender;
   const date = new Date(tender.date).toLocaleDateString("en-GB");
+  const fullDate = tender.date;
   const timestamp = new Date().toLocaleDateString("en-GB");
   const additionalIDs = extractAdditionalIDs(tender);
   const classificationIDs = [tender.tender.classification.id];
@@ -95,6 +96,7 @@ const tenderFactory = async (tender) => {
     ocid,
     id,
     date,
+    fullDate,
     tag,
     timestamp,
     classificationIDs,

@@ -6,6 +6,7 @@ const TenderSchema = new Schema({
   ocid: String,
   id: String,
   date: String,
+  fullDate: String,
   tag: Array,
   timestamp: Date,
   classificationIDs: Array,
