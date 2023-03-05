@@ -1,4 +1,4 @@
-import { TenderModel } from "../mongoose/schemasModels.js";
+import TenderModel from "../mongoose/schemasModels.js";
 
 const queryDB = async (categories, page) => {
   let pageToUse = page;

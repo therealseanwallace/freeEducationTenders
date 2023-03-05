@@ -131,7 +131,7 @@ const checkIfTenderExists = async (tenderID, model) => {
 };
 
 const storeTender = async (tender) => {
-  console.log("storeTender! - tender", tender);
+  console.log("storeTender! - tender", tender, 'TenderModel', TenderModel);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
     if (
@@ -159,6 +159,7 @@ const storeTenders = async (tenders) => {
   const storedTenders = Promise.all(
     tenders.map(async (tender) => {
       const tenderToStore = await tenderFactory(tender);
+      console.log('tentderToStore', tenderToStore);
       const storedTender = await storeTender(tenderToStore);
       return storedTender;
     })
