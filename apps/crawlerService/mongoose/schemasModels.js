@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import mongoosePaginate from "mongoose-paginate-v2";
 
 const { Schema } = mongoose;
 
@@ -30,8 +29,24 @@ const TenderSchema = new Schema({
   },
 });
 
-TenderSchema.plugin(mongoosePaginate);
-
 const TenderModel = mongoose.model("Tenders", TenderSchema);
 
-export default TenderModel;
+const AppStatus = new Schema({
+  name: String,
+  firstRun: Boolean,
+});
+
+const AppStatusModel = mongoose.model("AppStatus", AppStatus);
+
+const CrawlerQueue = new Schema({
+  URL: String,
+  ID: String,
+});
+
+const CrawlerQueueModel = mongoose.model("CrawlerQueue", CrawlerQueue);
+
+export {
+  AppStatusModel,
+  CrawlerQueueModel,
+  TenderModel,
+};
