@@ -10,14 +10,13 @@ import markRun from "../helpers/markRun.js";
 import {
   AppStatusModel,
   CrawlerQueueModel,
-
 } from "../mongoose/schemasModels.js";
 
 const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
-rule.minute = new Range(0, 59, 10);
+rule.minute = new Range(0, 59, 6);
 
 class APICrawlerService {
   constructor() {
@@ -32,6 +31,7 @@ class APICrawlerService {
 
   async runJobs() {
     console.log(`${getDateTimeString()} - Running jobs...`);
+    // this.getTendersFromTheOtherAPI();
 
     // Check to see if this is the first run
     this.appStatus = await AppStatusModel.find({ name: "apiCrawler" }).lean();
@@ -42,19 +42,18 @@ class APICrawlerService {
     console.log("this.appStatus[0].firstRun", this.appStatus[0].firstRun);
 
     // If this isn't the first run...
+    let FindTenderServiceQueue;
+    let ContractsFinderServiceQueue;
     if (this.appStatus[0].firstRun !== true) {
-      const DBCrawlerQueue = await CrawlerQueueModel.findOne({
-        ID: "CrawlerQueue",
+      FindTenderServiceQueue = await CrawlerQueueModel.findOne({
+        ID: "FindTenderServiceQueue",
+      }).lean();
+      ContractsFinderServiceQueue = await CrawlerQueueModel.findOne({
+        ID: "ContractsFinderServiceQueue",
       }).lean();
       let tenders;
-      console.log('DBCrawlerQueue', DBCrawlerQueue);
-      if (!DBCrawlerQueue || !DBCrawlerQueue.URL) {
-        // if the queue is empty, get the tenders from the last xx hours
-        tenders = await this.getTenders();
-      } else {
-        // if the queue is not empty, get the queued URL
-        tenders = await this.getTenders(DBCrawlerQueue.URL);
-      }
+
+      tenders = await this.getTenders(FindTenderServiceQueue.URL, ContractsFinderServiceQueue.URL);
       // Store the retrieved tenders
       const storedTenders = await this.storeTenders(tenders);
       console.log(
@@ -65,14 +64,27 @@ class APICrawlerService {
       );
     } else {
       // This is the first run...
-      await CrawlerQueueModel.create({ID: "CrawlerQueue", URL: null});
+      await CrawlerQueueModel.create({
+        ID: "FindTenderServiceQueue",
+        URL: null,
+      });
+      await CrawlerQueueModel.create({
+        ID: "ContractsFinderServiceQueue",
+        URL: null,
+      });
       let tenders;
       // This is the first run, so we will get the tenders from the last month
       // This will populate the queue with pages to crawl, depending on the results from the find a tender API
-      const urlToUse = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(
+      const findTenderServiceURL = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(
         true
       )}&updatedTo=${getDateTimeString()}`;
-      tenders = await this.getTenders(urlToUse);
+      const contractsFinderServiceURL = `https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?publishedFrom=${getDateTimeString(
+        true
+      )}&publishedTo=${getDateTimeString()}`;
+      tenders = await this.getTenders(
+        findTenderServiceURL,
+        contractsFinderServiceURL
+      );
       // Store the retrieved tenders
       const storedTenders = await this.storeTenders(tenders);
       console.log(

@@ -15,7 +15,9 @@ const filterEducationTenders = (tender) => {
   }
 };
 
-const sortEducationTenders = (data) =>
-  data.releases.filter(filterEducationTenders);
+const sortEducationTenders = (releases) => {
+  const filteredReleases = releases.filter(filterEducationTenders);
+  return filteredReleases;
+};
 
 export default sortEducationTenders;

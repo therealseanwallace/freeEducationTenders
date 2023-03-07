@@ -1,9 +1,22 @@
-const getDateTimeString = (firstRun) => {
-  const date = new Date();
-  if (firstRun) {
+const getDateTimeString = (offset) => {
+  let date = new Date();
+  if (offset === true) {
+    // if offset is strictly equal to true, this is
+    // the first run and we will retrieve the data
+    // for the last 3 months
     date.setMonth(date.getMonth() - 3);
   }
-  return date.toISOString().split(".")[0];
-}
+  if (typeof offset === "number") {
+    // otherwise, if offset is a number of hours,
+    // we will retrieve the data for the last x hours
+    const unixTime = date.getTime();
+    const fifteenMinutesAgo = unixTime + (offset * 60 * 60 * 1000);
+    date = new Date(fifteenMinutesAgo);
+  }
+  // if neither of the above conditions are met,
+  // we will simply return the current date and time
+  const dateToISOString = date.toISOString().split(".")[0];
+  return dateToISOString;
+};
 
 export default getDateTimeString;

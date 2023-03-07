@@ -59,20 +59,33 @@ const constructLot = async (lot, item) => {
 };
 
 const constructLots = async (lots, items) => {
-  const lotsToReturn = await Promise.all(
-    lots.map(async (lot, index) => {
-      const lotToReturn = await constructLot(lot, items[index]);
-      return lotToReturn;
-    })
-  );
+  // lots does not exist for one of the APIs, 
+  // therefore we must check if lots exists before proceeding
+  console.log("constructLots! - lots", lots);
+  let lotsToReturn = [];
+  if (lots) {
+    lotsToReturn = await Promise.all(
+      lots.map(async (lot, index) => {
+        const lotToReturn = await constructLot(lot, items[index]);
+        return lotToReturn;
+      })
+    );
+  } else if (items) {
+    lotsToReturn = await Promise.all(
+      items.map(async (item) => {
+        const lotToReturn = await constructLot({}, item);
+        return lotToReturn;
+      })
+    );
+  }
+
 
   return lotsToReturn;
 };
 
 const tenderFactory = async (tender) => {
   console.log("tenderFactory! - tender", tender);
-  const { ocid, id, tag } = tender;
-  const date = new Date(tender.date).toLocaleDateString("en-GB");
+  const { ocid, id, tag, parties, source } = tender;
   const fullDate = tender.date;
   const timestamp = new Date().toLocaleDateString("en-GB");
   const additionalIDs = extractAdditionalIDs(tender);
@@ -85,21 +98,27 @@ const tenderFactory = async (tender) => {
 
   let startDate = "";
   let endDate = "";
+  let value;
+
   if (tender.tender.awardPeriod) {
     startDate = new Date(tender.tender.awardPeriod.startDate).toLocaleString("en-GB");
   }
   if (tender.tender.tenderPeriod) {
     endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString("en-GB");
   }
-
+  if (tender.tender.value) {
+    value = tender.tender.value;
+  }
   const tenderToReturn = {
     ocid,
     id,
-    date,
     fullDate,
     tag,
     timestamp,
     classificationIDs,
+    value,
+    parties,
+    source,
     tenderDetails: {
       title: tender.tender.title,
       classificationDescription: tender.tender.classification.description,
