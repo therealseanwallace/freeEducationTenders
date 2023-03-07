@@ -11,6 +11,9 @@ const TenderSchema = new Schema({
   tag: Array,
   timestamp: Date,
   classificationIDs: Array,
+  value: Array,
+  parties: Array,
+  source: String,
   tenderDetails: {
     title: String,
     classificationDescription: String,
