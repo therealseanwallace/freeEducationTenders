@@ -6,9 +6,13 @@ const ResultsDisplay = (props) => {
       {props.tenders.map((tender) => (
         <TenderCard key={tender._id} tender={tender} />
       ))}
-      <button className="getMore" onClick={props.getMore}>Load more</button>
+      <div className="load-more-container">
+        <button className="getMore" onClick={props.getMore}>
+          Load more
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default ResultsDisplay;
