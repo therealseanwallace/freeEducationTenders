@@ -27,6 +27,9 @@ const nutsBinarySearch = async (array, l, r, x) => {
 const nutsLookup = async (query) => {
   let queryToUse = query;
   let result;
+  if (!queryToUse) {
+    return { Code: undefined, Region: "Not found" };
+  }
   if (queryToUse.startsWith("TL")) {
     queryToUse = `UK${queryToUse.slice(2)}`;
     result = await nutsBinarySearch(json, 0, json.length - 1, queryToUse);
