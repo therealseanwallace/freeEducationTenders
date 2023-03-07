@@ -17,38 +17,41 @@ const extractAdditionalIDs = (tender) => {
   return additionalIDs;
 };
 
-const constructLot = async (lot, item) => {
+const constructLot = async (lot) => {
   let title = "Unavailable";
   let description = "Unavailable";
   let ID = "Unavailable";
   let duration = "Unavailable";
   let value = "Unavailable";
   let deliveryLocations = "Unavailable";
-  if (lot.title) {
-    title = lot.title;
+
+  if (lot.lot.title) {
+    title = lot.lot.title;
   }
-  if (lot.description) {
-    description = lot.description;
+  if (lot.lot.description) {
+    description = lot.lot.description;
   }
-  if (lot.id) {
-    ID = lot.id;
+  if (lot.lot.id) {
+    ID = lot.lot.id;
   }
-  if (lot.contractPeriod) {
-    duration = `${lot.contractPeriod.durationInDays} days`;
+  if (lot.lot.contractPeriod) {
+    duration = `${lot.lot.contractPeriod.durationInDays} days`;
   }
-  if (lot.value) {
+  if (lot.lot.value) {
+    console.log('lot is: ', lot);
+    console.log('lot.lot.value', lot.lot.value);
     value = `${lot.value.currency} ${lot.value.amount}`;
   }
-  if (item.deliveryAddresses) {
-    deliveryLocations = await Promise.all(
-      item.deliveryAddresses.map(async (address) => {
-        const lookup = await nutsLookup(address.region);
-        console.log("lookup", lookup);
-        return lookup;
-      })
-    );
+  if (lot.item.deliveryAddresses) {
+    deliveryLocations = Promise.all(lot.item.deliveryAddresses.map(async (address) => {
+      const lookup = await nutsLookup(address.region);
+      console.log("lookup", lookup);
+      return await lookup;
+    }));
   }
-  return {
+  const returnValues = await Promise.all([title, description, ID, duration, value, deliveryLocations]);
+  [ title, description, ID, duration, value, deliveryLocations ] = returnValues;
+  const lotToReturn = {
     title,
     description,
     ID,
@@ -56,36 +59,38 @@ const constructLot = async (lot, item) => {
     value,
     deliveryLocations,
   };
+  return lotToReturn;
 };
 
 const constructLots = async (lots, items) => {
-  // lots does not exist for one of the APIs, 
-  // therefore we must check if lots exists before proceeding
-  console.log("constructLots! - lots", lots);
-  let lotsToReturn = [];
-  if (lots) {
-    lotsToReturn = await Promise.all(
-      lots.map(async (lot, index) => {
-        const lotToReturn = await constructLot(lot, items[index]);
-        return lotToReturn;
-      })
-    );
+  const arrayToProcess = [];
+  if (lots && items) {
+    for (let i = 0; i < lots.length; i += 1) {
+      arrayToProcess.push({ lot: lots[i], item: items[i] });
+    }
+  } else if (lots) {
+    for (let i = 0; i < lots.length; i += 1) {
+      arrayToProcess.push({ lot: lots[i], item: {} });
+    }
   } else if (items) {
-    lotsToReturn = await Promise.all(
-      items.map(async (item) => {
-        const lotToReturn = await constructLot({}, item);
-        return lotToReturn;
-      })
-    );
+    for (let i = 0; i < items.length; i += 1) {
+      arrayToProcess.push({ lot: {}, item: items[i] });
+    }
   }
 
+  let lotsToReturn = [];
 
+  lotsToReturn = Promise.all(arrayToProcess.map(async (lot) => {
+    const lotToReturn = await constructLot(lot);
+    return lotToReturn;
+  }));
   return lotsToReturn;
 };
 
 const tenderFactory = async (tender) => {
   console.log("tenderFactory! - tender", tender);
-  const { ocid, id, tag, parties, source } = tender;
+  const { ocid, id, tag } = tender;
+  const date = new Date(tender.date).toLocaleDateString("en-GB");
   const fullDate = tender.date;
   const timestamp = new Date().toLocaleDateString("en-GB");
   const additionalIDs = extractAdditionalIDs(tender);
@@ -98,27 +103,36 @@ const tenderFactory = async (tender) => {
 
   let startDate = "";
   let endDate = "";
-  let value;
-
   if (tender.tender.awardPeriod) {
-    startDate = new Date(tender.tender.awardPeriod.startDate).toLocaleString("en-GB");
+    startDate = new Date(tender.tender.awardPeriod.startDate).toLocaleString(
+      "en-GB"
+    );
   }
   if (tender.tender.tenderPeriod) {
-    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString("en-GB");
+    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
+      "en-GB"
+    );
   }
-  if (tender.tender.value) {
-    value = tender.tender.value;
+  let buyerURL = "Unavailable";
+  let buyerProfile = "Unavailable";
+  console.log("tender.tender.parties[0] is", tender.parties[0]);
+  if (tender.parties[0].details) {
+    if (tender.parties[0].details.buyerProfile) {
+      buyerProfile = tender.parties[0].details.buyerProfile;
+    }
+    if (tender.parties[0].details.url) {
+      buyerURL = tender.parties[0].details.url;
+    }
   }
+
   const tenderToReturn = {
     ocid,
     id,
+    date,
     fullDate,
     tag,
     timestamp,
     classificationIDs,
-    value,
-    parties,
-    source,
     tenderDetails: {
       title: tender.tender.title,
       classificationDescription: tender.tender.classification.description,
@@ -134,7 +148,10 @@ const tenderFactory = async (tender) => {
       buyer: {
         name: tender.buyer.name,
         contactPoint: tender.parties[0].contactPoint,
-        details: tender.parties[0].details,
+        details: {
+          buyerProfile,
+          buyerURL,
+        },
       },
     },
   };
@@ -152,7 +169,7 @@ const checkIfTenderExists = async (tenderID, model) => {
 };
 
 const storeTender = async (tender) => {
-  console.log("storeTender! - tender", tender, 'TenderModel', TenderModel);
+  console.log("storeTender! - tender", tender, "TenderModel", TenderModel);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
     if (
@@ -180,12 +197,12 @@ const storeTenders = async (tenders) => {
   const storedTenders = Promise.all(
     tenders.map(async (tender) => {
       const tenderToStore = await tenderFactory(tender);
-      console.log('tentderToStore', tenderToStore);
+      console.log("tentderToStore", tenderToStore);
       const storedTender = await storeTender(tenderToStore);
       return storedTender;
     })
   );
-  return storedTenders;
+  return await storedTenders;
 };
 
 export default storeTenders;

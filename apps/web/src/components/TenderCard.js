@@ -40,12 +40,20 @@ const TenderCard = ({ tender }) => {
       </div>
     );
   });
+  let buyerProfile = "";
+  /* console.log('about to run check. tender is' , tender);
+  console.log('tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile")', tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile"));
+  const check = tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile");*/
+  if (tender.tenderDetails.buyer.details.buyerProfile !== undefined) {
+    console.log('this has a buyer profile');
+    buyerProfile = tender.tenderDetails.buyer.details.buyerProfile;
+  }
   return (
     <div className="tender-card">
       <h2 className="tender-card-title">{tender.tenderDetails.title}</h2>
       <h2 className="tender-card-buyer">{tender.tenderDetails.buyer.name}</h2>
       <div className="tender-card-links">
-        <a href={tender.tenderDetails.buyer.details.buyerProfile} className="tender-card-button">
+        <a href={buyerProfile} className="tender-card-button">
           <button className="tender-card-buyer-profile-link ">
             Buyer profile
           </button>
