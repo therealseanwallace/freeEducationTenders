@@ -1,5 +1,6 @@
 import getDateTimeString from "./getDateTimeString.js";
 import { CrawlerQueueModel } from "../mongoose/schemasModels.js";
+import storeFullTenders from "./storeFullTenders.js";
 
 async function getTenders(crawlerQueue1, crawlerQueue2) {
   let crawlerURL1 = crawlerQueue1;
@@ -27,14 +28,12 @@ async function getTenders(crawlerQueue1, crawlerQueue2) {
       element.source = "Find A Tender Service";
     }
     const fetch2JSON = await fetch2.json();
-    // Add source to the releases
     for (let i = 0; i < fetch2JSON.releases.length; i++) {
       const element = fetch2JSON.releases[i];
       element.source = "Contracts Finder Service";
     }
 
     // We're going to loop through the responses
-    // 
     response = [fetch1JSON, fetch2JSON];
     for (let i = 0; i < response.length; i++) {
       const data = response[i];
@@ -71,7 +70,18 @@ async function getTenders(crawlerQueue1, crawlerQueue2) {
     }
     let releases = [...fetch1JSON.releases, ...fetch2JSON.releases];
     releases = [...releases];
+
+    // Prior to sending the education tenders to be sorted, we will
+    // store ALL tenders in a separate DB collection for future use.
+    storeFullTenders(releases, "AllTendersModel");
+
     const educationTenders = this.sortEducationTenders(releases);
+
+    // Having sorted the education tenders, we will store the education
+    // tenders as received from the APIs in a separate DB collection.
+
+    storeFullTenders(educationTenders, "AllEducationTendersModel");
+
     console.log(
       `${getDateTimeString()} - got ${educationTenders.length} tenders.`
     );

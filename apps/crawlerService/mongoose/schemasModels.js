@@ -49,8 +49,18 @@ const CrawlerQueue = new Schema({
 
 const CrawlerQueueModel = mongoose.model("CrawlerQueue", CrawlerQueue);
 
+const FullTenderSchema = new Schema({
+  tender: Object,
+});
+
+const AllTendersModel = mongoose.model("AllTenders", FullTenderSchema);
+
+const AllEducationTendersModel = mongoose.model("AllEducationTenders", FullTenderSchema);
+
 export {
   AppStatusModel,
   CrawlerQueueModel,
   TenderModel,
+  AllTendersModel,
+  AllEducationTendersModel,
 };
