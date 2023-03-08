@@ -6,18 +6,34 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import compression from "compression";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import tenderRouter from "./routes/tenderRouter.js";
+
+const PORT = process.env.PORT || 3001;
 
 dotenv.config();
 
 const app = express();
 
 app.use(cors(
-  
+  {
+    origin: "https://justeducationtenders.co.uk/",
+  }
 ));
 app.use(express.json());
+app.use(compression());
+app.use(helmet());
 
-const PORT = process.env.PORT || 3001;
+const apiRequestLimiter = rateLimit({
+  // limit each IP to 100 requests per minute
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+  message: "Too many requests from this IP, please try again shortly",
+});
+
+app.use("/api/", apiRequestLimiter);
 
 app.use('/api/tenders/', tenderRouter);
 
