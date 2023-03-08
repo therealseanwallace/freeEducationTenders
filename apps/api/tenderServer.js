@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-extraneous-dependencies */
@@ -21,13 +22,22 @@ const app = express();
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
-app.use(
-  cors({
-    origin: 
-      "https://justeducationtenders.co.uk/",
-    methods: "GET",
-  })
-);
+
+const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"]
+
+const corsOptions = {
+  origin: function corsCheck(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 const apiRequestLimiter = rateLimit({
   // limit each IP to 100 requests per minute
   windowMs: 1 * 60 * 1000,
