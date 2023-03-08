@@ -17,11 +17,15 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors(
-  {
-    origin: "https://justeducationtenders.co.uk/",
-  }
-));
+app.use(
+  cors({
+    origin: [
+      "https://justeducationtenders.co.uk/",
+      "https://therealseanwallace.github.io",
+    ],
+    methods: "GET",
+  })
+);
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
@@ -35,7 +39,7 @@ const apiRequestLimiter = rateLimit({
 
 app.use("/api/", apiRequestLimiter);
 
-app.use('/api/tenders/', tenderRouter);
+app.use("/api/tenders/", tenderRouter);
 
 app.use("/ping", (req, res) => {
   res.send("pong");
@@ -48,16 +52,16 @@ app.listen(PORT, () => {
 // Mongoose //
 
 const { MONGO_URL } = process.env;
-console.log('MONGO_URL', MONGO_URL);
+console.log("MONGO_URL", MONGO_URL);
 
 async function connect() {
   try {
     const connection = await mongoose.connect(MONGO_URL);
   } catch (error) {
-    console.log('Error connecting to MongoDB: ', error.message);
+    console.log("Error connecting to MongoDB: ", error.message);
   } finally {
     if (mongoose.connection.readyState === 1) {
-    console.log('Connected to MongoDB');
+      console.log("Connected to MongoDB");
     }
   }
 }
