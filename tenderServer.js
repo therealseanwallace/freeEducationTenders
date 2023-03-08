@@ -17,19 +17,17 @@ dotenv.config();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "https://justeducationtenders.co.uk/",
-      "https://therealseanwallace.github.io",
-    ],
-    methods: "GET",
-  })
-);
+
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
-
+app.use(
+  cors({
+    origin: 
+      "https://justeducationtenders.co.uk/",
+    methods: "GET",
+  })
+);
 const apiRequestLimiter = rateLimit({
   // limit each IP to 100 requests per minute
   windowMs: 1 * 60 * 1000,
