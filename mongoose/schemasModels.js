@@ -21,6 +21,7 @@ const TenderSchema = new Schema({
   tenderStatus: String,  
   timestampRetrieved: String,
   title: String,
+  value: Object,
 });
 
 TenderSchema.plugin(mongoosePaginate);
