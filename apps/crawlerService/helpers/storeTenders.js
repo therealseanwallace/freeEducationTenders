@@ -19,18 +19,22 @@ const extractDeliveryAddresses = async (tender) => {
   const { items } = tender.tender;
   const deliveryAddresses = [];
   let deliveryLocations;
-  for (let i = 0; i < items.length; i += 1) {
-    if (items[i].deliveryAddresses) {
-      deliveryLocations = Promise.all(
-        items[i].deliveryAddresses.map(async (deliveryLocation) => {
-          let locationToReturn = {};
-          locationToReturn = nutsLookup(deliveryLocation.region);
-          return locationToReturn;
-        })
-      );
-    }
-  }
-  return await deliveryLocations;
+  deliveryLocations = await Promise.all(
+    items.map(async (item) => {
+      console.log('item', item);
+      let itemsLocations = [];
+      if (item.deliveryAddresses) {
+        itemsLocations = await Promise.all(
+        item.deliveryAddresses.map(async (deliveryAddress) => {
+        const locationToReturn = await nutsLookup(deliveryAddress);
+        return await locationToReturn;
+      }));
+
+      }
+      return itemsLocations;
+    })
+  );
+  return deliveryLocations;
 };
 
 const tenderFactory = async (tender) => {
@@ -47,10 +51,13 @@ const tenderFactory = async (tender) => {
   const deliveryAddresses = await extractDeliveryAddresses(tender);
   const description = tender.tender.description;
   let endDate = "";
-  if (tender.tender.tenderPeriod.endDate) {
-    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
-      "en-GB"
-    );
+  if (tender.tender.tenderPeriod) {
+    if (tender.tender.tenderPeriod.endDate) {
+      endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
+        "en-GB"
+      );
+    }
+    
   }
   const fullDate = tender.date;
   const id = tender.id;
@@ -76,61 +83,11 @@ const tenderFactory = async (tender) => {
   const tenderStatus = tender.tender.status;
   const timestampRetrieved = new Date();
   const title = tender.tender.title;
-  const value = tender.tender.value.amount + " " + tender.tender.value.currency;
-  /*
-  const { ocid, id, tag } = tender;
-  const date = new Date(tender.date).toLocaleDateString("en-GB");
-  const fullDate = tender.date;
-  const timestampRetrieved = new Date().toLocaleDateString("en-GB");
-
-  // Get the classifications of this tender and any lots
-  const additionalIDs = extractAdditionalIDs(tender);
-  const classificationIDs = [tender.tender.classification.id];
-  for (let i = 0; i < additionalIDs.length; i += 1) {
-    if (!classificationIDs.includes(additionalIDs[i])) {
-      classificationIDs.push(additionalIDs[i]);
-    }
+  let value = "";
+  if (tender.tender.value) {
+    value = tender.tender.value.amount + " " + tender.tender.value.currency;
   }
-
-  // If the end date is available, add it to the tender else
-  // add an empty string
-  let endDate = "";
-  if (tender.tender.tenderPeriod) {
-    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
-      "en-GB"
-    );
-  }
-  
-  // If the tender includes a submission method, get it and add
-  // to the object to be returned
-  let submissionMethod = {};
-  if (tender.tender.submissionMethodDetails) {
-    if (tender.tender.submissionMethodDetails.startsWith("http")) {
-      submissionMethod = {
-        type: "url",
-        value: tender.tender.submissionMethodDetails,
-      };
-    } else {
-      submissionMethod = {
-        type: "text",
-        value: tender.tender.submissionMethodDetails,
-      };
-    }
-  }
-
-  // If they are available, add the buyer's URL and profile to the
-  // object to be returned
-  let buyerURL = "";
-  let buyerProfile = "";
-  if (tender.parties[0].details) {
-    if (tender.parties[0].details.buyerProfile) {
-      buyerProfile = tender.parties[0].details.buyerProfile;
-    }
-    if (tender.parties[0].details.url) {
-      buyerURL = tender.parties[0].details.url;
-    }
-  }
-*/
+ 
   tenderToReturn = {
     buyer,
     classificationIDs,

@@ -12,6 +12,7 @@ import {
   CrawlerQueueModel,
 } from "../mongoose/schemasModels.js";
 
+
 const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
@@ -24,14 +25,13 @@ class APICrawlerService {
     this.getTenders = getTenders.bind(this);
     this.storeTenders = storeTenders.bind(this);
     this.sortEducationTenders = sortEducationTenders.bind(this);
-    this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
+    // this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
     this.appStatus = [];
     this.markRun = markRun.bind(this);
   }
 
   async runJobs() {
     console.log(`${getDateTimeString()} - Running jobs...`);
-    // this.getTendersFromTheOtherAPI();
 
     // Check to see if this is the first run
     this.appStatus = await AppStatusModel.find({ name: "apiCrawler" }).lean();
