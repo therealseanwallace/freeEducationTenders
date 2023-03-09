@@ -4,34 +4,23 @@ import mongoosePaginate from "mongoose-paginate-v2";
 const { Schema } = mongoose;
 
 const TenderSchema = new Schema({
-  ocid: String,
-  id: String,
-  date: String,
-  fullDate: String,
-  tag: Array,
-  timestamp: Date,
+  buyer: Object,
   classificationIDs: Array,
-  value: Array,
+  date: String,
+  deliveryAddresses: Array,
+  description: String,
+  endDate: String,
+  fullDate: String,
+  id: String,
+  ocid: String,
   parties: Array,
   source: String,
-  tenderDetails: {
-    title: String,
-    classificationDescription: String,
-    tenderId: String,
-    tenderStatus: String,
-    description: String,
-    lots: Array,
-    startDate: String,
-    endDate: String,
-    SubmissionMethod: Array,
-    SubmissionMethodDetails: String,
-    links: Array,
-    buyer: {
-      name: String,
-      contactPoint: Object,
-      details: Object,
-    },
-  },
+  submissionMethod: Object,
+  tag: Array,
+  tenderId: String,
+  tenderStatus: String,  
+  timestampRetrieved: String,
+  title: String,
 });
 
 TenderSchema.plugin(mongoosePaginate);
