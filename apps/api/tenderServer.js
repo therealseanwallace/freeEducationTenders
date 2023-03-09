@@ -53,9 +53,11 @@ app.use("/ping", (req, res) => {
   res.send("pong");
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, err => {
+  if (err) throw err;
   console.log(`Server running on port ${PORT}`);
 });
+
 
 // Mongoose //
 
