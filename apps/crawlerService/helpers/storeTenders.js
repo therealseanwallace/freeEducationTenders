@@ -4,95 +4,86 @@ import nutsLookup from "./nutsLookup.js";
 const extractAdditionalIDs = (tender) => {
   const { items } = tender.tender;
   const additionalIDs = [];
-  if (items) {
-    for (let i = 0; i < items.length; i += 1) {
-      if (items[i].additionalClassifications) {
-        const { additionalClassifications } = items[i];
-        for (let j = 0; j < additionalClassifications.length; j += 1) {
-          additionalIDs.push(additionalClassifications[j].id);
-        }
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].additionalClassifications) {
+      const { additionalClassifications } = items[i];
+      for (let j = 0; j < additionalClassifications.length; j += 1) {
+        additionalIDs.push(additionalClassifications[j].id);
       }
     }
   }
   return additionalIDs;
 };
 
-const constructLot = async (lot) => {
-  let title = "Unavailable";
-  let description = "Unavailable";
-  let ID = "Unavailable";
-  let duration = "Unavailable";
-  let value = "Unavailable";
-  let deliveryLocations = "Unavailable";
-
-  if (lot.lot.title) {
-    title = lot.lot.title;
-  }
-  if (lot.lot.description) {
-    description = lot.lot.description;
-  }
-  if (lot.lot.id) {
-    ID = lot.lot.id;
-  }
-  if (lot.lot.contractPeriod) {
-    duration = `${lot.lot.contractPeriod.durationInDays} days`;
-  }
-  if (lot.lot.value) {
-    console.log('lot is: ', lot);
-    console.log('lot.lot.value', lot.lot.value);
-    value = lot.lot.value;
-  }
-  if (lot.item.deliveryAddresses) {
-    deliveryLocations = Promise.all(lot.item.deliveryAddresses.map(async (address) => {
-      const lookup = await nutsLookup(address.region);
-      console.log("lookup", lookup);
-      return await lookup;
-    }));
-  }
-  const returnValues = await Promise.all([title, description, ID, duration, value, deliveryLocations]);
-  [ title, description, ID, duration, value, deliveryLocations ] = returnValues;
-  const lotToReturn = {
-    title,
-    description,
-    ID,
-    duration,
-    value,
-    deliveryLocations,
-  };
-  return lotToReturn;
-};
-
-const constructLots = async (lots, items) => {
-  const arrayToProcess = [];
-  if (lots && items) {
-    for (let i = 0; i < lots.length; i += 1) {
-      arrayToProcess.push({ lot: lots[i], item: items[i] });
-    }
-  } else if (lots) {
-    for (let i = 0; i < lots.length; i += 1) {
-      arrayToProcess.push({ lot: lots[i], item: {} });
-    }
-  } else if (items) {
-    for (let i = 0; i < items.length; i += 1) {
-      arrayToProcess.push({ lot: {}, item: items[i] });
+const extractDeliveryAddresses = async (tender) => {
+  const { items } = tender.tender;
+  const deliveryAddresses = [];
+  let deliveryLocations;
+  for (let i = 0; i < items.length; i += 1) {
+    if (items[i].deliveryAddresses) {
+      deliveryLocations = Promise.all(
+        items[i].deliveryAddresses.map(async (deliveryLocation) => {
+          let locationToReturn = {};
+          locationToReturn = nutsLookup(deliveryLocation.region);
+          return locationToReturn;
+        })
+      );
     }
   }
-
-  let lotsToReturn = [];
-
-  lotsToReturn = Promise.all(arrayToProcess.map(async (lot) => {
-    const lotToReturn = await constructLot(lot);
-    return lotToReturn;
-  }));
-  return lotsToReturn;
+  return await deliveryLocations;
 };
 
 const tenderFactory = async (tender) => {
-  console.log("tenderFactory! - tender", tender);
+  let tenderToReturn;
+  let buyer = tender.parties[0];
+  const classificationIDs = [tender.tender.classification.id];
+  const additionalIDs = extractAdditionalIDs(tender);
+  for (let i = 0; i < additionalIDs.length; i += 1) {
+    if (!classificationIDs.includes(additionalIDs[i])) {
+      classificationIDs.push(additionalIDs[i]);
+    }
+  }
+  const date = new Date(tender.date).toLocaleDateString("en-GB");
+  const deliveryAddresses = await extractDeliveryAddresses(tender);
+  const description = tender.tender.description;
+  let endDate = "";
+  if (tender.tender.tenderPeriod.endDate) {
+    endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
+      "en-GB"
+    );
+  }
+  const fullDate = tender.date;
+  const id = tender.id;
+  const ocid = tender.ocid;
+  const parties = tender.parties;
+  const source = tender.source;
+  let submissionMethod;
+  if (tender.tender.submissionMethodDetails) {
+    if (tender.tender.submissionMethodDetails.startsWith("http")) {
+      submissionMethod = {
+        type: "url",
+        value: tender.tender.submissionMethodDetails,
+      };
+    } else {
+      submissionMethod = {
+        type: "text",
+        value: tender.tender.submissionMethodDetails,
+      };
+    }
+  }
+  const tag = tender.tag;
+  const tenderId = tender.tender.id;
+  const tenderStatus = tender.tender.status;
+  const timestampRetrieved = new Date();
+  const title = tender.tender.title;
+  const value = tender.tender.value.amount + " " + tender.tender.value.currency;
+  /*
   const { ocid, id, tag } = tender;
   const date = new Date(tender.date).toLocaleDateString("en-GB");
   const fullDate = tender.date;
-  const timestamp = new Date().toLocaleDateString("en-GB");
+  const timestampRetrieved = new Date().toLocaleDateString("en-GB");
+
+  // Get the classifications of this tender and any lots
   const additionalIDs = extractAdditionalIDs(tender);
   const classificationIDs = [tender.tender.classification.id];
   for (let i = 0; i < additionalIDs.length; i += 1) {
@@ -101,21 +92,36 @@ const tenderFactory = async (tender) => {
     }
   }
 
-  let startDate = "";
+  // If the end date is available, add it to the tender else
+  // add an empty string
   let endDate = "";
-  if (tender.tender.awardPeriod) {
-    startDate = new Date(tender.tender.awardPeriod.startDate).toLocaleString(
-      "en-GB"
-    );
-  }
   if (tender.tender.tenderPeriod) {
     endDate = new Date(tender.tender.tenderPeriod.endDate).toLocaleDateString(
       "en-GB"
     );
   }
-  let buyerURL = "Unavailable";
-  let buyerProfile = "Unavailable";
-  console.log("tender.tender.parties[0] is", tender.parties[0]);
+  
+  // If the tender includes a submission method, get it and add
+  // to the object to be returned
+  let submissionMethod = {};
+  if (tender.tender.submissionMethodDetails) {
+    if (tender.tender.submissionMethodDetails.startsWith("http")) {
+      submissionMethod = {
+        type: "url",
+        value: tender.tender.submissionMethodDetails,
+      };
+    } else {
+      submissionMethod = {
+        type: "text",
+        value: tender.tender.submissionMethodDetails,
+      };
+    }
+  }
+
+  // If they are available, add the buyer's URL and profile to the
+  // object to be returned
+  let buyerURL = "";
+  let buyerProfile = "";
   if (tender.parties[0].details) {
     if (tender.parties[0].details.buyerProfile) {
       buyerProfile = tender.parties[0].details.buyerProfile;
@@ -124,41 +130,27 @@ const tenderFactory = async (tender) => {
       buyerURL = tender.parties[0].details.url;
     }
   }
-
-  const tenderToReturn = {
-    ocid,
-    id,
-    date,
-    fullDate,
-    tag,
-    timestamp,
+*/
+  tenderToReturn = {
+    buyer,
     classificationIDs,
-    tenderDetails: {
-      title: tender.tender.title,
-      classificationDescription: tender.tender.classification.description,
-      tenderId: tender.tender.id,
-      tenderStatus: tender.tender.status,
-      description: tender.tender.description,
-      lots: await constructLots(tender.tender.lots, tender.tender.items),
-      startDate,
-      endDate,
-      submissionMethod: tender.tender.submissionMethod,
-      submissionMethodDetails: tender.tender.submissionMethodDetails,
-      links: tender.tender.links,
-      buyer: {
-        name: tender.buyer.name,
-        contactPoint: tender.parties[0].contactPoint,
-        details: {
-          buyerProfile,
-          buyerURL,
-        },
-      },
-    },
+    date,
+    deliveryAddresses,
+    description,
+    endDate,
+    fullDate,
+    id,
+    ocid,
+    parties,
+    source,
+    submissionMethod,
+    tag,
+    tenderId,
+    tenderStatus,
+    timestampRetrieved,
+    title,
+    value,
   };
-
-  if (tender.tender.communication) {
-    tenderToReturn.tenderDetails.communication = tender.tender.communication;
-  }
   return tenderToReturn;
 };
 
