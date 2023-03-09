@@ -40,7 +40,7 @@ const constructLot = async (lot) => {
   if (lot.lot.value) {
     console.log('lot is: ', lot);
     console.log('lot.lot.value', lot.lot.value);
-    value = `${lot.value.currency} ${lot.value.amount}`;
+    value = lot.lot.value;
   }
   if (lot.item.deliveryAddresses) {
     deliveryLocations = Promise.all(lot.item.deliveryAddresses.map(async (address) => {
