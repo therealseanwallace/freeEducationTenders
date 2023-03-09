@@ -3,6 +3,7 @@ import logo from "./logo.svg";
 import Selectors from "./components/Selectors";
 import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -126,10 +127,9 @@ const App = () => {
   return (
     <div className="App">
       <header>
-        <h1 className="header-title">Free Education Tenders</h1>
+        <h1 className="header-title">Just Education Tenders</h1>
         <h2 className="header-text">
-          Doggo ipsum mlem floofs borking doggo pats dat tungg tho heckin good
-          boys shoober shibe
+        UK Education Tenders direct from the source and updated in real time - always free and no signup needed
         </h2>
       </header>
       <main>
@@ -140,6 +140,7 @@ const App = () => {
         />
         <ResultsDisplay tenders={tenders} getMore={getMore}/>
       </main>
+      <Footer />
     </div>
   );
 };

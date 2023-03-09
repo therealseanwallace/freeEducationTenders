@@ -151,7 +151,8 @@ button:hover,
 }
 
 hr {
-  margin: 8px 0;
+  width: 90%;
+  margin-bottom: 24px;
 }
 
 .tender-card-button > button {
@@ -295,6 +296,31 @@ hr {
   height: 50px;
 }
 
+footer {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-top {
+  margin-bottom: 18px;
+}
+
+.version-statement {
+  font-size: 0.9rem;
+}
+.disclaimer {
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
 /* MEDIA QUERIES */
 
 @media (min-width: 600px) {
