@@ -1,8 +1,6 @@
 import fs from "fs/promises";
 
 const readFile = async (path) => {
-  console.log('readFile! - path', path);
-  console.log('process.cwd() is: ', process.cwd());
   const data = await fs.readFile(path, "utf8");
   const json = JSON.parse(data);
   return json;
@@ -25,25 +23,38 @@ const nutsBinarySearch = async (array, l, r, x) => {
 };
 
 const nutsLookup = async (query) => {
-  let queryToUse = query;
-  let result;
-  if (!queryToUse) {
+  if (!query) {
     return { Code: undefined, Region: "Not found" };
   }
-  if (queryToUse.startsWith("TL")) {
-    queryToUse = `UK${queryToUse.slice(2)}`;
+  if (!query.region) {
+    return query;
+  }
+  if (
+    query.region.startsWith("UK") ||
+    query.region.startsWith("TL") ||
+    query.region.startsWith("uk") ||
+    query.region.startsWith("tl")
+  ) {
+    let queryToUse = query.region;
+    let result;
+    if (!queryToUse) {
+      return { Code: undefined, Region: "Not found" };
+    }
+    if (queryToUse.startsWith("TL")) {
+      queryToUse = `UK${queryToUse.slice(2)}`;
+      result = await nutsBinarySearch(json, 0, json.length - 1, queryToUse);
+      if (result === -1) {
+        return query;
+      }
+      return { Code: query, Region: result.Region };
+    }
     result = await nutsBinarySearch(json, 0, json.length - 1, queryToUse);
     if (result === -1) {
-      return { Code: query, Region: "Not found" };
+      return query;
     }
-    return { Code: query, Region: result.Region };
+    return result;
   }
-  result = await nutsBinarySearch(json, 0, json.length - 1, queryToUse);
-  if (result === -1) {
-    return { Code: query, Region: "Not found" };
-  }
-  console.log('nutsLookup! - result', result);
-  return result;
+  return query;
 };
 
 export default nutsLookup;

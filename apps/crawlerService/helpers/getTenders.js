@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import getDateTimeString from "./getDateTimeString.js";
 import { CrawlerQueueModel } from "../mongoose/schemasModels.js";
 import storeFullTenders from "./storeFullTenders.js";
@@ -23,45 +24,42 @@ async function getTenders(crawlerQueue1, crawlerQueue2) {
     const fetch2 = await fetch(crawlerURL2);
     const fetch1JSON = await fetch1.json();
     // Add source to the releases
-    for (let i = 0; i < fetch1JSON.releases.length; i++) {
+    for (let i = 0; i < fetch1JSON.releases.length; i += 1) {
       const element = fetch1JSON.releases[i];
       element.source = "Find A Tender Service";
     }
     const fetch2JSON = await fetch2.json();
-    for (let i = 0; i < fetch2JSON.releases.length; i++) {
+    for (let i = 0; i < fetch2JSON.releases.length; i += 1) {
       const element = fetch2JSON.releases[i];
       element.source = "Contracts Finder Service";
     }
 
     // We're going to loop through the responses
     response = [fetch1JSON, fetch2JSON];
-    for (let i = 0; i < response.length; i++) {
+    for (let i = 0; i < response.length; i += 1) {
       const data = response[i];
       // This whole conditional deals with the queues
       if (data.links) {
-        let queue;
         if (i === 0) {
-          queue = await CrawlerQueueModel.findOneAndUpdate(
+          await CrawlerQueueModel.findOneAndUpdate(
             { ID: "FindTenderServiceQueue" },
             { $set: { URL: data.links.next } }
           ).setOptions({ returnDocument: "after" });
         } else {
-          queue = await CrawlerQueueModel.findOneAndUpdate(
+          await CrawlerQueueModel.findOneAndUpdate(
             { ID: "ContractsFinderServiceQueue" },
             { $set: { URL: data.links.next } }
           ).setOptions({ returnDocument: "after" });
         }
-        console.log("Updated crawler queue. queue = ", queue);
-        console.log("Updated crawler queue. Next URL: ", queue.URL);
       } else {
-        console.log("No links in response. Clearing crawler queue.");
+        console.log(`${getDateTimeString()} - No links in response. Clearing crawler queue.`);
         if (i === 0) {
-          await CrawlerQueueModel.findOneAndUpdate(
+          CrawlerQueueModel.findOneAndUpdate(
             { ID: "FindTenderServiceQueue" },
             { $set: { URL: null } }
           ).setOptions({ returnDocument: "after" });
         } else {
-          await CrawlerQueueModel.findOneAndUpdate(
+          CrawlerQueueModel.findOneAndUpdate(
             { ID: "ContractsFinderServiceQueue" },
             { $set: { URL: null } }
           ).setOptions({ returnDocument: "after" });
