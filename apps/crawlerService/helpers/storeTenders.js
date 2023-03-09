@@ -17,9 +17,7 @@ const extractAdditionalIDs = (tender) => {
 
 const extractDeliveryAddresses = async (tender) => {
   const { items } = tender.tender;
-  const deliveryAddresses = [];
-  let deliveryLocations;
-  deliveryLocations = await Promise.all(
+  const deliveryLocations = await Promise.all(
     items.map(async (item) => {
       console.log('item', item);
       let itemsLocations = [];
@@ -27,7 +25,7 @@ const extractDeliveryAddresses = async (tender) => {
         itemsLocations = await Promise.all(
         item.deliveryAddresses.map(async (deliveryAddress) => {
         const locationToReturn = await nutsLookup(deliveryAddress);
-        return await locationToReturn;
+        return locationToReturn;
       }));
 
       }
@@ -38,8 +36,7 @@ const extractDeliveryAddresses = async (tender) => {
 };
 
 const tenderFactory = async (tender) => {
-  let tenderToReturn;
-  let buyer = tender.parties[0];
+  const buyer = tender.parties[0];
   const classificationIDs = [tender.tender.classification.id];
   const additionalIDs = extractAdditionalIDs(tender);
   for (let i = 0; i < additionalIDs.length; i += 1) {
@@ -49,7 +46,7 @@ const tenderFactory = async (tender) => {
   }
   const date = new Date(tender.date).toLocaleDateString("en-GB");
   const deliveryAddresses = await extractDeliveryAddresses(tender);
-  const description = tender.tender.description;
+  const { description } = tender.tender;
   let endDate = "";
   if (tender.tender.tenderPeriod) {
     if (tender.tender.tenderPeriod.endDate) {
@@ -60,10 +57,7 @@ const tenderFactory = async (tender) => {
     
   }
   const fullDate = tender.date;
-  const id = tender.id;
-  const ocid = tender.ocid;
-  const parties = tender.parties;
-  const source = tender.source;
+  const { id, ocid, parties, source, tag } = tender;
   let submissionMethod;
   if (tender.tender.submissionMethodDetails) {
     if (tender.tender.submissionMethodDetails.startsWith("http")) {
@@ -78,17 +72,17 @@ const tenderFactory = async (tender) => {
       };
     }
   }
-  const tag = tender.tag;
+
   const tenderId = tender.tender.id;
   const tenderStatus = tender.tender.status;
   const timestampRetrieved = new Date();
-  const title = tender.tender.title;
+  const { title } = tender.tender;
   let value = "";
   if (tender.tender.value) {
-    value = tender.tender.value.amount + " " + tender.tender.value.currency;
+    value = `${tender.tender.value.amount} ${tender.tender.value.currency}`;
   }
  
-  tenderToReturn = {
+  const tenderToReturn = {
     buyer,
     classificationIDs,
     date,
@@ -113,12 +107,10 @@ const tenderFactory = async (tender) => {
 
 const checkIfTenderExists = async (tenderID, model) => {
   const tenderExists = await model.find({ id: tenderID }).lean();
-  console.log("checkIfTenderExists! - tenderExists: ", tenderExists);
   return tenderExists;
 };
 
 const storeTender = async (tender) => {
-  console.log("storeTender! - tender", tender, "TenderModel", TenderModel);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
     if (
@@ -133,7 +125,6 @@ const storeTender = async (tender) => {
       updatedTenderModel = await updatedTenderModel.save();
       return updatedTenderModel;
     }
-    console.log("storeTender! - tender already exists, not storing");
     return false;
   }
   let model = new TenderModel(tender);
@@ -142,16 +133,14 @@ const storeTender = async (tender) => {
 };
 
 const storeTenders = async (tenders) => {
-  console.log("storeTenders! - tenders", tenders);
   const storedTenders = Promise.all(
     tenders.map(async (tender) => {
       const tenderToStore = await tenderFactory(tender);
-      console.log("tentderToStore", tenderToStore);
       const storedTender = await storeTender(tenderToStore);
       return storedTender;
     })
   );
-  return await storedTenders;
+  return storedTenders;
 };
 
 export default storeTenders;

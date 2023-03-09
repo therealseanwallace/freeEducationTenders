@@ -1,8 +1,6 @@
 import { AllTendersModel, AllEducationTendersModel } from "../mongoose/schemasModels.js";
 
-// Takes two parameters - a list of tenders and
-// a model to store them with
-const storeFullTenders = async function(tenders, model) {
+async function storeFullTenders(tenders, model) {
   let modelToUse;
   if (model === "AllTendersModel") {
     modelToUse = AllTendersModel;

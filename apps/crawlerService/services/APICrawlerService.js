@@ -35,16 +35,16 @@ class APICrawlerService {
 
     // Check to see if this is the first run
     this.appStatus = await AppStatusModel.find({ name: "apiCrawler" }).lean();
-    console.log("this.appStatus", this.appStatus);
     if (this.appStatus.length === 0) {
       this.appStatus = [{ firstRun: true }];
     }
     console.log("this.appStatus[0].firstRun", this.appStatus[0].firstRun);
 
-    // If this isn't the first run...
+    
     let FindTenderServiceQueue;
     let ContractsFinderServiceQueue;
     if (this.appStatus[0].firstRun !== true) {
+      // If this isn't the first run...
       FindTenderServiceQueue = await CrawlerQueueModel.findOne({
         ID: "FindTenderServiceQueue",
       }).lean();
@@ -90,8 +90,7 @@ class APICrawlerService {
       console.log(
         `${getDateTimeString()} - ${
           tenders.length
-        } tenders stored! Tenders are:`,
-        storedTenders
+        } tenders stored!`
       );
       // Mark the app as having run
       if (this.appStatus[0].firstRun === true) {

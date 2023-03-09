@@ -16,7 +16,6 @@ const TenderSchema = new Schema({
   source: String,
   submissionMethod: Object,
   tag: Array,
-  tenderId: String,
   tenderStatus: String,  
   timestampRetrieved: String,
   title: String,

@@ -1,8 +1,6 @@
 import fs from "fs/promises";
 
 const readFile = async (path) => {
-  console.log("readFile! - path", path);
-  console.log("process.cwd() is: ", process.cwd());
   const data = await fs.readFile(path, "utf8");
   const json = JSON.parse(data);
   return json;
@@ -25,7 +23,6 @@ const nutsBinarySearch = async (array, l, r, x) => {
 };
 
 const nutsLookup = async (query) => {
-  console.log('query is: ', query, typeof query)
   if (!query) {
     return { Code: undefined, Region: "Not found" };
   }
@@ -47,7 +44,7 @@ const nutsLookup = async (query) => {
       queryToUse = `UK${queryToUse.slice(2)}`;
       result = await nutsBinarySearch(json, 0, json.length - 1, queryToUse);
       if (result === -1) {
-        return query
+        return query;
       }
       return { Code: query, Region: result.Region };
     }
@@ -55,11 +52,9 @@ const nutsLookup = async (query) => {
     if (result === -1) {
       return query;
     }
-    console.log("nutsLookup! - result", result);
     return result;
-  } else {
-    return query
   }
+  return query;
 };
 
 export default nutsLookup;
