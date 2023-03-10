@@ -27,6 +27,7 @@ const TenderModel = mongoose.model("Tenders", TenderSchema);
 const AppStatus = new Schema({
   name: String,
   firstRun: Boolean,
+  lastRan: Date,
 });
 
 const AppStatusModel = mongoose.model("AppStatus", AppStatus);

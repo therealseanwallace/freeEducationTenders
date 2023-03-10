@@ -4,11 +4,13 @@ import nutsLookup from "./nutsLookup.js";
 const extractAdditionalIDs = (tender) => {
   const { items } = tender.tender;
   const additionalIDs = [];
-  for (let i = 0; i < items.length; i += 1) {
-    if (items[i].additionalClassifications) {
-      const { additionalClassifications } = items[i];
-      for (let j = 0; j < additionalClassifications.length; j += 1) {
-        additionalIDs.push(additionalClassifications[j].id);
+  if (items) {
+    for (let i = 0; i < items.length; i += 1) {
+      if (items[i].additionalClassifications) {
+        const { additionalClassifications } = items[i];
+        for (let j = 0; j < additionalClassifications.length; j += 1) {
+          additionalIDs.push(additionalClassifications[j].id);
+        }
       }
     }
   }
@@ -17,17 +19,20 @@ const extractAdditionalIDs = (tender) => {
 
 const extractDeliveryAddresses = async (tender) => {
   const { items } = tender.tender;
+  if (typeof items === "undefined") {
+    return [];
+  }
   const deliveryLocations = await Promise.all(
     items.map(async (item) => {
-      console.log('item', item);
+      console.log("item", item);
       let itemsLocations = [];
       if (item.deliveryAddresses) {
         itemsLocations = await Promise.all(
-        item.deliveryAddresses.map(async (deliveryAddress) => {
-        const locationToReturn = await nutsLookup(deliveryAddress);
-        return locationToReturn;
-      }));
-
+          item.deliveryAddresses.map(async (deliveryAddress) => {
+            const locationToReturn = await nutsLookup(deliveryAddress);
+            return locationToReturn;
+          })
+        );
       }
       return itemsLocations;
     })
@@ -54,7 +59,6 @@ const tenderFactory = async (tender) => {
         "en-GB"
       );
     }
-    
   }
   const fullDate = tender.date;
   const { id, ocid, parties, source, tag } = tender;
@@ -81,7 +85,7 @@ const tenderFactory = async (tender) => {
   if (tender.tender.value) {
     value = `${tender.tender.value.amount} ${tender.tender.value.currency}`;
   }
- 
+
   const tenderToReturn = {
     buyer,
     classificationIDs,
@@ -111,23 +115,14 @@ const checkIfTenderExists = async (tenderID, model) => {
 };
 
 const storeTender = async (tender) => {
+  let model = new TenderModel(tender);
   const tenderExists = await checkIfTenderExists(tender.id, TenderModel);
   if (tenderExists.length !== 0) {
-    if (
-      tenderExists &&
-      tenderExists[0].tenderDetails.tenderStatus !==
-        tender.tenderDetails.tenderStatus
-    ) {
-      const updatedTender = tenderExists[0];
-      updatedTender.tenderDetails.updates.push(tender.tenderDetails);
-      await TenderModel.deleteOne({ id: tender.id });
-      let updatedTenderModel = new TenderModel(updatedTender);
-      updatedTenderModel = await updatedTenderModel.save();
-      return updatedTenderModel;
+    if (tenderExists[0].date === tender.date) {
+      return false;  
     }
-    return false;
+    
   }
-  let model = new TenderModel(tender);
   model = await model.save();
   return model;
 };

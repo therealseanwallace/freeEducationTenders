@@ -17,7 +17,7 @@ const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
-rule.minute = new Range(0, 59, 10);
+rule.minute = new Range(0, 59, 6);
 
 class APICrawlerService {
   constructor() {
@@ -53,7 +53,7 @@ class APICrawlerService {
       }).lean();
       let tenders;
 
-      tenders = await this.getTenders(FindTenderServiceQueue.URL, ContractsFinderServiceQueue.URL);
+      tenders = await this.getTenders(FindTenderServiceQueue.URL, ContractsFinderServiceQueue.URL, this.appStatus[0].lastRan);
       // Store the retrieved tenders
       const storedTenders = await this.storeTenders(tenders);
       console.log(
@@ -62,6 +62,7 @@ class APICrawlerService {
         } tenders stored! Tenders are:`,
         storedTenders
       );
+      this.markRun(new Date());
     } else {
       // This is the first run...
       await CrawlerQueueModel.create({
@@ -83,7 +84,8 @@ class APICrawlerService {
       )}&publishedTo=${getDateTimeString()}`;
       tenders = await this.getTenders(
         findTenderServiceURL,
-        contractsFinderServiceURL
+        contractsFinderServiceURL,
+        this.appStatus[0].lastRan
       );
       // Store the retrieved tenders
       const storedTenders = await this.storeTenders(tenders);
@@ -95,7 +97,9 @@ class APICrawlerService {
       // Mark the app as having run
       if (this.appStatus[0].firstRun === true) {
         this.appStatus[0].firstRun = false;
-        this.markRun();
+        const date = new Date();
+        this.appStatus[0].lastRan = date;
+        this.markRun(date);
       }
     }
   }
