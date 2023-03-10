@@ -3,20 +3,22 @@ import getDateTimeString from "./getDateTimeString.js";
 import { CrawlerQueueModel } from "../mongoose/schemasModels.js";
 import storeFullTenders from "./storeFullTenders.js";
 
-async function getTenders(crawlerQueue1, crawlerQueue2) {
+async function getTenders(crawlerQueue1, crawlerQueue2, lastRan) {
   let crawlerURL1 = crawlerQueue1;
   let crawlerURL2 = crawlerQueue2;
+  let date = new Date();
+  if (lastRan) {
+    date = new Date(lastRan);
+  } else {
+    date.setMinutes(date.getMinutes() - 15);
+  }
+  const dateToISOString = date.toISOString().split(".")[0];
 
   if (!crawlerURL1) {
-    crawlerURL1 = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${getDateTimeString(
-      -0.22
-    )}&updatedTo=${getDateTimeString()}`;
-    
+    crawlerURL1 = `https://www.find-tender.service.gov.uk/api/1.0/ocdsReleasePackages?updatedFrom=${dateToISOString}&updatedTo=${getDateTimeString()}`;
   }
   if (!crawlerURL2) {
-    crawlerURL2 = `https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?publishedFrom=${getDateTimeString(
-      -0.22
-    )}&publishedTo=${getDateTimeString()}`;
+    crawlerURL2 = `https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search?publishedFrom=${dateToISOString}&publishedTo=${getDateTimeString()}`;
   }
   let response;
   try {
@@ -52,7 +54,9 @@ async function getTenders(crawlerQueue1, crawlerQueue2) {
           ).setOptions({ returnDocument: "after" });
         }
       } else {
-        console.log(`${getDateTimeString()} - No links in response. Clearing crawler queue.`);
+        console.log(
+          `${getDateTimeString()} - No links in response. Clearing crawler queue.`
+        );
         if (i === 0) {
           CrawlerQueueModel.findOneAndUpdate(
             { ID: "FindTenderServiceQueue" },
