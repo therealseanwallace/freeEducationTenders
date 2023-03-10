@@ -4,11 +4,11 @@ import mongoosePaginate from "mongoose-paginate-v2";
 const { Schema } = mongoose;
 
 const TenderSchema = new Schema({
-  buyer: Object,
   classificationIDs: Array,
   date: String,
   deliveryAddresses: Array,
   description: String,
+  documents: Array,
   endDate: String,
   fullDate: String,
   id: String,
