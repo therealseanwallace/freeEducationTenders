@@ -41,8 +41,11 @@ const extractDeliveryAddresses = async (tender) => {
 };
 
 const tenderFactory = async (tender) => {
-  const buyer = tender.parties[0];
   const classificationIDs = [tender.tender.classification.id];
+  let documents = [];
+  if (tender.tender.documents) {
+    documents = tender.tender.documents;
+  }
   const additionalIDs = extractAdditionalIDs(tender);
   for (let i = 0; i < additionalIDs.length; i += 1) {
     if (!classificationIDs.includes(additionalIDs[i])) {
@@ -62,7 +65,7 @@ const tenderFactory = async (tender) => {
   }
   const fullDate = tender.date;
   const { id, ocid, parties, source, tag } = tender;
-  let submissionMethod;
+  let submissionMethod = {};
   if (tender.tender.submissionMethodDetails) {
     if (tender.tender.submissionMethodDetails.startsWith("http")) {
       submissionMethod = {
@@ -87,11 +90,11 @@ const tenderFactory = async (tender) => {
   }
 
   const tenderToReturn = {
-    buyer,
     classificationIDs,
     date,
     deliveryAddresses,
     description,
+    documents,
     endDate,
     fullDate,
     id,

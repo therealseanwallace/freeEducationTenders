@@ -1,10 +1,11 @@
-import TenderCardLots from "./TenderCardLots";
+import TenderCardAddresses from "./TenderCardAddresses";
 import Collapsible from "react-collapsible";
+import Parties from "./Parties";
 
 const TenderCard = ({ tender }) => {
   console.log("tender card! tender = ", tender);
   const tags = [];
-  tags.push(tender.tenderDetails.tenderStatus);
+  tags.push(tender.tenderStatus);
   tags.push(...tender.tag);
   const tagsMap = tags.map((tag, index) => {
     let uniqueClass;
@@ -41,46 +42,49 @@ const TenderCard = ({ tender }) => {
     );
   });
   let buyerProfile = "";
-  /* console.log('about to run check. tender is' , tender);
-  console.log('tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile")', tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile"));
-  const check = tender.tenderDetails.buyer.details.hasOwnProperty("buyerProfile");*/
-  if (tender.tenderDetails.buyer.details.buyerProfile !== undefined) {
-    console.log('this has a buyer profile');
-    buyerProfile = tender.tenderDetails.buyer.details.buyerProfile;
+  let buyerString = "";
+
+  if (tender.submissionMethod) {
+    if (tender.submissionMethod.type === "url") {
+      buyerProfile = tender.submissionMethod.value;
+    } else {
+      buyerString = tender.submissionMethod.value;
+    }
   }
   return (
     <div className="tender-card">
-      <h2 className="tender-card-title">{tender.tenderDetails.title}</h2>
-      <h2 className="tender-card-buyer">{tender.tenderDetails.buyer.name}</h2>
+      <h2 className="tender-card-title">{tender.title}</h2>
+      <h2 className="tender-card-buyer">{tender.parties[0].name}</h2>
       <div className="tender-card-links">
         <a href={buyerProfile} className="tender-card-button">
-          <button className="tender-card-buyer-profile-link ">
-            Buyer profile
-          </button>
-        </a>
-        <a href={tender.tenderDetails.buyer.details.url} className="tender-card-button">
-          <button className="tender-card-website-link">
-            Buyer website
+          <button className="tender-card-submission-link">
+            Link to submission
           </button>
         </a>
       </div>
-
-
       <h2 className="tender-card-date">Released: {tender.date}</h2>
+      <h2 className="end-date">End date: {tender.endDate}</h2>
       <div className="tags">
         <h2 className="tags-title">Tags:</h2>
         {tagsMap}
       </div>
+      <div className="tender-card-delivery-addresses">
+        {tender.deliveryAddresses.map((address, index) => (
+          <TenderCardAddresses key={index} address={address} />
+        ))}
+      </div>
       <hr />
       <p className="card-instructions">Click description/lots to expand</p>
       <Collapsible trigger={"Description"} className="description-collapsible">
-        {tender.tenderDetails.description}
+        {tender.description}
       </Collapsible>
-      <div className="tender-card-lots-display">
-        {tender.tenderDetails.lots.map((lot, index) => (
-          <TenderCardLots key={index} lot={lot} />
-        ))}
-      </div>
+      <Collapsible
+        trigger={"Parties"}
+        className="parties-collapsible"
+        
+      >
+        <Parties parties={tender.parties}/>
+      </Collapsible>
     </div>
   );
 };
