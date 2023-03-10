@@ -17,7 +17,7 @@ const { scheduleJob, RecurrenceRule, Range } = pkgSchedule;
 
 const rule = new RecurrenceRule();
 rule.hour = new Range(0, 23, 1);
-rule.minute = new Range(0, 59, 6);
+rule.minute = new Range(0, 59, 10);
 
 class APICrawlerService {
   constructor() {
