@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import logo from "./logo.svg";
 import Selectors from "./components/Selectors";
 import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
@@ -119,10 +118,6 @@ const App = () => {
     }, 1000);
     return () => clearInterval(interval);
   });
-
-  useEffect(() => {
-    console.log("tenders", tenders);
-  }, [tenders]);
 
   return (
     <div className="App">

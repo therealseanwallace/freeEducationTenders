@@ -137,6 +137,18 @@ button:hover,
   font-weight: normal;
 }
 
+.tender-card-value > span, .tender-card-date > span, .tender-card-end-date > span, .tender-card-addresses > span {
+  font-weight: 500;
+}
+
+.tender-card-value, .tender-card-date, .tender-card-end-date, .tender-card-addresses  {
+  font-size: 1.2rem;
+  margin: 0 0 0 8px;
+}
+
+.tender-card-submission-link {
+  margin: 4px 0 4px 8px;
+}
 .tender-card-links {
   display: flex;
   gap: 2px;
@@ -163,12 +175,6 @@ hr {
   border: 0;
   background-color: #14aaf5;
   color: whitesmoke;
-  font-weight: 500;
-}
-
-.tender-card-date {
-  font-size: 1.2rem;
-  margin: 0 0 0 8px;
   font-weight: 500;
 }
 
@@ -205,9 +211,10 @@ hr {
   display: flex;
   gap: 2px;
   flex-wrap: wrap;
+  margin-left: 8px;
 }
 
-.tag {
+.tag, .tender-card-address, .tender-card-party-role {
   background-color: #680005;
   font-size: 0.8rem;
   color: whitesmoke;
@@ -219,12 +226,36 @@ hr {
   height: 28px;
 }
 
+.tender-card-addresses, .tender-card-party-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+.tender-card-address, .tender-card-party-role {
+  background-color: #00a796;
+  flex-shrink: 1;
+}
+
+.tender-card-party-role {
+  background-color: #937a00;
+}
+.tender-card-address-label {
+  width: 100%;
+}
+
+.tender-card-party > * > span, .tender-card-party-contact-url > span, .tender-card-party-buyer-profile > span, .tender-card-party-roles-label {
+  font-weight: 500;
+  margin-right: 4px;
+}
 .tags-title {
   font-size: 1.2rem;
-  margin: 4px 8px 0 8px;
-
+  margin: 4px 8px 0 0;
   font-weight: 500;
+  width: 100%;
 }
+
 
 .active,
 .tender {
@@ -301,8 +332,11 @@ footer {
   margin-top: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+}
+
+footer > hr {
+  width: 100%;
 }
 
 .footer-top {
@@ -319,7 +353,20 @@ footer {
 
 .social-links {
   display: flex;
-  gap: 12px;
+  gap: 36px;
+  align-items: center;
+}
+
+.social-link-logo {
+  width: 36px;
+  height: auto;
+}
+
+.copyright-statement-social-links-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
 }
 /* MEDIA QUERIES */
 
@@ -342,7 +389,8 @@ footer {
   .results-display {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 24px;
   }
 }

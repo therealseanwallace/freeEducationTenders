@@ -1,10 +1,13 @@
+import githubLogo from "../assets/github-mark.png";
+import linkedInLogo from "../assets/LI-In-Bug.png";
+
 const Footer = (props) => {
   return (
     <footer>
       <hr />
       <div className="footer-top">
         <p className="version-statement">
-          <strong>Version:</strong> 0.1.1 <br />
+          <strong>Version:</strong> 0.1.3 <br />
           <strong>Please note:</strong> this web application is in a pre-release
           or “alpha” stage of development and may undergo frequent or extensive
           changes or shutdowns or prolonged delays in loading results.
@@ -25,22 +28,32 @@ const Footer = (props) => {
           Do NOT base your bidding decisions on this information -{" "}
           <strong>always</strong> check official sources!
         </p>
-        <p className="author-statement">
-          Designed and Developed by Sean Patrick Wallace © 2023
-        </p>
-        <div className="social-links">
-          <a
-            className="github-link"
-            href="https://github.com/therealseanwallace/freeEducationTenders"
-          >
-            GitHub
-          </a>
-          <a
-            className="linkedin-link"
-            href="https://www.linkedin.com/in/sean-wallace-338a53198/"
-          >
-            LinkedIn
-          </a>
+        <div className="copyright-statement-social-links-container">
+          <p className="copyright-statement">
+            Designed and Developed by Sean Patrick Wallace © 2023
+          </p>
+          <div className="social-links">
+            <a
+              className="github-link"
+              href="https://github.com/therealseanwallace/freeEducationTenders"
+            >
+              <img
+                src={githubLogo}
+                alt="GitHub link"
+                className="social-link-logo"
+              />
+            </a>
+            <a
+              className="linkedin-link"
+              href="https://www.linkedin.com/in/sean-wallace-338a53198/"
+            >
+              <img
+                src={linkedInLogo}
+                alt="LinkedIn link"
+                className="social-link-logo"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </footer>
