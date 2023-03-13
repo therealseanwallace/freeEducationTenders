@@ -35,9 +35,10 @@ const App = () => {
     console.log("fetchCategory", category);
     try {
       const categoryTenders = await fetch(
-        `http://localhost:3001/api/tenders/category/${category.category}/page/${
+        /*`http://localhost:3001/api/tenders/category/${category.category}/page/${
           category.pageRetrieved + 1
-        }`,
+        }`,*/
+        `https://dull-holiday-inhabitant.herokuapp.com/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,
         {
           method: "GET",
           mode: "cors",
@@ -124,7 +125,7 @@ const App = () => {
       <header>
         <h1 className="header-title">Just Education Tenders</h1>
         <h2 className="header-text">
-        UK Education Tenders direct from the source and updated in real time - always free and no signup needed
+        UK Education Tenders updated in real time - always free and no signup needed
         </h2>
       </header>
       <main>
