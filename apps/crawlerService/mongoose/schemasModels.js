@@ -7,7 +7,7 @@ const TenderSchema = new Schema({
   date: String,
   deliveryAddresses: Array,
   description: String,
-  Documents: Array,
+  documents: Array,
   endDate: String,
   fullDate: String,
   id: String,

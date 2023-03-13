@@ -64,7 +64,7 @@ async function connect() {
     console.log(`${getDateTimeString()} - Error connecting to MongoDB: `, error.message);
   } finally {
     if (mongoose.connection.readyState === 1) {
-      console.log(`${getDateTimeString} - Connected to MongoDB`);
+      console.log(`${getDateTimeString()} - Connected to MongoDB`);
     }
   }
 }

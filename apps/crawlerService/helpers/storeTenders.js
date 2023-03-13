@@ -65,7 +65,7 @@ const tenderFactory = async (tender) => {
   }
   const fullDate = tender.date;
   const { id, ocid, parties, source, tag } = tender;
-  let submissionMethod;
+  let submissionMethod = {};
   if (tender.tender.submissionMethodDetails) {
     if (tender.tender.submissionMethodDetails.startsWith("http")) {
       submissionMethod = {
