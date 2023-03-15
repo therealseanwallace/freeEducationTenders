@@ -10,7 +10,7 @@ const queryDB = async (categories, page) => {
     const options = {
       page: pageToUse,
       limit: 10,
-      sort: { date: -1 },
+      sort: { fullDate: -1 },
     };
 
     const response = TenderModel.paginate({
