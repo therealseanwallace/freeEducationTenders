@@ -4,11 +4,25 @@ const TenderCardAddresses = ( { addresses } ) => {
   const addressesToDisplay = [];
   for (let i = 0; i < addresses.length; i++) {
     const address = addresses[i][0];
-    if (!addressesToDisplay.includes(address.Code)) {
-      addressesToDisplay.push(address.Code);
+    if (address.Code) {
+      if (!addressesToDisplay.includes(address.Code)) {
+        addressesToDisplay.push(address.Code);
+      }
     }
-    if (!addressesToDisplay.includes(address.Region)) {
-      addressesToDisplay.push(address.Region);
+    if (address.region) {
+      if (!addressesToDisplay.includes(address.region)) {
+        addressesToDisplay.push(address.region);
+      }
+    }
+    if (address.postalCode) {
+      if (!addressesToDisplay.includes(address.postalCode)) {
+        addressesToDisplay.push(address.postalCode);
+      }
+    }
+    if (address.countryName) {
+      if (!addressesToDisplay.includes(address.countryName)) {
+        addressesToDisplay.push(address.countryName);
+      }
     }
   }
   console.log('addressesToDisplay = ', addressesToDisplay);

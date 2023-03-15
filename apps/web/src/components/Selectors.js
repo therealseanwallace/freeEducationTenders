@@ -10,7 +10,7 @@ const Selectors = (props) => {
 
   return (
     <div className="selectors">
-      <h3>Select categories</h3>
+      <h3>Click to select categories</h3>
       {categoryButtons}
       <button className="clear-cats" onClick={props.clearCategories}>Clear categories</button>
     </div>

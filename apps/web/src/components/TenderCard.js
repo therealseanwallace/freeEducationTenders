@@ -47,14 +47,23 @@ const TenderCard = ({ tender }) => {
     if (tender.submissionMethod) {
       if (tender.submissionMethod.type === "url") {
         return (
-          <a
+          <button onClick={(e) => {
+            e.preventDefault();
+            window.open(tender.submissionMethod.value);
+          }}>
+            Link to submission <span>opens new tab</span>
+            
+          </button>
+
+          
+          /*<a
             href={tender.submissionMethod.value}
             className="tender-card-submission-method-link"
           >
-            <button className="tender-card-submission-link">
-              Submission link
+            <button className="tender-card-submission-link" aria-hidden="true">
+                
             </button>
-          </a>
+          </a>*/
         );
       } else {
         return (
@@ -84,6 +93,14 @@ const TenderCard = ({ tender }) => {
     } else return "";
   };
 
+  const returnCollapsibleButton = (content) => {
+    return (
+      <button className="collapsible-button">
+        <p className="collapsible-button-text">{content}</p>
+      </button>
+    )
+  };
+
   return (
     <div className="tender-card">
       <div className="tender-card-upper">
@@ -104,12 +121,16 @@ const TenderCard = ({ tender }) => {
       </div>
       <hr />
       <p className="card-instructions">Click description/lots to expand</p>
-      <Collapsible trigger={"Description"} className="description-collapsible">
+      
+      <Collapsible trigger={returnCollapsibleButton("Description")} className="description-collapsible">
         {tender.description}
       </Collapsible>
-      <Collapsible trigger={"Parties"} className="parties-collapsible">
+      
+      
+      <Collapsible trigger={returnCollapsibleButton("Parties")} className="parties-collapsible">
         <Parties parties={tender.parties} />
       </Collapsible>
+      
     </div>
   );
 };

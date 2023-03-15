@@ -35,10 +35,10 @@ const App = () => {
     console.log("fetchCategory", category);
     try {
       const categoryTenders = await fetch(
-        /*`http://localhost:3001/api/tenders/category/${category.category}/page/${
+        `http://localhost:3001/api/tenders/category/${category.category}/page/${
           category.pageRetrieved + 1
-        }`,*/
-        `https://dull-holiday-inhabitant.herokuapp.com/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,
+        }`,
+        /*`https://dull-holiday-inhabitant.herokuapp.com/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,*/
         {
           method: "GET",
           mode: "cors",
