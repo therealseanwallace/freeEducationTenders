@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 
-const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"]
+/* const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"]
 
 const corsOptions = {
   origin: function corsCheck(origin, callback) {
@@ -30,9 +30,9 @@ const corsOptions = {
     }
   },
   optionsSuccessStatus: 200,
-};
+}; */
 
-// const corsOptions = {};
+const corsOptions = {};
 app.use(cors(corsOptions));
 
 const apiRequestLimiter = rateLimit({
