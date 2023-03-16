@@ -136,27 +136,3 @@ const TenderCard = ({ tender }) => {
 };
 
 export default TenderCard;
-
-/* <Collapsible trigger={"Parties"} className="parties-collapsible">
-        <Parties
-          parties={tender.parties.map((party) => {
-            return (
-              <div className="tender-card-party">
-                <p className="tender-card-party-name" key={uuidv4()}>
-                  {party.name}
-                </p>
-                <div className="tender-card-party-roles">
-                  {party.roles.map((role) => {
-                    return (
-                      <p className="tender-card-party-role" key={uuidv4()}>
-                        {role}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        />
-      </Collapsible>
-      */

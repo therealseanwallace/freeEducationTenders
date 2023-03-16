@@ -7,13 +7,12 @@ const Footer = (props) => {
       <hr />
       <div className="footer-top">
         <p className="version-statement">
-          <strong>Version:</strong> 0.1.4 <br />
+          <strong>Version:</strong> 0.2.0 <br />
           <strong>Please note:</strong> this web application is in a pre-release
           or “alpha” stage of development and may undergo frequent or extensive
           changes or shutdowns or prolonged delays in loading results.
           <br />
-          Several features have yet to be added - most importantly,
-          accessibility.
+          Several features have yet to be added.
           <br />
           In the meantime, please bear with me 🙂
         </p>
