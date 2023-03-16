@@ -42,13 +42,13 @@ const Parties = ({ parties }) => {
                 className="tender-card-party-contact-url"
                 key={uuidv4()}
               >
-                <span>Contact url:</span> {url}
+                <span>Contact website:</span> {url}
               </p>
               <p
                 className="tender-card-party-buyer-profile"
                 key={uuidv4()}
               >
-                <span>Buyer profile:</span> {buyerProfile}
+                <span>Buyer website:</span> {buyerProfile}
               </p>
             </div>
 
