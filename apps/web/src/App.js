@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [tenders, setTenders] = useState([]);
+  const [updatesRequested, setUpdatesRequested] = useState(0);
 
   const selectCategories = (e) => {
     for (let i = 0; i < selectedCategories.length; i++) {
@@ -63,9 +64,7 @@ const App = () => {
     setTenders([]);
   };
 
-  let updatesRequested = 0;
-
-  const checkTendersToAdd = (docs) => {
+    const checkTendersToAdd = (docs) => {
     const tendersToReturn = [];
     for (let i = 0; i < docs.length; i++) {
       let foundTender = false;
@@ -109,7 +108,7 @@ const App = () => {
 
   const getMore = () => {
     console.log("getMore");
-    updatesRequested += 1;
+    setUpdatesRequested(updatesRequested + 1);
   };
 
   useEffect(() => {
