@@ -6,6 +6,7 @@ const Footer = (props) => {
     <footer>
       <hr />
       <div className="footer-top">
+        <button onClick={props.togglePrivacyPolicy}>Show Privacy Policy</button>
         <p className="version-statement">
           <strong>Version:</strong> 0.2.0 <br />
           <strong>Please note:</strong> this web application is in a pre-release

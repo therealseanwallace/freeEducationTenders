@@ -3,11 +3,13 @@ import Selectors from "./components/Selectors";
 import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
 import Footer from "./components/Footer";
+import PrivacyPolicy from "./components/privacyPolicy";
 
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [tenders, setTenders] = useState([]);
   const [updatesRequested, setUpdatesRequested] = useState(0);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
   const selectCategories = (e) => {
     for (let i = 0; i < selectedCategories.length; i++) {
@@ -111,6 +113,10 @@ const App = () => {
     setUpdatesRequested(updatesRequested + 1);
   };
 
+  const togglePrivacyPolicy = () => {
+    setShowPrivacyPolicy(!showPrivacyPolicy);
+  }
+
   useEffect(() => {
     console.log("selectedCategories", selectedCategories);
     const interval = setInterval(() => {
@@ -119,7 +125,22 @@ const App = () => {
     return () => clearInterval(interval);
   });
 
-  return (
+  if (showPrivacyPolicy) {
+    return (
+      <div className="App">
+        <header>
+          <h1 className="header-title">Just Education Tenders</h1>
+          <h2 className="header-text">
+          UK Education Tenders updated in real time - always free and no signup needed
+          </h2>
+        </header>
+        <main>
+          <PrivacyPolicy togglePrivacyPolicy={togglePrivacyPolicy}/>
+        </main>
+        <Footer togglePrivacyPolicy={togglePrivacyPolicy} />
+      </div>
+    )
+  } else return (
     <div className="App">
       <header>
         <h1 className="header-title">Just Education Tenders</h1>
@@ -135,7 +156,7 @@ const App = () => {
         />
         <ResultsDisplay tenders={tenders} getMore={getMore}/>
       </main>
-      <Footer />
+      <Footer togglePrivacyPolicy={togglePrivacyPolicy}/>
     </div>
   );
 };
