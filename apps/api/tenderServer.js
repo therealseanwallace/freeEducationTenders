@@ -51,7 +51,6 @@ app.listen(PORT, err => {
   console.log(`${getDateTimeString()} - Server running on port ${PORT}`);
 });
 
-
 // Mongoose //
 
 const { MONGO_URL } = process.env;

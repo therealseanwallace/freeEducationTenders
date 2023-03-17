@@ -8,6 +8,7 @@ tenderRouter.get("/category/:category/page/:page", async (req, res) => {
   const { category, page } = req.params;
   const catArray = returnCategoriesArray(category);
   const response = await queryDB(catArray, page);
+  res.set("Cache-Control", "public, max-age=360");
   return res.json(response);
 });
 
