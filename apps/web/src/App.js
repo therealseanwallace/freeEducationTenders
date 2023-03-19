@@ -36,10 +36,9 @@ const App = () => {
   const fetchCategory = async (category) => {
     try {
       const categoryTenders = await fetch(
-        `http://localhost:3001/api/tenders/category/${category.category}/page/${
-          category.pageRetrieved + 1
-        }`,
-        /*`https://api.justeducationtenders.co.uk/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,*/
+        `https://api.justeducationtenders.co.uk/api/tenders/category/${
+          category.category
+        }/page/${category.pageRetrieved + 1}`,
         {
           method: "GET",
           mode: "cors",
@@ -161,7 +160,11 @@ const App = () => {
             )}
             clearCategories={clearCategories}
           />
-          <ResultsDisplay tenders={tenders} getMore={getMore} newDataRequested={newDataRequested}/>
+          <ResultsDisplay
+            tenders={tenders}
+            getMore={getMore}
+            newDataRequested={newDataRequested}
+          />
         </main>
         <Footer
           togglePrivacyPolicy={togglePrivacyPolicy}
