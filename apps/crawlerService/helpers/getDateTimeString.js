@@ -3,8 +3,8 @@ const getDateTimeString = (offset) => {
   if (offset === true) {
     // if offset is strictly equal to true, this is
     // the first run and we will retrieve the data
-    // for the last 3 months
-    date.setMonth(date.getMonth() - 3);
+    // for the last month
+    date.setMonth(date.getMonth() - 1);
   }
   if (typeof offset === "number") {
     // otherwise, if offset is a number of hours,
