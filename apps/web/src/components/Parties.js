@@ -26,17 +26,17 @@ const Parties = ({ parties }) => {
           }
         }
         return (
-          <div className="tender-card-party">
+          <div className="tender-card-party" key={uuidv4()}>
             <p className="tender-card-party-name" key={uuidv4()}>
               <span>Party name:</span> {party.name}
             </p>
             <p className="tender-card-party-contact-name" key={uuidv4()}>
               <span>Contact name:</span> {contactName}
             </p>
-            <p className="tender-card-party-contact-email" key={uuidv4()}>
+            <div className="tender-card-party-contact-email" key={uuidv4()}>
               <span>Contact email:</span>{" "}
               <p key={uuidv4()}>{email}</p>
-            </p>
+            </div>
             <div className="tender-card-party-links">
               <p
                 className="tender-card-party-contact-url"
