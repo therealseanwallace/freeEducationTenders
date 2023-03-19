@@ -236,7 +236,6 @@ const PrivacyPolicy = (props) => {
         If you have any questions or suggestions about our Privacy Policy, do
         not hesitate to contact us at wallace.sean111@gmail.com
       </p>
-      <button onClick={props.togglePrivacyPolicy}>Close privacy policy</button>
     </div>
   );
 };

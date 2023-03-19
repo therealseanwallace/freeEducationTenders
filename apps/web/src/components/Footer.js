@@ -2,13 +2,24 @@ import githubLogo from "../assets/github-mark.png";
 import linkedInLogo from "../assets/LI-In-Bug.png";
 
 const Footer = (props) => {
+  const returnPrivacyPolicyButton = () => {
+    if (props.showPrivacyPolicy) {
+      return (
+        <button onClick={props.togglePrivacyPolicy}>Hide Privacy Policy</button>
+      );
+    } else {
+      return (
+        <button onClick={props.togglePrivacyPolicy}>Show Privacy Policy</button>
+      );
+    }
+  };
   return (
     <footer>
       <hr />
       <div className="footer-top">
-        <button onClick={props.togglePrivacyPolicy}>Show Privacy Policy</button>
+        {returnPrivacyPolicyButton()}
         <p className="version-statement">
-          <strong>Version:</strong> 0.2.0 <br />
+          <strong>Version:</strong> 0.3.0 <br />
           <strong>Please note:</strong> this web application is in a pre-release
           or “alpha” stage of development and may undergo frequent or extensive
           changes or shutdowns or prolonged delays in loading results.
