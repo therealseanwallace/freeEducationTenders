@@ -50,7 +50,7 @@ const TenderCard = ({ tender }) => {
             e.preventDefault();
             window.open(tender.submissionMethod.value);
           }}>
-            Link to submission <span>opens new tab</span>
+            Link to submission <span className="new-tab">{"(opens new tab)"}</span>
             
           </button>
 
