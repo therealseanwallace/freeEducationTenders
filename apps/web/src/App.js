@@ -9,6 +9,7 @@ import CookieConsent from "react-cookie-consent";
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [tenders, setTenders] = useState([]);
+  const [firstUpdateReceived, setFirstUpdateReceived] = useState(false);
   const [updatesRequested, setUpdatesRequested] = useState(0);
   const [newDataRequested, setNewDataRequested] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
@@ -90,6 +91,7 @@ const App = () => {
         const response = await fetchCategory(categoriesUpdated[i]);
         if (response[1] === 200) {
           foundUnretrievedCategory = true;
+          setFirstUpdateReceived(true);
           categoriesUpdated[i].totalPages = response[0].totalPages;
           const tendersToAdd = checkTendersToAdd(response[0].docs);
           setTenders([...tenders, ...tendersToAdd]);
@@ -164,6 +166,7 @@ const App = () => {
             tenders={tenders}
             getMore={getMore}
             newDataRequested={newDataRequested}
+            firstUpdateReceived={firstUpdateReceived}
           />
         </main>
         <Footer

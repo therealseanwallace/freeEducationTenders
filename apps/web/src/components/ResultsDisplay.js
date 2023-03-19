@@ -16,6 +16,15 @@ const ResultsDisplay = (props) => {
       );
     } else return "";
   }
+  const returnLoadMoreButton = (firstUpdateReceived) => {
+    if (firstUpdateReceived) {
+      return (
+        <button className="load-more-button" onClick={props.getMore}>
+          Load more
+        </button>
+      );
+    } else return "";
+  };
   return (
     <div className="results-display">
       {props.tenders.map((tender) => (
@@ -23,9 +32,7 @@ const ResultsDisplay = (props) => {
       ))}
       <div className="load-more-container">
         {returnLoadingIcon()}
-        <button className="getMore" onClick={props.getMore}>
-          Load more
-        </button>
+        {returnLoadMoreButton(props.firstUpdateReceived)}
       </div>
     </div>
   );
