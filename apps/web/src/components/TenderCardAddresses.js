@@ -25,7 +25,6 @@ const TenderCardAddresses = ( { addresses } ) => {
       }
     }
   }
-  console.log('addressesToDisplay = ', addressesToDisplay);
   return (
     <div className="tender-card-addresses">
       <span className="tender-card-address-label">Delivery addresses:</span>

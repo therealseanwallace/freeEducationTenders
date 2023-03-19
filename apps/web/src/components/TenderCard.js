@@ -4,7 +4,6 @@ import Parties from "./Parties";
 import { v4 as uuidv4 } from "uuid";
 
 const TenderCard = ({ tender }) => {
-  console.log("tender card! tender = ", tender);
   const tags = [];
   tags.push(tender.tenderStatus);
   tags.push(...tender.tag);
@@ -112,7 +111,7 @@ const TenderCard = ({ tender }) => {
           <span>Released:</span>{" "}
           {tender.date}
         </p>
-        <p className="end-date">{generateEndDate(tender)}</p>
+        {generateEndDate(tender)}
         <div className="tags">
           <h2 className="tags-title">Tags: </h2>
           {tagsMap}

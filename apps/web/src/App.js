@@ -21,10 +21,6 @@ const App = () => {
         return;
       }
     }
-    console.log("selectCategories! e is", e);
-    console.log("e.target.dataset", e.target.dataset);
-    console.log("e.target.classlist", e.target.classList);
-    console.log('selectedCategories', selectedCategories);
     const newCategory = {
       category: getCategory(e.target.dataset.id),
       id: Number(e.target.dataset.id),
@@ -36,7 +32,6 @@ const App = () => {
   };
 
   const fetchCategory = async (category) => {
-    console.log("fetchCategory", category);
     try {
       const categoryTenders = await fetch(
         /*`http://localhost:3001/api/tenders/category/${category.category}/page/${
@@ -48,7 +43,6 @@ const App = () => {
           mode: "cors",
         }
       );
-      console.log("categoryTenders", categoryTenders);
       if (categoryTenders.status === 200) {
         return [await categoryTenders.json(), categoryTenders.status];
       }
@@ -67,7 +61,7 @@ const App = () => {
     setTenders([]);
   };
 
-    const checkTendersToAdd = (docs) => {
+  const checkTendersToAdd = (docs) => {
     const tendersToReturn = [];
     for (let i = 0; i < docs.length; i++) {
       let foundTender = false;
@@ -79,10 +73,9 @@ const App = () => {
       if (foundTender === false) {
         tendersToReturn.push(docs[i]);
       }
-      
     }
     return tendersToReturn;
-  }
+  };
 
   const getTenders = async () => {
     let foundUnretrievedCategory = false;
@@ -94,13 +87,10 @@ const App = () => {
         categoriesUpdated[i].pageRetrieved < categoriesUpdated[i].totalPages
       ) {
         const response = await fetchCategory(categoriesUpdated[i]);
-        console.log("response", response);
         if (response[1] === 200) {
-          console.log('response is valid');
           foundUnretrievedCategory = true;
           categoriesUpdated[i].totalPages = response[0].totalPages;
           const tendersToAdd = checkTendersToAdd(response[0].docs);
-          console.log('tendersToAdd', tendersToAdd);
           setTenders([...tenders, ...tendersToAdd]);
           categoriesUpdated[i].pageRetrieved += 1;
           setSelectedCategories(categoriesUpdated);
@@ -110,16 +100,14 @@ const App = () => {
   };
 
   const getMore = () => {
-    console.log("getMore");
     setUpdatesRequested(updatesRequested + 1);
   };
 
   const togglePrivacyPolicy = () => {
     setShowPrivacyPolicy(!showPrivacyPolicy);
-  }
+  };
 
   useEffect(() => {
-    console.log("selectedCategories", selectedCategories);
     const interval = setInterval(() => {
       getTenders();
     }, 1000);
@@ -132,36 +120,57 @@ const App = () => {
         <header>
           <h1 className="header-title">Just Education Tenders</h1>
           <h2 className="header-text">
-          UK Education Tenders updated in real time - always free and no signup needed
+            UK Education Tenders updated in real time - always free and no
+            signup needed
           </h2>
         </header>
         <main>
-          <PrivacyPolicy togglePrivacyPolicy={togglePrivacyPolicy}/>
+          <PrivacyPolicy togglePrivacyPolicy={togglePrivacyPolicy} />
         </main>
-        <Footer togglePrivacyPolicy={togglePrivacyPolicy} showPrivacyPolicy={showPrivacyPolicy}/>
-        <CookieConsent>This website uses essential cookies to enhance the user experience. <span style={{ fontSize: "10px" }}><button onClick={togglePrivacyPolicy}>Hide privacy policy</button></span></CookieConsent>
-      </div>
-    )
-  } else return (
-    <div className="App">
-      <header>
-        <h1 className="header-title">Just Education Tenders</h1>
-        <h2 className="header-text">
-        UK Education Tenders updated in real time - always free and no signup needed
-        </h2>
-      </header>
-      <main>
-        <Selectors
-          selectCategories={selectCategories}
-          selectedCategories={selectedCategories.map((category) => category.id)}
-          clearCategories={clearCategories}
+        <Footer
+          togglePrivacyPolicy={togglePrivacyPolicy}
+          showPrivacyPolicy={showPrivacyPolicy}
         />
-        <ResultsDisplay tenders={tenders} getMore={getMore}/>
-      </main>
-      <Footer togglePrivacyPolicy={togglePrivacyPolicy} showPrivacyPolicy={showPrivacyPolicy}/>
-      <CookieConsent>This website uses essential cookies to enhance the user experience. <span style={{ fontSize: "10px" }}><button onClick={togglePrivacyPolicy}>Show privacy policy</button></span></CookieConsent>
-    </div>
-  );
+        <CookieConsent>
+          This website uses essential cookies to enhance the user experience.{" "}
+          <span style={{ fontSize: "10px" }}>
+            <button onClick={togglePrivacyPolicy}>Hide privacy policy</button>
+          </span>
+        </CookieConsent>
+      </div>
+    );
+  } else
+    return (
+      <div className="App">
+        <header>
+          <h1 className="header-title">Just Education Tenders</h1>
+          <h2 className="header-text">
+            UK Education Tenders updated in real time - always free and no
+            signup needed
+          </h2>
+        </header>
+        <main>
+          <Selectors
+            selectCategories={selectCategories}
+            selectedCategories={selectedCategories.map(
+              (category) => category.id
+            )}
+            clearCategories={clearCategories}
+          />
+          <ResultsDisplay tenders={tenders} getMore={getMore} />
+        </main>
+        <Footer
+          togglePrivacyPolicy={togglePrivacyPolicy}
+          showPrivacyPolicy={showPrivacyPolicy}
+        />
+        <CookieConsent>
+          This website uses essential cookies to enhance the user experience.{" "}
+          <span style={{ fontSize: "10px" }}>
+            <button onClick={togglePrivacyPolicy}>Show privacy policy</button>
+          </span>
+        </CookieConsent>
+      </div>
+    );
 };
 
 export default App;
