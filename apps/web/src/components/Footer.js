@@ -32,13 +32,31 @@ const Footer = (props) => {
       <div className="footer-bottom">
         <p className="disclaimer">
           Tenders are sourced from official UK government sources (Find A Tender
-          Service and Contracts Finder Service). However, this website is NOT an
-          official source and the maintainer of this website makes no claims
-          regarding the accuracy or completeness of the information contained
-          within. <br /> <br />
+          Service and Contracts Finder Service) and used under the{" "}
+          <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
+            Open Government Licence
+          </a>
+          . However, this website is NOT an official source and the maintainer
+          of this website makes no claims regarding the accuracy or completeness
+          of the information contained within. <br /> <br />
           Do NOT base your bidding decisions on this information -{" "}
           <strong>always</strong> check official sources!
         </p>
+        <div className="acknowledgements-container">
+          <h3>Acknowledgements</h3>
+          <p className="acknowledgement">
+            Loading gif by Nevit Dilmen at{" "}
+            <a href="https://commons.wikimedia.org/wiki/File:Lightness_rotate_36f_cw.gif">
+              Wikimedia Commons.
+            </a>
+            <br />
+            Licensed under{" "}
+            <a href="https://commons.wikimedia.org/wiki/Commons:GNU_Free_Documentation_License,_version_1.2">
+              GNU Free Documentation License, version 1.2
+            </a>
+          </p>
+          <hr />
+        </div>
         <div className="copyright-statement-social-links-container">
           <p className="copyright-statement">
             Designed and Developed by Sean Patrick Wallace © 2023
