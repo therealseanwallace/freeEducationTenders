@@ -134,6 +134,7 @@ button:hover,
   padding: 14px;
   margin-bottom: 24px;
   border-radius: 8px;
+  flex: 1 1 30%;
 }
 
 .tender-card-title {
@@ -387,7 +388,6 @@ footer > hr {
 
 @media (min-width: 960px) {
   .tender-card {
-    max-width: 450px;
     min-height: 500px;
   }
 

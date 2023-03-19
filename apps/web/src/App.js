@@ -4,6 +4,7 @@ import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
 import Footer from "./components/Footer";
 import PrivacyPolicy from "./components/privacyPolicy";
+import CookieConsent from "react-cookie-consent";
 
 const App = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -38,10 +39,10 @@ const App = () => {
     console.log("fetchCategory", category);
     try {
       const categoryTenders = await fetch(
-        `http://localhost:3001/api/tenders/category/${category.category}/page/${
+        /*`http://localhost:3001/api/tenders/category/${category.category}/page/${
           category.pageRetrieved + 1
-        }`,
-        /*`https://api.justeducationtenders.co.uk/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,*/
+        }`,*/
+        `https://api.justeducationtenders.co.uk/api/tenders/category/${category.category}/page/${category.pageRetrieved + 1}`,
         {
           method: "GET",
           mode: "cors",
@@ -137,7 +138,8 @@ const App = () => {
         <main>
           <PrivacyPolicy togglePrivacyPolicy={togglePrivacyPolicy}/>
         </main>
-        <Footer togglePrivacyPolicy={togglePrivacyPolicy} />
+        <Footer togglePrivacyPolicy={togglePrivacyPolicy} showPrivacyPolicy={showPrivacyPolicy}/>
+        <CookieConsent>This website uses essential cookies to enhance the user experience. <span style={{ fontSize: "10px" }}><button onClick={togglePrivacyPolicy}>Hide privacy policy</button></span></CookieConsent>
       </div>
     )
   } else return (
@@ -156,7 +158,8 @@ const App = () => {
         />
         <ResultsDisplay tenders={tenders} getMore={getMore}/>
       </main>
-      <Footer togglePrivacyPolicy={togglePrivacyPolicy}/>
+      <Footer togglePrivacyPolicy={togglePrivacyPolicy} showPrivacyPolicy={showPrivacyPolicy}/>
+      <CookieConsent>This website uses essential cookies to enhance the user experience. <span style={{ fontSize: "10px" }}><button onClick={togglePrivacyPolicy}>Show privacy policy</button></span></CookieConsent>
     </div>
   );
 };
