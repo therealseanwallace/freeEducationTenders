@@ -36,9 +36,12 @@ const Footer = (props) => {
           <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
             Open Government Licence
           </a>
-          . However, this website is NOT an official source and the maintainer
-          of this website makes no claims regarding the accuracy or completeness
-          of the information contained within. <br /> <br />
+          . <br />
+          Contains public sector information licensed under the Open Government
+          Licence v3.0. <br />
+          However, this website is NOT an official source and the maintainer of
+          this website makes no claims regarding the accuracy or completeness of
+          the information contained within. <br /> <br />
           Do NOT base your bidding decisions on this information -{" "}
           <strong>always</strong> check official sources!
         </p>
