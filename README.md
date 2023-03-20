@@ -34,12 +34,11 @@ I built this app for a few reasons:
     * Deployment to Heroku
     * Creation and config via SSH of a AWS Lightsail VM to run my API crawler service
 
-
 ## Acknowledgements
 
 - Contains public sector information licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/").
 
-- Loading gif by Nevit Dilmen at[Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lightness_rotate_36f_cw.gif), licensed under [GNU Free Documentation License, version 1.2]()
+- Loading gif by Nevit Dilmen at [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Lightness_rotate_36f_cw.gif), licensed under [GNU Free Documentation License, version 1.2]()
 
 ## License
 
