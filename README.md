@@ -28,7 +28,7 @@ I built this app for a few reasons:
 
 - Develop further my skills in Node JS and Express and how to apply the same skills to solving real-world problems
 
-- Gained proficiency the full workflow of deploying and releasing an app in the wild including:
+- Gained proficiency in the full workflow of deploying and releasing an app in the wild including:
  * Domain registration
  * DNS config and configuring GitHub pages to use custom domain
  * Deployment to Heroku
