@@ -37,6 +37,7 @@ I built this app for a few reasons:
 
 ## Roadmap
 
+- Add sorting of tenders (on the frontend) by date, category, status, etc.
 - Add filtering (on the backend) of tenders by status
 
 ## Acknowledgements
