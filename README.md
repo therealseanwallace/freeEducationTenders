@@ -11,9 +11,9 @@ This full stack app comprises three main components:
 The crawler filters out education tenders and processes them into an object containing only the info we need for the front end. It then saves the tenders
 to MongoDB using Mongoose.
 
-- A Node.JS/Express app which presents a RESTful API with a single GET route which the client can use to get tenders.
+- A Node.JS/Express app which presents a RESTful API with a single GET route which the client can use to get tenders from the database.
 
-- A React app hosted on GitHub pages ( with a custom URL) which displays tenders to users and allows getting tenders by category.
+- A React app hosted on GitHub pages ( with a custom URL) which GETs tenders from the API for display to users and allows fetching tenders by category.
 
 ## Motivation
 
