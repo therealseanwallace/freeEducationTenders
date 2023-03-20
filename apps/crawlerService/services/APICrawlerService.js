@@ -25,7 +25,7 @@ class APICrawlerService {
     this.getTenders = getTenders.bind(this);
     this.storeTenders = storeTenders.bind(this);
     this.sortEducationTenders = sortEducationTenders.bind(this);
-    this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
+    // this.jobsSchedule = scheduleJob(rule, this.runJobs.bind(this));
     this.appStatus = [];
     this.markRun = markRun.bind(this);
   }
