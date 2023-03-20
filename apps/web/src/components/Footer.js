@@ -19,12 +19,13 @@ const Footer = (props) => {
       <div className="footer-top">
         {returnPrivacyPolicyButton()}
         <p className="version-statement">
-          <strong>Version:</strong> 0.3.1 <br />
-          <h3>Please note:</h3> this web application is in a pre-release
-          or beta stage of development and may undergo frequent or extensive
-          changes or shutdowns or prolonged delays in loading results.
+          <strong>Version:</strong> 0.3.2 <br />
+          <h3>Please note:</h3> This web application is in a pre-release or beta
+          stage of development and may undergo unplanned changes or shutdowns or
+          delays in loading results.
           <br />
-          Several features have yet to be added.
+          Several features have yet to be added including sorting and filtering
+          of tenders.
           <br />
           In the meantime, please bear with me 🙂
         </p>

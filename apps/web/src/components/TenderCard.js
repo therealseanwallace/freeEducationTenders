@@ -119,7 +119,7 @@ const TenderCard = ({ tender }) => {
         {<TenderCardAddresses addresses={tender.deliveryAddresses} />}
       </div>
       <hr />
-      <p className="card-instructions">Click description/lots to expand</p>
+      <p className="card-instructions">Click description/parties to expand</p>
       
       <Collapsible trigger={returnCollapsibleButton("Description")} className="description-collapsible">
         {tender.description}
