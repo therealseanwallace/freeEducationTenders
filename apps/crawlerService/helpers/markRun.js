@@ -15,7 +15,7 @@ const markRun = async (date) => {
     return newAppStatusSaved;
   }
   return AppStatusModel.findOneAndUpdate(
-    { name: "apiCrawler" }, { lastRan: date }
+    { name: "apiCrawler" }, { lastRan: getDateTimeString(date) }
   );
 };
 

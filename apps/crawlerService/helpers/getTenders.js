@@ -42,31 +42,32 @@ async function getTenders(crawlerQueue1, crawlerQueue2, lastRan) {
       const data = response[i];
       // This whole conditional deals with the queues
       if (data.links) {
+        // If there is a next link, we will update the queue
         if (i === 0) {
           await CrawlerQueueModel.findOneAndUpdate(
             { ID: "FindTenderServiceQueue" },
-            { $set: { URL: data.links.next } }
-          ).setOptions({ returnDocument: "after" });
+            { URL: data.links.next }
+          );
         } else {
           await CrawlerQueueModel.findOneAndUpdate(
             { ID: "ContractsFinderServiceQueue" },
-            { $set: { URL: data.links.next } }
-          ).setOptions({ returnDocument: "after" });
+            { URL: data.links.next }
+          );
         }
       } else {
         console.log(
           `${getDateTimeString()} - No links in response. Clearing crawler queue.`
         );
         if (i === 0) {
-          CrawlerQueueModel.findOneAndUpdate(
+          await CrawlerQueueModel.findOneAndUpdate(
             { ID: "FindTenderServiceQueue" },
-            { $set: { URL: null } }
-          ).setOptions({ returnDocument: "after" });
+            { URL: null }
+          );
         } else {
-          CrawlerQueueModel.findOneAndUpdate(
+          await CrawlerQueueModel.findOneAndUpdate(
             { ID: "ContractsFinderServiceQueue" },
-            { $set: { URL: null } }
-          ).setOptions({ returnDocument: "after" });
+            { URL: null }
+          );
         }
       }
     }
