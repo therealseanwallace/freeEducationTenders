@@ -34,6 +34,10 @@ I built this app for a few reasons:
     * Deployment to Heroku
     * Creation and config via SSH of a AWS Lightsail VM to run my API crawler service
 
+## Roadmap
+
+- Add filtering (on the backend) of tenders by status
+
 ## Acknowledgements
 
 - Contains public sector information licensed under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/").
