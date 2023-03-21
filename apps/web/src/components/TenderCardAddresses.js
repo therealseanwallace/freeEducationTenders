@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const TenderCardAddresses = ( { addresses } ) => {
   const addressesToDisplay = [];
-  for (let i = 0; i < addresses.length; i++) {
+  for (let i = 0; i < addresses.length; i += 1) {
     const address = addresses[i][0];
     if (address.Code) {
       if (!addressesToDisplay.includes(address.Code)) {

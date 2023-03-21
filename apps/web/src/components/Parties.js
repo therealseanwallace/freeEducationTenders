@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-const Parties = ({ parties }) => {
-  return (
+const Parties = ({ parties }) => (
     <div className="tender-card-parties">
       {parties.map((party) => {
         let email = "";
@@ -54,13 +53,11 @@ const Parties = ({ parties }) => {
 
             <div className="tender-card-party-roles">
               <p className="tender-card-party-roles-label">Roles:</p>
-              {party.roles.map((role) => {
-                return (
+              {party.roles.map((role) => (
                   <p className="tender-card-party-role" key={uuidv4()}>
                     {role}
                   </p>
-                );
-              })}
+                ))}
             </div>
             <hr />-
           </div>
@@ -69,6 +66,5 @@ const Parties = ({ parties }) => {
       })}
     </div>
   );
-};
 
 export default Parties;

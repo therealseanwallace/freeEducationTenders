@@ -1,5 +1,5 @@
-import TenderCard from "./TenderCard";
 import { v4 as uuidv4 } from "uuid";
+import TenderCard from "./TenderCard";
 import loadingGif from "../assets/loading.gif";
 
 const ResultsDisplay = (props) => {
@@ -7,23 +7,25 @@ const ResultsDisplay = (props) => {
     if (props.newDataRequested) {
       return (
         <div className="loading-icon-container">
-          <img
-            className="loading-icon"
-            src={loadingGif}
-            alt="Loading icon"
-          />
+          <img className="loading-icon" src={loadingGif} alt="Loading icon" />
         </div>
       );
-    } else return "";
-  }
+    }
+    return "";
+  };
   const returnLoadMoreButton = (firstUpdateReceived) => {
     if (firstUpdateReceived) {
       return (
-        <button className="load-more-button" onClick={props.getMore}>
+        <button
+          className="load-more-button"
+          onClick={props.getMore}
+          type="button"
+        >
           Load more
         </button>
       );
-    } else return "";
+    }
+    return "";
   };
   return (
     <div className="results-display">

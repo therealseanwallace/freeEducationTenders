@@ -1,6 +1,7 @@
-import categories from "../constants/categories.js";
-import CategoryButton from "./categoryButton.js";
 import { v4 as uuidv4 } from "uuid";
+import categories from "../constants/categories";
+import CategoryButton from "./categoryButton";
+
 
 const Selectors = (props) => {
   const categoryButtons = categories.map((category) => (
@@ -11,7 +12,7 @@ const Selectors = (props) => {
     <div className="selectors">
       <h3>Click to select categories</h3>
       {categoryButtons}
-      <button className="clear-cats" onClick={props.clearCategories}>Clear categories</button>
+      <button className="clear-cats" onClick={props.clearCategories} type="button">Clear categories</button>
     </div>
   );
 };

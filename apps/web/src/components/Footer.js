@@ -1,17 +1,16 @@
 import githubLogo from "../assets/github-mark.png";
 import linkedInLogo from "../assets/LI-In-Bug.png";
 
-const Footer = (props) => {
+const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
   const returnPrivacyPolicyButton = () => {
-    if (props.showPrivacyPolicy) {
-      return (
-        <button onClick={props.togglePrivacyPolicy}>Hide Privacy Policy</button>
-      );
-    } else {
-      return (
-        <button onClick={props.togglePrivacyPolicy}>Show Privacy Policy</button>
-      );
+    if (showPrivacyPolicy) {
+      return <button onClick={togglePrivacyPolicy} type="button">Hide Privacy Policy</button>;
     }
+    return (
+      <button onClick={togglePrivacyPolicy} type="button">
+        Show Privacy Policy
+      </button>
+    );
   };
   return (
     <footer>
@@ -19,15 +18,14 @@ const Footer = (props) => {
       <div className="footer-top">
         {returnPrivacyPolicyButton()}
         <p className="version-statement">
-          <strong>Version:</strong> 0.3.2 <br />
+          <strong>Version:</strong> 0.3.3 <br />
           <h3>Please note:</h3> This web application is in a pre-release or beta
           stage of development and may undergo unplanned changes or shutdowns or
           delays in loading results.
           <br />
-          Several features have yet to be added including sorting and filtering
+          Several features have yet to be added, including sorting and filtering
           of tenders.
           <br />
-          In the meantime, please bear with me 🙂
         </p>
       </div>
       <div className="footer-bottom">
@@ -92,5 +90,7 @@ const Footer = (props) => {
     </footer>
   );
 };
+
+
 
 export default Footer;

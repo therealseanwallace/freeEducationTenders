@@ -1,7 +1,6 @@
-const PrivacyPolicy = (props) => {
-  return (
+const PrivacyPolicy = (props) => (
     <div>
-      <button onClick={props.togglePrivacyPolicy}>Close privacy policy</button>
+      <button onClick={props.togglePrivacyPolicy} type="button">Close privacy policy</button>
 
       <h1>Privacy Policy for justeducationtenders.co.uk</h1>
 
@@ -238,6 +237,5 @@ const PrivacyPolicy = (props) => {
       </p>
     </div>
   );
-};
 
 export default PrivacyPolicy;

@@ -5,6 +5,7 @@ const CategoryButton = (props) => {
         className={`cat-button cat-button-selected`}
         data-id={props.id}
         key={props.id}
+        type="button"
       >
         {props.name}
       </button>
@@ -16,6 +17,7 @@ const CategoryButton = (props) => {
       data-id={props.id}
       key={props.id}
       onClick={props.selectCategories}
+      type="button"
     >
       {props.name}
     </button>
