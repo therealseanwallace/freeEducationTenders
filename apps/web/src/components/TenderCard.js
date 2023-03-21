@@ -53,16 +53,6 @@ const TenderCard = ({ tender }) => {
             Link to submission <span className="new-tab">{"(opens new tab)"}</span>
             
           </button>
-
-          
-          /*<a
-            href={tender.submissionMethod.value}
-            className="tender-card-submission-method-link"
-          >
-            <button className="tender-card-submission-link" aria-hidden="true">
-                
-            </button>
-          </a>*/
         );
       } else {
         return (
