@@ -42,10 +42,6 @@ const extractDeliveryAddresses = async (tender) => {
 
 const tenderFactory = async (tender) => {
   const classificationIDs = [tender.tender.classification.id];
-  let documents = [];
-  if (tender.tender.documents) {
-    documents = tender.tender.documents;
-  }
   const additionalIDs = extractAdditionalIDs(tender);
   for (let i = 0; i < additionalIDs.length; i += 1) {
     if (!classificationIDs.includes(additionalIDs[i])) {
@@ -94,7 +90,6 @@ const tenderFactory = async (tender) => {
     date,
     deliveryAddresses,
     description,
-    documents,
     endDate,
     fullDate,
     id,

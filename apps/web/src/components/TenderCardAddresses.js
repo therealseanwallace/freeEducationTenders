@@ -14,6 +14,11 @@ const TenderCardAddresses = ( { addresses } ) => {
         addressesToDisplay.push(address.region);
       }
     }
+    if (address.Region) {
+      if (!addressesToDisplay.includes(address.Region)) {
+        addressesToDisplay.push(address.Region);
+      }
+    }
     if (address.postalCode) {
       if (!addressesToDisplay.includes(address.postalCode)) {
         addressesToDisplay.push(address.postalCode);
