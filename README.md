@@ -35,6 +35,13 @@ I built this app for a few reasons:
     * Deployment to Heroku
     * Creation and config via SSH of a AWS Lightsail VM to run my API crawler service
 
+## Technology
+
+- Built using a MERN stack featuring:
+   * A RESTful API built using Express
+   * A discrete crawler service which gets tenders from UK government APIs
+   * A single-page React app which gets tenders from our API and displays them to users
+
 ## Roadmap
 
 - Add sorting of tenders (on the frontend) by date, category, status, etc.
