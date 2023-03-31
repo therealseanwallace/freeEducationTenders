@@ -47,6 +47,7 @@ I built this app for a few reasons:
 - Write tests! This is a big one. I was so excited to build that I almost completely failed to write tests for this app. So that's my next big job. Wish me luck wrestling with testing React.
 - Add sorting of tenders (on the frontend) by date, category, status, etc.
 - Add filtering (on the backend) of tenders by status
+- Migrate the React app to Next.js instead of create-react-app.
 
 ## Acknowledgements
 
