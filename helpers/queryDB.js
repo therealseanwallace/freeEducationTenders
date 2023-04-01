@@ -1,6 +1,6 @@
 import TenderModel from "../mongoose/schemasModels.js";
 
-const queryDB = async (categories, page) => {
+const queryDB = async (categories, page, onlyShowActive) => {
   let pageToUse = page;
   if (!pageToUse) {
     pageToUse = 0;
@@ -12,12 +12,23 @@ const queryDB = async (categories, page) => {
       limit: 10,
       sort: { fullDate: -1 },
     };
-
-    const response = TenderModel.paginate({
-      "classificationIDs": {
-        "$in": categories
-      }
-    }, options, (err, result) => {
+    let query;
+    if (onlyShowActive === "true") {
+      query = {
+        classificationIDs: {
+          $in: categories,
+        },
+        tenderStatus: "active",
+      };
+      
+    } else {
+      query = {
+        classificationIDs: {
+          $in: categories,
+        },
+      };
+    }
+    const response = TenderModel.paginate(query, options, (err, result) => {
       if (err) {
         console.error("queryDB! - error: ", err);
         return [];
@@ -25,7 +36,6 @@ const queryDB = async (categories, page) => {
       return result;
     });
     return response;
-    
   } catch (error) {
     return [];
   }
