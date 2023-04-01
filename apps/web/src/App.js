@@ -41,7 +41,7 @@ function App() {
       const categoryTenders = await fetch(
         `https://api.justeducationtenders.co.uk/api/tenders/category/${
           category.category
-        }/page/${category.pageRetrieved + 1}`,
+        }/page/${category.pageRetrieved + 1}/onlyShowActive/${onlyShowActive}`,
         {
           method: "GET",
           mode: "cors",
