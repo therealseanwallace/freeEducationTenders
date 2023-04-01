@@ -18,7 +18,7 @@ const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
       <div className="footer-top">
         {returnPrivacyPolicyButton()}
         <p className="version-statement">
-          <strong>Version:</strong> 0.3.3 <br />
+          <strong>Version:</strong> 0.3.4 <br />
           <h3>Please note:</h3> This web application is in a pre-release or beta
           stage of development and may undergo unplanned changes or shutdowns or
           delays in loading results.

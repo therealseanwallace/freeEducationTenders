@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 
-const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"]
+const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"];
+/* const whitelist = ["https://localhost:3000", "https://localhost:3001", "http://localhost:3000", "http://localhost:3001"]; */
 
 const corsOptions = {
   origin: function corsCheck(origin, callback) {
