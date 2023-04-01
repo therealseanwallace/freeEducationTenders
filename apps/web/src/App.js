@@ -5,7 +5,7 @@ import getCategory from "./helpers/getCategory";
 import ResultsDisplay from "./components/ResultsDisplay";
 import Footer from "./components/Footer";
 import PrivacyPolicy from "./components/privacyPolicy";
-
+import ToggleShowActive from "./components/ToggleShowActive";
 
 function App() {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -14,6 +14,7 @@ function App() {
   const [updatesRequested, setUpdatesRequested] = useState(0);
   const [newDataRequested, setNewDataRequested] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [onlyShowActive, setOnlyShowActive] = useState(true);
 
   const selectCategories = (e) => {
     for (let i = 0; i < selectedCategories.length; i += 1) {
@@ -46,6 +47,11 @@ function App() {
           mode: "cors",
         }
       );
+      /* const categoryTenders = await fetch(
+        `http://localhost:3001/api/tenders/category/${category.category}/page/${
+          category.pageRetrieved + 1
+        }/onlyShowActive/${onlyShowActive}`
+      ); */
       if (categoryTenders.status === 200) {
         return [await categoryTenders.json(), categoryTenders.status];
       }
@@ -114,6 +120,13 @@ function App() {
     setShowPrivacyPolicy(!showPrivacyPolicy);
   };
 
+  const toggleOnlyShowActive = () => {
+    setOnlyShowActive(!onlyShowActive);
+    setTenders([]);
+    setUpdatesRequested(0);
+    setSelectedCategories([]);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       getTenders();
@@ -132,6 +145,10 @@ function App() {
           </h2>
         </header>
         <main>
+          <ToggleShowActive
+            toggleOnlyShowActive={toggleOnlyShowActive}
+            onlyShowActive={onlyShowActive}
+          />
           <PrivacyPolicy togglePrivacyPolicy={togglePrivacyPolicy} />
         </main>
         <Footer
@@ -141,7 +158,9 @@ function App() {
         <CookieConsent>
           This website uses essential cookies to enhance the user experience.{" "}
           <span style={{ fontSize: "10px" }}>
-            <button onClick={togglePrivacyPolicy} type="button">Hide privacy policy</button>
+            <button onClick={togglePrivacyPolicy} type="button">
+              Hide privacy policy
+            </button>
           </span>
         </CookieConsent>
       </div>
@@ -157,6 +176,10 @@ function App() {
         </h2>
       </header>
       <main>
+        <ToggleShowActive
+          toggleOnlyShowActive={toggleOnlyShowActive}
+          onlyShowActive={onlyShowActive}
+        />
         <Selectors
           selectCategories={selectCategories}
           selectedCategories={selectedCategories.map((category) => category.id)}

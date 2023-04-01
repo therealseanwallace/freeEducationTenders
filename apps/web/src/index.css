@@ -67,6 +67,7 @@ body {
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
     "Helvetica Neue", sans-serif;
 }
+
 .App {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -86,6 +87,25 @@ header {
   font-weight: 500;
 }
 
+.toggle-show-active {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.toggle-show-active > p {
+  font-weight: 600;
+}
+
+.toggle-show-active > p:last-of-type {
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.toggle-show-active > input {
+  width: 24px;
+  height: 24px;
+}
 .selectors {
   display: flex;
   flex-wrap: wrap;
