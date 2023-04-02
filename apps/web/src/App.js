@@ -15,6 +15,7 @@ function App() {
   const [newDataRequested, setNewDataRequested] = useState(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
   const [onlyShowActive, setOnlyShowActive] = useState(true);
+  const [receivedAllUpdates, setReceivedAllUpdates] = useState(false);
 
   const selectCategories = (e) => {
     for (let i = 0; i < selectedCategories.length; i += 1) {
@@ -112,8 +113,17 @@ function App() {
   };
 
   const getMore = () => {
-    setUpdatesRequested(updatesRequested + 1);
-    setNewDataRequested(true);
+    for (let i = 0; i < selectedCategories.length; i += 1) {
+      const category = selectedCategories[i];
+      if (category.pageRetrieved < category.totalPages) {
+        setUpdatesRequested(updatesRequested + 1);
+        setNewDataRequested(true);
+        return;
+      } 
+      if (i === selectedCategories.length - 1) {
+        setReceivedAllUpdates(true);
+      }
+    }
   };
 
   const togglePrivacyPolicy = () => {
@@ -190,6 +200,7 @@ function App() {
           getMore={getMore}
           newDataRequested={newDataRequested}
           firstUpdateReceived={firstUpdateReceived}
+          receivedAllUpdates={receivedAllUpdates}
         />
       </main>
       <Footer

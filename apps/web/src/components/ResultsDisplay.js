@@ -14,6 +14,9 @@ const ResultsDisplay = (props) => {
     return "";
   };
   const returnLoadMoreButton = (firstUpdateReceived) => {
+    if (props.receivedAllUpdates === true) {
+      return <p className="no-more-results">No more results</p>;
+    }
     if (firstUpdateReceived) {
       return (
         <button
