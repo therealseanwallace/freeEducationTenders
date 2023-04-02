@@ -8,7 +8,7 @@ tenderRouter.get("/category/:category/page/:page/onlyShowActive/:onlyShowActive"
   const { category, page, onlyShowActive } = req.params;
   const catArray = returnCategoriesArray(category);
   const response = await queryDB(catArray, page, onlyShowActive);
-  res.set("Cache-Control", "public, max-age=360");
+  // res.set("Cache-Control", "public, max-age=360");
   return res.json(response);
 });
 
