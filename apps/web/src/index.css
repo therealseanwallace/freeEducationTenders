@@ -119,12 +119,17 @@ header {
   font-weight: 600;
 }
 
-button {
+button, .no-more-results {
   border-radius: 4px;
   border: 0;
   background-color: var(--buttonBlue);
   padding: 3px 12px;
   font-weight: 500;
+}
+
+.no-more-results {
+  background-color: rgb(105, 0, 0);
+  color: whitesmoke;
 }
 
 button:hover,
