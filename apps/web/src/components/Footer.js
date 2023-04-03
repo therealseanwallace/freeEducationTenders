@@ -4,7 +4,11 @@ import linkedInLogo from "../assets/LI-In-Bug.png";
 const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
   const returnPrivacyPolicyButton = () => {
     if (showPrivacyPolicy) {
-      return <button onClick={togglePrivacyPolicy} type="button">Hide Privacy Policy</button>;
+      return (
+        <button onClick={togglePrivacyPolicy} type="button">
+          Hide Privacy Policy
+        </button>
+      );
     }
     return (
       <button onClick={togglePrivacyPolicy} type="button">
@@ -18,7 +22,6 @@ const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
       <div className="footer-top">
         {returnPrivacyPolicyButton()}
         <p className="version-statement">
-          <strong>Version:</strong> 0.3.4 <br />
           <h3>Please note:</h3> This web application is in a pre-release or beta
           stage of development and may undergo unplanned changes or shutdowns or
           delays in loading results.
@@ -37,7 +40,7 @@ const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
           <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/">
             Open Government Licence
           </a>
-          . <br />
+          . <br /> <br />
           However, this website is NOT an official source and the maintainer of
           this website makes no claims regarding the accuracy or completeness of
           the information contained within. <br /> <br />
@@ -49,16 +52,25 @@ const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
           <p className="acknowledgement">
             Loading gif by Nevit Dilmen at{" "}
             <a href="https://commons.wikimedia.org/wiki/File:Lightness_rotate_36f_cw.gif">
-              Wikimedia Commons.
-            </a>
-            <br />
-            Licensed under{" "}
+              Wikimedia Commons
+            </a> {" "}
+            licensed under{" "}
             <a href="https://commons.wikimedia.org/wiki/Commons:GNU_Free_Documentation_License,_version_1.2">
               GNU Free Documentation License, version 1.2
             </a>
           </p>
           <hr />
         </div>
+        <div className="version-container">
+          <strong>Version:</strong> 0.3.5 <br />
+          <strong>Release date:</strong> 2/4/2023
+          <br />
+          <p>
+            <strong>Release note:</strong> Added only retrieving active tenders by default.
+            <br /> Added "no more results" notice.
+          </p>
+        </div>
+        <hr />
         <div className="copyright-statement-social-links-container">
           <p className="copyright-statement">
             Designed and Developed by Sean Patrick Wallace © 2023
@@ -90,7 +102,5 @@ const Footer = ({ showPrivacyPolicy, togglePrivacyPolicy }) => {
     </footer>
   );
 };
-
-
 
 export default Footer;
