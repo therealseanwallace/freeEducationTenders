@@ -9,6 +9,7 @@ tenderRouter.get("/category/:category/page/:page/onlyShowActive/:onlyShowActive"
   const catArray = returnCategoriesArray(category);
   const response = await queryDB(catArray, page, onlyShowActive);
   res.set("Cache-Control", "public, max-age=360");
+  if (catArray === null) return res.status(404).json({ error: "Category not found" });
   return res.json(response);
 });
 

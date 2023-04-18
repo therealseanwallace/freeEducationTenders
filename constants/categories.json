@@ -55,15 +55,15 @@
     "80650000",
     "80660000"
   ],
-  "education and training": ["80000000", "80500000"],
-  "adult education, vocational, staff, and personnel training": [
+  "education": ["80000000", "80500000"],
+  "adulteducation": [
     "80400000",
     "80530000",
     "79632000",
     "80511000"
   ],
-  "e-learning and computer": ["80420000", "80510000", "80533000"],
-  "schools and special education": [
+  "elearning": ["80420000", "80510000", "80533000"],
+  "schoolsandspecial": [
     "80340000",
     "80100000",
     "80110000",
@@ -74,13 +74,13 @@
     "80310000",
     "80410000"
   ],
-  "health, first aid, and medical": [
+  "health": [
     "80320000",
     "80560000",
     "80561000",
     "80562000"
   ],
-  "higher and university level": ["80300000", "80430000"],
+  "higher": ["80300000", "80430000"],
   "other": [
     "80330000",
     "80550000",

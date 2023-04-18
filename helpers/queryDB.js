@@ -9,7 +9,7 @@ const queryDB = async (categories, page, onlyShowActive) => {
   try {
     const options = {
       page: pageToUse,
-      limit: 10,
+      limit: 20,
       sort: { fullDate: -1 },
     };
     let query;
