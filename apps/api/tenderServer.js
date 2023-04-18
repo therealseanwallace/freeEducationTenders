@@ -19,10 +19,10 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 
-const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"];
+const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io", "https://jet-next-frontend-pulb.vercel.app/"];
 /* const whitelist = ["https://localhost:3000", "https://localhost:3001", "http://localhost:3000", "http://localhost:3001"]; */
 
-const corsOptions = {
+/* const corsOptions = {
   origin: function corsCheck(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -31,9 +31,11 @@ const corsOptions = {
     }
   },
   optionsSuccessStatus: 200,
-};
+}; 
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); */
+
+app.use(cors());
 
 const apiRequestLimiter = rateLimit({
   // limit each IP to 100 requests per minute

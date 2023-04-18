@@ -148,11 +148,7 @@ function App() {
     return (
       <div className="App">
         <header>
-          <h1 className="header-title">Just Education Tenders</h1>
-          <h2 className="header-text">
-            UK Education Tenders updated in real time - always free and no
-            signup needed
-          </h2>
+          
         </header>
         <main>
           <ToggleShowActive
