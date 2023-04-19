@@ -13,7 +13,8 @@ to MongoDB using Mongoose.
 
 - A Node.JS/Express app which presents a RESTful API with a single GET route which the client can use to get tenders from the database.
 
-- A Next.JS frontend app hosted with Vercel ## [REPO](https://github.com/therealseanwallace/jetNextFrontend)
+- A Next.JS frontend app hosted with Vercel 
+# [REPO](https://github.com/therealseanwallace/jetNextFrontend)
 
 ## Motivation
 
