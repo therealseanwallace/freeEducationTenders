@@ -1,4 +1,4 @@
-# [Free Education Tenders](https://justeducationtenders.co.uk)
+# [Just Education Tenders](https://justeducationtenders.co.uk)
 Live link ☝️
 
 ## Description
@@ -13,7 +13,7 @@ to MongoDB using Mongoose.
 
 - A Node.JS/Express app which presents a RESTful API with a single GET route which the client can use to get tenders from the database.
 
-- A React app hosted on GitHub pages ( with a custom URL) which GETs tenders from the API for display to users and allows fetching tenders by category.
+- A Next.JS frontend app hosted with Vercel. [Repo](https://github.com/therealseanwallace/jetNextFrontend)
 
 ## Motivation
 
@@ -40,14 +40,11 @@ I built this app for a few reasons:
 - Built using a MERN stack featuring:
    * A RESTful API built using Express
    * A discrete crawler service which gets tenders from UK government APIs
-   * A single-page React app which gets tenders from our API and displays them to users
+   * A single-page React / Next.JS app which gets tenders from our API and displays them to users
 
 ## Roadmap
 
 - Write tests! This is a big one. I was so excited to build that I almost completely failed to write tests for this app. So that's my next big job. Wish me luck wrestling with testing React.
-- Add sorting of tenders (on the frontend) by date, category, status, etc.
-- Add filtering (on the backend) of tenders by status
-- Migrate the React app to Next.js instead of create-react-app.
 
 ## Acknowledgements
 
