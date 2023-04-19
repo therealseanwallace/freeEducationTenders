@@ -22,7 +22,7 @@ app.use(helmet());
 const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io", "https://jet-next-frontend-pulb.vercel.app/", "https://jet-next-frontend-pulb-74du3de4e-therealseanwallace.vercel.app/"];
 /* const whitelist = ["https://localhost:3000", "https://localhost:3001", "http://localhost:3000", "http://localhost:3001"]; */
 
-/* const corsOptions = {
+ const corsOptions = {
   origin: function corsCheck(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -33,7 +33,7 @@ const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwal
   optionsSuccessStatus: 200,
 }; 
 
-app.use(cors(corsOptions)); */
+app.use(cors(corsOptions));
 
 app.use(cors());
 
