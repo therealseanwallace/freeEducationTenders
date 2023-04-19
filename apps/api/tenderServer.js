@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(compression());
 app.use(helmet());
 
-/* const whitelist = [
+const whitelist = [
   "https://justeducationtenders.co.uk",
   "https://therealseanwallace.github.io",
   "https://jet-next-frontend-pulb.vercel.app/",
@@ -37,9 +37,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-/* app.use(cors(corsOptions)); */
-
-app.use(cors());
+app.use(cors(corsOptions));
 
 const apiRequestLimiter = rateLimit({
   // limit each IP to 100 requests per minute
