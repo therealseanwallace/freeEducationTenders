@@ -29,7 +29,7 @@ I built this app for a few reasons:
 
 ## Key Learning
 
-- Develop further my skills in Node JS and Express and how to apply the same skills to solving real-world problems
+- Develop further my skills in Node JS, Express, and Next.JS and how to apply the same skills to solving real-world problems
 
 - Gained proficiency in the full workflow of deploying and releasing an app in the wild including:
     * Domain registration
