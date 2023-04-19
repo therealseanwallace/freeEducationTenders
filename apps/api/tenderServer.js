@@ -14,15 +14,18 @@ dotenv.config();
 
 const app = express();
 
-
 app.use(express.json());
 app.use(compression());
 app.use(helmet());
 
-const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwallace.github.io"];
-/* const whitelist = ["https://localhost:3000", "https://localhost:3001", "http://localhost:3000", "http://localhost:3001"]; */
+const whitelist = [
+  "justeducationtenders.co.uk",
+  "jet-next-frontend-pulb.vercel.app/",
+  "jet-next-frontend-pulb-therealseanwallace.vercel.app",
+  "jet-next-frontend-pulb-git-main-therealseanwallace.vercel.app/"
+];
 
-const corsOptions = {
+/* const corsOptions = {
   origin: function corsCheck(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -30,6 +33,11 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  optionsSuccessStatus: 200,
+};*/
+
+const corsOptions = {
+  origin: "justeducationtenders.co.uk/",
   optionsSuccessStatus: 200,
 };
 
@@ -46,7 +54,7 @@ app.use("/api/", apiRequestLimiter);
 
 app.use("/api/tenders/", tenderRouter);
 
-app.listen(PORT, err => {
+app.listen(PORT, (err) => {
   if (err) throw err;
   console.log(`${getDateTimeString()} - Server running on port ${PORT}`);
 });
@@ -60,7 +68,10 @@ async function connect() {
   try {
     const connection = await mongoose.connect(MONGO_URL);
   } catch (error) {
-    console.log(`${getDateTimeString()} - Error connecting to MongoDB: `, error.message);
+    console.log(
+      `${getDateTimeString()} - Error connecting to MongoDB: `,
+      error.message
+    );
   } finally {
     if (mongoose.connection.readyState === 1) {
       console.log(`${getDateTimeString()} - Connected to MongoDB`);
