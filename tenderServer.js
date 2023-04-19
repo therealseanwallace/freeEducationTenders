@@ -25,7 +25,7 @@ const whitelist = [
   "jet-next-frontend-pulb-git-main-therealseanwallace.vercel.app/"
 ];
 
-const corsOptions = {
+/* const corsOptions = {
   origin: function corsCheck(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -33,6 +33,11 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  optionsSuccessStatus: 200,
+};*/
+
+const corsOptions = {
+  origin: "justeducationtenders.co.uk/",
   optionsSuccessStatus: 200,
 };
 
