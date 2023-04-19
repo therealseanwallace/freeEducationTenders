@@ -44,7 +44,9 @@ I built this app for a few reasons:
 
 ## Roadmap
 
-- Write tests! This is a big one. I was so excited to build that I almost completely failed to write tests for this app. So that's my next big job. Wish me luck wrestling with testing React.
+- Consider getting rid of the Express API and taking advantage of Next.JS's ability to get info directly from the database.
+
+- Write tests! I was so excited to build that I almost completely failed to write tests for this app. So that's my next big job. Wish me luck wrestling with testing React.
 
 ## Acknowledgements
 
