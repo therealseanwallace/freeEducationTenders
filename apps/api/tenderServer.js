@@ -35,8 +35,6 @@ const whitelist = ["https://justeducationtenders.co.uk", "https://therealseanwal
 
 app.use(cors(corsOptions));
 
-app.use(cors());
-
 const apiRequestLimiter = rateLimit({
   // limit each IP to 100 requests per minute
   windowMs: 1 * 60 * 1000,
