@@ -19,11 +19,10 @@ app.use(compression());
 app.use(helmet());
 
 const whitelist = [
-  "https://justeducationtenders.co.uk",
-  "https://therealseanwallace.github.io",
-  "https://jet-next-frontend-pulb.vercel.app/",
-  "https://jet-next-frontend-pulb-therealseanwallace.vercel.app",
-  "https://jet-next-frontend-pulb-git-main-therealseanwallace.vercel.app/"
+  "justeducationtenders.co.uk",
+  "jet-next-frontend-pulb.vercel.app/",
+  "jet-next-frontend-pulb-therealseanwallace.vercel.app",
+  "jet-next-frontend-pulb-git-main-therealseanwallace.vercel.app/"
 ];
 
 const corsOptions = {
