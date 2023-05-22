@@ -15,7 +15,7 @@ to MongoDB using Mongoose. At this time, this is the only piece of code in this 
 
 - A Next.JS app hosted with Vercel. See below for REPO:
 
-## [REPO](https://github.com/therealseanwallace/jetNextFrontend)
+## [NEXT.JS REPO](https://github.com/therealseanwallace/jetNextFrontend)
 
 ## Motivation
 
