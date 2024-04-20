@@ -1,3 +1,5 @@
+# I'm leaving this here for posterity but this should very much be considered *ahem* legacy code. That is to say, it's bad, and my code now doesn't look a lot like this.
+
 # [Just Education Tenders](https://justeducationtenders.co.uk)
 Live link ☝️
 
